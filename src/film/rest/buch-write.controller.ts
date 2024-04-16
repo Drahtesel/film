@@ -51,8 +51,8 @@ import {
 import { BuchDTO, BuchDtoOhneRef } from './buchDTO.entity.js';
 import { Request, Response } from 'express';
 import { type Abbildung } from '../entity/abbildung.entity.js';
-import { type Film } from '../entity/film.entity.js';
-import { BuchWriteService } from '../service/buch-write.service.js';
+import { type Film } from '../entity/buch.entity.js';
+import { BuchWriteService } from '../service/film-write.service.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { type Titel } from '../entity/titel.entity.js';
 import { getBaseUri } from './getBaseUri.js';
@@ -215,7 +215,7 @@ export class BuchWriteController {
             id: undefined,
             titel: titelDTO.titel,
             untertitel: titelDTO.untertitel,
-            buch: undefined,
+            film: undefined,
         };
         const abbildungen = buchDTO.abbildungen?.map((abbildungDTO) => {
             const abbildung: Abbildung = {
@@ -245,7 +245,7 @@ export class BuchWriteController {
         };
 
         // Rueckwaertsverweise
-        buch.titel.buch = buch;
+        buch.titel.film = buch;
         buch.abbildungen?.forEach((abbildung) => {
             abbildung.film = buch;
         });
@@ -256,7 +256,7 @@ export class BuchWriteController {
         return {
             id: undefined,
             version: undefined,
-            isbn: buchDTO.isbn,
+            IMDB-ID: buchDTO.isbn,
             rating: buchDTO.rating,
             art: buchDTO.art,
             preis: buchDTO.preis,

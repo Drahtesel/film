@@ -21,7 +21,7 @@
  */
 
 import { Abbildung } from '../entity/abbildung.entity.js';
-import { Film } from '../entity/film.entity.js';
+import { Film } from '../entity/buch.entity.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';

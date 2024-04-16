@@ -38,7 +38,7 @@ import {
 } from 'class-validator';
 import { AbbildungDTO } from './abbildungDTO.entity.js';
 import { ApiProperty } from '@nestjs/swagger';
-import { type FilmArt } from '../entity/film.entity.js';
+import { type FilmArt } from '../entity/buch.entity.js';
 import { TitelDTO } from './titelDTO.entity.js';
 import { Type } from 'class-transformer';
 

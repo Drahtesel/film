@@ -32,7 +32,7 @@ import {
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
-import { type Film, type FilmArt } from '../entity/film.entity.js';
+import { type Film, type FilmArt } from '../entity/buch.entity.js';
 import {
     Controller,
     Get,
@@ -46,7 +46,7 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { BuchReadService } from '../service/buch-read.service.js';
+import { BuchReadService } from '../service/film-read.service.js';
 import { Public } from 'nest-keycloak-connect';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
@@ -76,10 +76,10 @@ export interface Links {
 }
 
 /** Typedefinition für ein Titel-Objekt ohne Rückwärtsverweis zum Buch */
-export type TitelModel = Omit<Titel, 'buch' | 'id'>;
+export type TitelModel = Omit<Titel, 'film' | 'id'>;
 
 /** Buch-Objekt mit HATEOAS-Links */
-export type BuchModel = Omit<
+export type FilmModel = Omit<
     Film,
     'abbildungen' | 'aktualisiert' | 'erzeugt' | 'id' | 'titel' | 'version'
 > & {
@@ -89,10 +89,10 @@ export type BuchModel = Omit<
 };
 
 /** Buch-Objekte mit HATEOAS-Links in einem JSON-Array. */
-export interface BuecherModel {
+export interface FilmeModel {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _embedded: {
-        buecher: BuchModel[];
+        filme: FilmModel[];
     };
 }
 
@@ -106,9 +106,12 @@ export interface BuecherModel {
  * Außerdem muss noch `string` statt `Date` verwendet werden, weil es in OpenAPI
  * den Typ Date nicht gibt.
  */
-export class BuchQuery implements Suchkriterien {
+export class FilmQuery implements Suchkriterien {
     @ApiProperty({ required: false })
-    declare readonly isbn: string;
+    declare readonly imdbId: string;
+
+    @ApiProperty({ required: false })
+    declare readonly laenge: number;
 
     @ApiProperty({ required: false })
     declare readonly rating: number;
@@ -154,12 +157,12 @@ const APPLICATION_HAL_JSON = 'application/hal+json';
 @ApiTags('Buch REST-API')
 // @ApiBearerAuth()
 // Klassen ab ES 2015
-export class BuchGetController {
+export class FilmGetController {
     // readonly in TypeScript, vgl. C#
     // private ab ES 2019
     readonly #service: BuchReadService;
 
-    readonly #logger = getLogger(BuchGetController.name);
+    readonly #logger = getLogger(FilmGetController.name);
 
     // Dependency Injection (DI) bzw. Constructor Injection
     // constructor(private readonly service: BuchReadService) {}
@@ -212,7 +215,7 @@ export class BuchGetController {
         @Req() req: Request,
         @Headers('If-None-Match') version: string | undefined,
         @Res() res: Response,
-    ): Promise<Response<BuchModel | undefined>> {
+    ): Promise<Response<FilmModel | undefined>> {
         this.#logger.debug('getById: idStr=%s, version=%s', idStr, version);
         const id = Number(idStr);
         if (!Number.isInteger(id)) {
@@ -267,10 +270,10 @@ export class BuchGetController {
     @ApiOperation({ summary: 'Suche mit Suchkriterien' })
     @ApiOkResponse({ description: 'Eine evtl. leere Liste mit Büchern' })
     async get(
-        @Query() query: BuchQuery,
+        @Query() query: FilmQuery,
         @Req() req: Request,
         @Res() res: Response,
-    ): Promise<Response<BuecherModel | undefined>> {
+    ): Promise<Response<FilmeModel | undefined>> {
         this.#logger.debug('get: query=%o', query);
 
         if (req.accepts([APPLICATION_HAL_JSON, 'json', 'html']) === false) {
@@ -278,23 +281,23 @@ export class BuchGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const buecher = await this.#service.find(query);
-        this.#logger.debug('get: %o', buecher);
+        const filme = await this.#service.find(query);
+        this.#logger.debug('get: %o', filme);
 
         // HATEOAS: Atom Links je Buch
-        const buecherModel = buecher.map((buch) =>
-            this.#toModel(buch, req, false),
+        const filmeModel = filme.map((film) =>
+            this.#toModel(film, req, false),
         );
-        this.#logger.debug('get: buecherModel=%o', buecherModel);
+        this.#logger.debug('get: filmeModel=%o', filmeModel);
 
-        const result: BuecherModel = { _embedded: { buecher: buecherModel } };
+        const result: FilmeModel = { _embedded: { filme: filmeModel } };
         return res.contentType(APPLICATION_HAL_JSON).json(result).send();
     }
 
-    #toModel(buch: Film, req: Request, all = true) {
+    #toModel(film: Film, req: Request, all = true) {
         const baseUri = getBaseUri(req);
         this.#logger.debug('#toModel: baseUri=%s', baseUri);
-        const { id } = buch;
+        const { id } = film;
         const links = all
             ? {
                   self: { href: `${baseUri}/${id}` },
@@ -305,26 +308,27 @@ export class BuchGetController {
               }
             : { self: { href: `${baseUri}/${id}` } };
 
-        this.#logger.debug('#toModel: buch=%o, links=%o', buch, links);
+        this.#logger.debug('#toModel: buch=%o, links=%o', film, links);
         const titelModel: TitelModel = {
-            titel: buch.titel?.titel ?? 'N/A',
-            untertitel: buch.titel?.untertitel ?? 'N/A',
+            titel: film.titel?.titel ?? 'N/A',
+            untertitel: film.titel?.untertitel ?? 'N/A',
         };
-        const buchModel: BuchModel = {
-            isbn: buch.isbn,
-            rating: buch.rating,
-            art: buch.art,
-            preis: buch.preis,
-            rabatt: buch.rabatt,
-            streambar: buch.streambar,
-            datum: buch.datum,
-            homepage: buch.homepage,
-            schlagwoerter: buch.schlagwoerter,
+        const filmModel: FilmModel = {
+            imdbId: film.imdbId,
+            laenge: film.laenge,
+            rating: film.rating,
+            art: film.art,
+            preis: film.preis,
+            rabatt: film.rabatt,
+            streambar: film.streambar,
+            datum: film.datum,
+            homepage: film.homepage,
+            schlagwoerter: film.schlagwoerter,
             titel: titelModel,
             _links: links,
         };
 
-        return buchModel;
+        return filmModel;
     }
 }
 /* eslint-enable max-lines */

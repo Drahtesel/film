@@ -20,13 +20,13 @@
  * @packageDocumentation
  */
 
-import { type FilmArt } from '../entity/film.entity.js';
+import { type FilmArt } from '../entity/buch.entity.js';
 
 /**
  * Typdefinition für `BuchReadService.find()`und `QueryBuilder.build()`
  */
 export interface Suchkriterien {
-    readonly isbn?: string;
+    readonly imdbId?: string;
     readonly rating?: number;
     readonly art?: FilmArt;
     readonly preis?: number;

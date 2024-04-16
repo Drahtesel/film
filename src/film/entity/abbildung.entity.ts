@@ -22,7 +22,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Film } from './film.entity.js';
+import { Film } from './buch.entity.js';
 
 @Entity()
 export class Abbildung {

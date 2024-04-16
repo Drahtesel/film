@@ -20,9 +20,9 @@ import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { IsInt, IsNumberString, Min } from 'class-validator';
 import { UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { type Abbildung } from '../entity/abbildung.entity.js';
-import { type Film } from '../entity/film.entity.js';
+import { type Film } from '../entity/buch.entity.js';
 import { BuchDTO } from '../rest/buchDTO.entity.js';
-import { BuchWriteService } from '../service/buch-write.service.js';
+import { BuchWriteService } from '../service/film-write.service.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
 import { type IdInput } from './buch-query.resolver.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
@@ -117,7 +117,7 @@ export class BuchMutationResolver {
             id: undefined,
             titel: titelDTO.titel,
             untertitel: titelDTO.untertitel,
-            buch: undefined,
+            film: undefined,
         };
         const abbildungen = buchDTO.abbildungen?.map((abbildungDTO) => {
             const abbildung: Abbildung = {
@@ -131,7 +131,7 @@ export class BuchMutationResolver {
         const buch: Film = {
             id: undefined,
             version: undefined,
-            isbn: buchDTO.isbn,
+            IMDB-ID: buchDTO.isbn,
             rating: buchDTO.rating,
             art: buchDTO.art,
             preis: buchDTO.preis,
@@ -155,7 +155,7 @@ export class BuchMutationResolver {
         return {
             id: undefined,
             version: undefined,
-            isbn: buchDTO.isbn,
+            IMDB-ID: buchDTO.isbn,
             rating: buchDTO.rating,
             art: buchDTO.art,
             preis: buchDTO.preis,

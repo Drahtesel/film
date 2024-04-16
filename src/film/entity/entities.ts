@@ -16,7 +16,7 @@
  */
 
 import { Abbildung } from './abbildung.entity.js';
-import { Film } from './film.entity.js';
+import { Film } from './buch.entity.js';
 import { Titel } from './titel.entity.js';
 
 // erforderlich in src/config/db.ts und src/buch/buch.module.ts

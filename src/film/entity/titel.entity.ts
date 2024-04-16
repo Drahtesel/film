@@ -22,7 +22,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Film } from './film.entity.js';
+import { Film } from './buch.entity.js';
 
 @Entity()
 export class Titel {
@@ -36,9 +36,9 @@ export class Titel {
     @Column('varchar')
     readonly untertitel: string | undefined;
 
-    @OneToOne(() => Film, (buch) => buch.titel)
-    @JoinColumn({ name: 'buch_id' })
-    buch: Film | undefined;
+    @OneToOne(() => Film, (film) => film.titel)
+    @JoinColumn({ name: 'film_id' })
+    film: Film | undefined;
 
     public toString = (): string =>
         JSON.stringify({

@@ -24,13 +24,13 @@
 import { type DeleteResult, Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-    IsbnExistsException,
+    IsbnExistsException as ImdbIdExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
 import { Abbildung } from '../entity/abbildung.entity.js';
-import { Film } from '../entity/film.entity.js';
-import { BuchReadService } from './buch-read.service.js';
+import { Film } from '../entity/buch.entity.js';
+import { BuchReadService } from './film-read.service.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MailService } from '../../mail/mail.service.js';
 import { Titel } from '../entity/titel.entity.js';
@@ -74,20 +74,20 @@ export class BuchWriteService {
 
     /**
      * Ein neues Buch soll angelegt werden.
-     * @param buch Das neu abzulegende Buch
+     * @param film Das neu abzulegende Buch
      * @returns Die ID des neu angelegten Buches
      * @throws IsbnExists falls die ISBN-Nummer bereits existiert
      */
-    async create(buch: Film): Promise<number> {
-        this.#logger.debug('create: buch=%o', buch);
-        await this.#validateCreate(buch);
+    async create(film: Film): Promise<number> {
+        this.#logger.debug('create: buch=%o', film);
+        await this.#validateCreate(film);
 
-        const buchDb = await this.#repo.save(buch); // implizite Transaktion
-        this.#logger.debug('create: buchDb=%o', buchDb);
+        const filmDb = await this.#repo.save(film); // implizite Transaktion
+        this.#logger.debug('create: buchDb=%o', filmDb);
 
-        await this.#sendmail(buchDb);
+        await this.#sendmail(filmDb);
 
-        return buchDb.id!;
+        return filmDb.id!;
     }
 
     /**
@@ -100,26 +100,26 @@ export class BuchWriteService {
      * @throws VersionOutdatedException falls die Versionsnummer veraltet ist
      */
     // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async update({ id, buch, version }: UpdateParams): Promise<number> {
+    async update({ id, buch: film, version }: UpdateParams): Promise<number> {
         this.#logger.debug(
             'update: id=%d, buch=%o, version=%s',
             id,
-            buch,
+            film,
             version,
         );
         if (id === undefined) {
             this.#logger.debug('update: Keine gueltige ID');
-            throw new NotFoundException(`Es gibt kein Buch mit der ID ${id}.`);
+            throw new NotFoundException(`Es gibt kein Film mit der ID ${id}.`);
         }
 
-        const validateResult = await this.#validateUpdate(buch, id, version);
+        const validateResult = await this.#validateUpdate(film, id, version);
         this.#logger.debug('update: validateResult=%o', validateResult);
         if (!(validateResult instanceof Film)) {
             return validateResult;
         }
 
         const buchNeu = validateResult;
-        const merged = this.#repo.merge(buchNeu, buch);
+        const merged = this.#repo.merge(buchNeu, film);
         this.#logger.debug('update: merged=%o', merged);
         const updated = await this.#repo.save(merged); // implizite Transaktion
         this.#logger.debug('update: updated=%o', updated);
@@ -165,17 +165,17 @@ export class BuchWriteService {
         );
     }
 
-    async #validateCreate({ isbn }: Film): Promise<undefined> {
-        this.#logger.debug('#validateCreate: isbn=%s', isbn);
-        if (await this.#repo.existsBy({ isbn })) {
-            throw new IsbnExistsException(isbn);
+    async #validateCreate({ IMDB: imdbId-ID: imdbId }: Film): Promise<undefined> {
+        this.#logger.debug('#validateCreate: isbn=%s', imdbId);
+        if (await this.#repo.existsBy({ imdbId: imdbId })) {
+            throw new ImdbIdExistsException(imdbId);
         }
     }
 
-    async #sendmail(buch: Film) {
-        const subject = `Neues Buch ${buch.id}`;
-        const titel = buch.titel?.titel ?? 'N/A';
-        const body = `Das Buch mit dem Titel <strong>${titel}</strong> ist angelegt`;
+    async #sendmail(film: Film) {
+        const subject = `Neues Film ${film.id}`;
+        const titel = film.titel?.titel ?? 'N/A';
+        const body = `Das Film mit dem Titel <strong>${titel}</strong> ist angelegt`;
         await this.#mailService.sendmail({ subject, body });
     }
 
@@ -201,15 +201,15 @@ export class BuchWriteService {
             version,
         );
 
-        const buchDb = await this.#readService.findById({ id });
+        const filmDb = await this.#readService.findById({ id });
 
         // nullish coalescing
-        const versionDb = buchDb.version!;
+        const versionDb = filmDb.version!;
         if (version < versionDb) {
             this.#logger.debug('#validateUpdate: versionDb=%d', version);
             throw new VersionOutdatedException(version);
         }
-        this.#logger.debug('#validateUpdate: buchDb=%o', buchDb);
-        return buchDb;
+        this.#logger.debug('#validateUpdate: buchDb=%o', filmDb);
+        return filmDb;
     }
 }

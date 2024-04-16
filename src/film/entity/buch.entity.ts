@@ -47,6 +47,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
+    VersionColumn,
 } from 'typeorm';
 import { Abbildung } from './abbildung.entity.js';
 import { ApiProperty } from '@nestjs/swagger';
@@ -70,6 +71,17 @@ export class Film {
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
+    @VersionColumn()
+    readonly version: number | undefined;
+
+    @Column()
+    @ApiProperty({ example: '0-0070-0644-6', type: String })
+    readonly imdbId!: string;
+
+    @Column('int')
+    @ApiProperty({ example: 200, type: Number })
+    readonly laenge: number | undefined;
+
     @Column('int')
     @ApiProperty({ example: 5, type: Number })
     readonly rating: number | undefined;
@@ -77,10 +89,6 @@ export class Film {
     @Column('varchar')
     @ApiProperty({ example: 'KINOFASSUNG', type: String })
     readonly art: FilmArt | undefined;
-
-    @Column('int')
-    @ApiProperty({ example: 300, type: Number })
-    readonly laenge: number | undefined;
 
     @Column('decimal', {
         precision: 8,
@@ -118,7 +126,8 @@ export class Film {
     schlagwoerter: string[] | null | undefined;
 
     // undefined wegen Updates
-    @OneToOne(() => Titel, (titel) => titel.buch, {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    @OneToOne(() => Titel, (titel) => titel.film, {
         cascade: ['insert', 'remove'],
     })
     readonly titel: Titel | undefined;
@@ -147,6 +156,8 @@ export class Film {
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
+            version: this.version,
+            imdbId: this.imdbId,
             laenge: this.laenge,
             rating: this.rating,
             art: this.art,
