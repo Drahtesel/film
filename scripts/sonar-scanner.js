@@ -26,7 +26,7 @@ scanner(
     {
         serverUrl: 'http://localhost:9000',
         options: {
-            'sonar.projectName': 'buch',
+            'sonar.projectName': 'film',
             'sonar.projectDescription': 'Beispiel fuer Software Engineering',
             'sonar.projectVersion': '2024.04.0',
             'sonar.sources': 'src',
