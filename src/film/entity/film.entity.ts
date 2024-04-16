@@ -48,19 +48,19 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Abbildung } from './abbildung.entity.js';
 import { ApiProperty } from '@nestjs/swagger';
 import { DecimalTransformer } from './decimal-transformer.js';
-import { Titel } from './titel.entity.js';
+import { Distributor } from './distributor.entity.js';
+import { Schauspieler } from './schauspieler.entity.js';
 import { dbType } from '../../config/db.js';
 
 /**
- * Alias-Typ für gültige Strings bei der Art eines Buches.
+ * Alias-Typ für gültige Strings bei der Art eines Films.
  */
 export type FilmArt = 'KINOFASSUNG' | 'ORIGINAL';
 
 /**
- * Entity-Klasse zu einem relationalen Tabelle
+ * Entity-Klasse zu einer relationalen Tabelle
  */
 // https://typeorm.io/entities
 @Entity()
@@ -88,7 +88,6 @@ export class Film {
         transformer: new DecimalTransformer(),
     })
     @ApiProperty({ example: 1, type: Number })
-    // statt number ggf. Decimal aus decimal.js analog zu BigDecimal von Java
     readonly preis!: number;
 
     @Column('decimal', {
@@ -99,41 +98,32 @@ export class Film {
     @ApiProperty({ example: 0.1, type: Number })
     readonly rabatt: number | undefined;
 
-    @Column('decimal') // TypeORM unterstuetzt bei Oracle *NICHT* den Typ boolean
+    @Column('boolean')
     @ApiProperty({ example: true, type: Boolean })
     readonly streambar: boolean | undefined;
 
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    // TypeORM unterstuetzt *NICHT* das Temporal-API (ES2022)
     readonly datum: Date | string | undefined;
 
-    @Column('date')
+    @Column('varchar')
     @ApiProperty({ example: 'https://test.de/', type: String })
     readonly homepage: string | undefined;
 
-    // https://typeorm.io/entities#simple-array-column-type
-    // nicht "readonly": null ersetzen durch []
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;
 
-    // undefined wegen Updates
-    @OneToOne(() => Titel, (titel) => titel.buch, {
+    @OneToOne(() => Distributor, (distributor) => distributor.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly titel: Titel | undefined;
+    readonly distributor: Distributor | undefined;
 
     // undefined wegen Updates
-    @OneToMany(() => Abbildung, (abbildung) => abbildung.film, {
+    @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly abbildungen: Abbildung[] | undefined;
+    readonly schauspieler: Schauspieler[] | undefined;
 
-    // https://typeorm.io/entities#special-columns
-    // https://typeorm.io/entities#column-types-for-postgres
-    // https://typeorm.io/entities#column-types-for-mysql--mariadb
-    // https://typeorm.io/entities#column-types-for-oracle
-    // https://typeorm.io/entities#column-types-for-sqlite--cordova--react-native--expo
     @CreateDateColumn({
         type: dbType === 'sqlite' ? 'datetime' : 'timestamp',
     })

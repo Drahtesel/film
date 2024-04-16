@@ -25,26 +25,26 @@ import {
 import { Film } from './film.entity.js';
 
 @Entity()
-export class Abbildung {
+export class Schauspieler {
     // https://typeorm.io/entities#primary-columns
     // CAVEAT: zuerst @Column() und erst dann @PrimaryGeneratedColumn()
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
-    @Column()
-    readonly beschriftung!: string;
-
     @Column('varchar')
-    readonly contentType: string | undefined;
+    readonly name!: string;
 
-    @ManyToOne(() => Film, (film) => film.abbildungen)
+    @Column('date')
+    readonly geburtsdatum: Date | undefined;
+
+    @ManyToOne(() => Film, (film) => film.schauspieler)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
 
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
-            beschriftung: this.beschriftung,
-            contentType: this.contentType,
+            name: this.name,
+            geburtsdatum: this.geburtsdatum,
         });
 }
