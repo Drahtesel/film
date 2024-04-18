@@ -22,28 +22,32 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Film } from './buch.entity.js';
+import { DecimalTransformer } from './decimal-transformer.js';
+import { Film } from './film.entity.js';
 
 @Entity()
-export class Titel {
-    // https://typeorm.io/entities#primary-columns
+export class Distributor {
     @PrimaryGeneratedColumn()
     id: number | undefined;
 
     @Column()
-    readonly titel!: string;
+    readonly name!: string;
 
-    @Column('varchar')
-    readonly untertitel: string | undefined;
+    @Column('decimal', {
+        precision: 8,
+        scale: 2,
+        transformer: new DecimalTransformer(),
+    })
+    readonly umsatz!: string | undefined;
 
-    @OneToOne(() => Film, (film) => film.titel)
+    @OneToOne(() => Film, (film) => film.distributor)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
 
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
-            titel: this.titel,
-            untertitel: this.untertitel,
+            name: this.name,
+            umsatz: this.umsatz,
         });
 }

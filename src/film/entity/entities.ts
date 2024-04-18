@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-import { Abbildung } from './abbildung.entity.js';
-import { Film } from './buch.entity.js';
-import { Titel } from './titel.entity.js';
+import { Distributor } from './distributor.entity.js';
+import { Film } from './film.entity.js';
+import { Schauspieler } from './schauspieler.entity.js';
 
 // erforderlich in src/config/db.ts und src/buch/buch.module.ts
-export const entities = [Abbildung, Film, Titel];
+export const entities = [Schauspieler, Film, Distributor];

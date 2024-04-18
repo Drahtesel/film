@@ -1,8 +1,8 @@
 {
-  "name": "buch",
+  "name": "film",
   "version": "2024.04.0",
   "description": "Beispiel",
-  "author": "Juergen Zimmermann",
+  "author": "Team 9",
   "private": true,
   "license": "GPL-3.0",
   "exports": "./dist/src/main.js",
