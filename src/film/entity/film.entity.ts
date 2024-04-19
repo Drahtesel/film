@@ -104,11 +104,7 @@ export class Film {
 
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    readonly datum: Date | string | undefined;
-
-    @Column('varchar')
-    @ApiProperty({ example: 'https://test.de/', type: String })
-    readonly homepage: string | undefined;
+    readonly erscheinungsdatum: Date | string | undefined;
 
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;
@@ -143,8 +139,7 @@ export class Film {
             preis: this.preis,
             rabatt: this.rabatt,
             lieferbar: this.streambar,
-            datum: this.datum,
-            homepage: this.homepage,
+            datum: this.erscheinungsdatum,
             schlagwoerter: this.schlagwoerter,
             erzeugt: this.erzeugt,
             aktualisiert: this.aktualisiert,
