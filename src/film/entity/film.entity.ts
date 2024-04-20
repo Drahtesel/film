@@ -113,15 +113,12 @@ export class Film {
 
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    // TypeORM unterstuetzt *NICHT* das Temporal-API (ES2022)
-    readonly datum: Date | string | undefined;
+    readonly erscheinungsdatum: Date | string | undefined;
 
-    @Column('date')
+    @Column('varchar')
     @ApiProperty({ example: 'https://test.de/', type: String })
     readonly homepage: string | undefined;
 
-    // https://typeorm.io/entities#simple-array-column-type
-    // nicht "readonly": null ersetzen durch []
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;
 
@@ -163,8 +160,7 @@ export class Film {
             preis: this.preis,
             rabatt: this.rabatt,
             lieferbar: this.streambar,
-            datum: this.datum,
-            homepage: this.homepage,
+            datum: this.erscheinungsdatum,
             schlagwoerter: this.schlagwoerter,
             erzeugt: this.erzeugt,
             aktualisiert: this.aktualisiert,

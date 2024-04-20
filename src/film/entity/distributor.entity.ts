@@ -22,6 +22,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { DecimalTransformer } from './decimal-transformer.js';
 import { Film } from './film.entity.js';
 
@@ -38,7 +39,12 @@ export class Distributor {
         scale: 2,
         transformer: new DecimalTransformer(),
     })
-    readonly umsatz!: string | undefined;
+    @ApiProperty({ example: 1234.56, type: Number })
+    readonly umsatz: number | undefined;
+
+    @Column('varchar')
+    @ApiProperty({ example: 'https://test.de/', type: String })
+    readonly homepage: string | undefined;
 
     @OneToOne(() => Film, (film) => film.distributor)
     @JoinColumn({ name: 'film_id' })
@@ -49,5 +55,6 @@ export class Distributor {
             id: this.id,
             name: this.name,
             umsatz: this.umsatz,
+            homepage: this.homepage,
         });
 }
