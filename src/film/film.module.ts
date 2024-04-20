@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { FilmGetController } from './rest/buch-get.controller.js';
-import { BuchMutationResolver } from './graphql/buch-mutation.resolver.js';
-import { BuchQueryResolver } from './graphql/buch-query.resolver.js';
+import { FilmMutationResolver } from './graphql/film-mutation.resolver.js';
+import { FilmQueryResolver } from './graphql/film-query.resolver.js';
 import { BuchReadService } from './service/film-read.service.js';
 import { BuchWriteController } from './rest/buch-write.controller.js';
 import { BuchWriteService } from './service/film-write.service.js';
@@ -44,8 +44,8 @@ import { entities } from './entity/entities.js';
     providers: [
         BuchReadService,
         BuchWriteService,
-        BuchQueryResolver,
-        BuchMutationResolver,
+        FilmQueryResolver,
+        FilmMutationResolver,
         QueryBuilder,
     ],
     // Export der Provider fuer DI in anderen Modulen
