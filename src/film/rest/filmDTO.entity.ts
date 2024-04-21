@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable max-classes-per-file */
 import {
     ArrayUnique,
@@ -9,6 +10,7 @@ import {
     IsPositive,
     Matches,
     Max,
+    MaxLength,
     Min,
     ValidateNested,
 } from 'class-validator';
@@ -29,6 +31,11 @@ export class FilmDTOOhneRef {
     @Max(MAX_RATING)
     @ApiProperty({ example: 5, type: Number })
     readonly rating: number | undefined;
+
+    @Matches('^\\w.*')
+    @MaxLength(40)
+    @ApiProperty({ example: 'Der Film', type: String })
+    readonly titel!: string;
 
     @IsOptional()
     @Matches(/^KINOFASSUNG$|^ORIGINAL$/u)
@@ -78,4 +85,5 @@ export class FilmDTO extends FilmDTOOhneRef {
     @ApiProperty({ type: [SchauspielerDTO] })
     readonly schauspieler: SchauspielerDTO[] | undefined;
 }
+/* eslint-enable @typescript-eslint/no-magic-numbers */
 /* eslint-enable max-classes-per-file */

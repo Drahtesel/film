@@ -47,6 +47,7 @@ import {
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
+    VersionColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { DecimalTransformer } from './decimal-transformer.js';
@@ -69,6 +70,12 @@ export class Film {
     // default: strategy = 'increment' (SEQUENCE, GENERATED ALWAYS AS IDENTITY, AUTO_INCREMENT)
     @PrimaryGeneratedColumn()
     id: number | undefined;
+
+    @VersionColumn()
+    readonly version: number | undefined;
+
+    @Column()
+    readonly titel!: string;
 
     @Column('int')
     @ApiProperty({ example: 5, type: Number })
@@ -133,6 +140,7 @@ export class Film {
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
+            titel: this.titel,
             laenge: this.laenge,
             rating: this.rating,
             art: this.art,
