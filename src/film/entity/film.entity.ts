@@ -126,13 +126,13 @@ export class Film {
     @OneToOne(() => Distributor, (distributor) => distributor.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly titel: Distributor | undefined;
+    readonly distributor: Distributor | undefined;
 
     // undefined wegen Updates
     @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly abbildungen: Schauspieler[] | undefined;
+    readonly schauspielerinnen: Schauspieler[] | undefined;
 
     // https://typeorm.io/entities#special-columns
     // https://typeorm.io/entities#column-types-for-postgres
@@ -159,7 +159,7 @@ export class Film {
             art: this.art,
             preis: this.preis,
             rabatt: this.rabatt,
-            lieferbar: this.streambar,
+            streambar: this.streambar,
             datum: this.erscheinungsdatum,
             schlagwoerter: this.schlagwoerter,
             erzeugt: this.erzeugt,

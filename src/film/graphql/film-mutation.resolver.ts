@@ -19,14 +19,14 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { IsInt, IsNumberString, Min } from 'class-validator';
 import { UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
-import { type Abbildung } from '../entity/abbildung.entity.js';
-import { type Buch as Film } from '../entity/buch.entity.js';
-import { BuchDTO as FilmDTO } from '../rest/buchDTO.entity.js';
-import { BuchWriteService as FilmWriteService } from '../service/buch-write.service.js';
+import { type Distributor } from '../entity/distributor.entity.js';
+import { type Film } from '../entity/film.entity.js';
+import { FilmDTO } from '../rest/filmDTO.entity.js';
+import { FilmWriteService } from '../service/film-write.service.js';
 import { HttpExceptionFilter } from './http-exception.filter.js';
 import { type IdInput } from './film-query.resolver.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
-import { type Titel as Distributor } from '../entity/titel.entity.js';
+import { type Schauspieler } from '../entity/schauspieler.entity.js';
 import { getLogger } from '../../logger/logger.js';
 
 // Authentifizierung und Autorisierung durch
@@ -72,7 +72,7 @@ export class FilmMutationResolver {
     @Mutation()
     @Roles({ roles: ['admin', 'user'] })
     async create(@Args('input') filmDTO: FilmDTO) {
-        this.#logger.debug('create: buchDTO=%o', filmDTO);
+        this.#logger.debug('create: filmDTO=%o', filmDTO);
 
         const film = this.#filmDtoToFilm(filmDTO);
         const id = await this.#service.create(film);
@@ -85,14 +85,14 @@ export class FilmMutationResolver {
     @Mutation()
     @Roles({ roles: ['admin', 'user'] })
     async update(@Args('input') filmDTO: FilmUpdateDTO) {
-        this.#logger.debug('update: buch=%o', filmDTO);
+        this.#logger.debug('update: film=%o', filmDTO);
 
-        const buch = this.#buchUpdateDtoToFilm(filmDTO);
+        const film = this.#filmUpdateDtoToFilm(filmDTO);
         const versionStr = `"${filmDTO.version.toString()}"`;
 
         const versionResult = await this.#service.update({
             id: Number.parseInt(filmDTO.id, 10),
-            buch,
+            film,
             version: versionStr,
         });
         // TODO BadUserInputError
@@ -112,36 +112,37 @@ export class FilmMutationResolver {
     }
 
     #filmDtoToFilm(filmDTO: FilmDTO): Film {
-        const titelDTO = filmDTO.titel;
+        const distributorDTO = filmDTO.distributor;
         const distributor: Distributor = {
             id: undefined,
-            titel: titelDTO.titel,
-            untertitel: titelDTO.untertitel,
+            name: distributorDTO.name,
+            umsatz: distributorDTO.umsatz,
+            homepage: distributorDTO.homepage,
             film: undefined,
         };
-        const abbildungen = filmDTO.abbildungen?.map((schauspielerDTO) => {
-            const schauspieler: Abbildung = {
+        const schauspielerinnen = filmDTO.schauspielerinnen?.map((schauspielerDTO) => {
+            const schauspieler: Schauspieler = {
                 id: undefined,
-                beschriftung: schauspielerDTO.beschriftung,
-                contentType: schauspielerDTO.contentType,
+                name: schauspielerDTO.name,
+                geburtsdatum: schauspielerDTO.geburtsdatum,
                 film: undefined,
             };
-            return schauspieler;
+            return schauspielerinnen;
         });
         const film: Film = {
             id: undefined,
             version: undefined,
             imdbId: filmDTO.imdbId,
-            laenge:  filmDTO.laenge,
+            laenge: filmDTO.laenge,
             rating: filmDTO.rating,
             art: filmDTO.art,
             preis: filmDTO.preis,
             rabatt: filmDTO.rabatt,
-            lieferbar: filmDTO.lieferbar,
+            streambar: filmDTO.streambar,
             datum: filmDTO.datum,
             schlagwoerter: filmDTO.schlagwoerter,
-            distributor: distributor,
-            schauspieler,
+            distributor,
+            schauspielerinnen,
             erzeugt: new Date(),
             aktualisiert: new Date(),
         };
@@ -151,7 +152,7 @@ export class FilmMutationResolver {
         return film;
     }
 
-    #buchUpdateDtoToFilm(filmDTO: FilmUpdateDTO): Film {
+    #filmUpdateDtoToFilm(filmDTO: FilmUpdateDTO): Film {
         return {
             id: undefined,
             version: undefined,
@@ -165,8 +166,8 @@ export class FilmMutationResolver {
             datum: filmDTO.datum,
             homepage: filmDTO.homepage,
             schlagwoerter: filmDTO.schlagwoerter,
-            titel: undefined,
-            abbildungen: undefined,
+            distributor: undefined,
+            schauspielerinnen: undefined,
             erzeugt: undefined,
             aktualisiert: new Date(),
         };

@@ -22,7 +22,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Film } from './buch.entity.js';
+import { Film } from './film.entity.js';
 
 @Entity()
 export class Schauspieler {
@@ -37,7 +37,7 @@ export class Schauspieler {
     @Column('date')
     readonly geburtsdatum: Date | undefined;
 
-    @ManyToOne(() => Film, (film) => film.schauspieler)
+    @ManyToOne(() => Film, (film) => film.schauspielerinnen)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
 
