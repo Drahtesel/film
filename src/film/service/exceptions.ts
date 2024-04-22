@@ -25,12 +25,12 @@ import { HttpException, HttpStatus } from '@nestjs/common';
  */
 
 /**
- * Exception-Klasse für einen bereits existierenden Film-Titel.
+ * Exception-Klasse für einen bereits existierenden Film.
  */
-export class TitelExistsException extends HttpException {
-    constructor(readonly titel: string) {
+export class FilmAlreadyExistsException extends HttpException {
+    constructor(readonly titel: string, readonly erscheinungsdatum : date) {
         super(
-            `Der Film-Titel ${titel} existiert bereits.`,
+            `Der Film ${titel} mit dem Erscheinungsdatum ${erscheinungsdatum} existiert bereits.`,
             HttpStatus.UNPROCESSABLE_ENTITY,
         );
     }
