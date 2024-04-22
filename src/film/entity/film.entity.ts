@@ -56,12 +56,12 @@ import { Schauspieler } from './schauspieler.entity.js';
 import { dbType } from '../../config/db.js';
 
 /**
- * Alias-Typ für gültige Strings bei der Art eines Films.
+ * Alias-Typ für gültige Strings bei der Art eines Buches.
  */
 export type FilmArt = 'KINOFASSUNG' | 'ORIGINAL';
 
 /**
- * Entity-Klasse zu einer relationalen Tabelle
+ * Entity-Klasse zu einem relationalen Tabelle
  */
 // https://typeorm.io/entities
 @Entity()
@@ -75,7 +75,12 @@ export class Film {
     readonly version: number | undefined;
 
     @Column()
+    @ApiProperty({ example: 'Die Verurteilten', type: String })
     readonly titel!: string;
+
+    @Column('int')
+    @ApiProperty({ example: 200, type: Number })
+    readonly laenge: number | undefined;
 
     @Column('int')
     @ApiProperty({ example: 5, type: Number })
@@ -85,16 +90,13 @@ export class Film {
     @ApiProperty({ example: 'KINOFASSUNG', type: String })
     readonly art: FilmArt | undefined;
 
-    @Column('int')
-    @ApiProperty({ example: 300, type: Number })
-    readonly laenge: number | undefined;
-
     @Column('decimal', {
         precision: 8,
         scale: 2,
         transformer: new DecimalTransformer(),
     })
     @ApiProperty({ example: 1, type: Number })
+    // statt number ggf. Decimal aus decimal.js analog zu BigDecimal von Java
     readonly preis!: number;
 
     @Column('decimal', {
@@ -105,7 +107,7 @@ export class Film {
     @ApiProperty({ example: 0.1, type: Number })
     readonly rabatt: number | undefined;
 
-    @Column('boolean')
+    @Column('decimal') // TypeORM unterstuetzt bei Oracle *NICHT* den Typ boolean
     @ApiProperty({ example: true, type: Boolean })
     readonly streambar: boolean | undefined;
 
@@ -116,6 +118,7 @@ export class Film {
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;
 
+    // undefined wegen Updates
     @OneToOne(() => Distributor, (distributor) => distributor.film, {
         cascade: ['insert', 'remove'],
     })
@@ -125,8 +128,13 @@ export class Film {
     @OneToMany(() => Schauspieler, (schauspieler) => schauspieler.film, {
         cascade: ['insert', 'remove'],
     })
-    readonly schauspieler: Schauspieler[] | undefined;
+    readonly schauspielerinnen: Schauspieler[] | undefined;
 
+    // https://typeorm.io/entities#special-columns
+    // https://typeorm.io/entities#column-types-for-postgres
+    // https://typeorm.io/entities#column-types-for-mysql--mariadb
+    // https://typeorm.io/entities#column-types-for-oracle
+    // https://typeorm.io/entities#column-types-for-sqlite--cordova--react-native--expo
     @CreateDateColumn({
         type: dbType === 'sqlite' ? 'datetime' : 'timestamp',
     })
@@ -140,13 +148,14 @@ export class Film {
     public toString = (): string =>
         JSON.stringify({
             id: this.id,
+            version: this.version,
             titel: this.titel,
             laenge: this.laenge,
             rating: this.rating,
             art: this.art,
             preis: this.preis,
             rabatt: this.rabatt,
-            lieferbar: this.streambar,
+            streambar: this.streambar,
             datum: this.erscheinungsdatum,
             schlagwoerter: this.schlagwoerter,
             erzeugt: this.erzeugt,
