@@ -58,7 +58,7 @@ type Film {
   # ID ist bei Apollo ein String
   id: Int!
   version: Int!
-  imdbId: String!
+  titel: String!
   laenge: Int
   rating: Int
   art: Art
@@ -81,7 +81,7 @@ enum Art {
 "Suchkriterien für Bücher"
 input SuchkriterienInput {
   name: String
-  imdbId: String
+  titel: String
   rating: Int
   art: Art
   streambar: Boolean
@@ -102,7 +102,7 @@ input SchauspielerInput {
 
 "Daten für ein neues Buch"
 input FilmInput {
-  imdbId: String
+  titel: String
   laenge: Int
   rating: Int
   art: Art
@@ -123,7 +123,7 @@ type CreatePayload {
 input FilmUpdateInput {
   id: ID
   version: Int
-  imdbId: String
+  titel: String
   laenge: Int
   rating: Int
   art: Art
