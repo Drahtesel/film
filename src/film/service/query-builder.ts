@@ -30,15 +30,15 @@ import { Titel } from '../entity/titel.entity.js';
 import { getLogger } from '../../logger/logger.js';
 import { typeOrmModuleOptions } from '../../config/typeormOptions.js';
 
-/** Typdefinitionen für die Suche mit der Buch-ID. */
+/** Typdefinitionen für die Suche mit der Titel-ID. */
 export interface BuildIdParams {
-    /** ID des gesuchten Buchs. */
+    /** ID des gesuchten Films. */
     readonly id: number;
     /** Sollen die Abbildungen mitgeladen werden? */
     readonly mitSchauspielerinnen?: boolean;
 }
 /**
- * Die Klasse `QueryBuilder` implementiert das Lesen für Bücher und greift
+ * Die Klasse `QueryBuilder` implementiert das Lesen für Filme und greift
  * mit _TypeORM_ auf eine relationale DB zu.
  */
 @Injectable()
@@ -64,22 +64,22 @@ export class QueryBuilder {
     }
 
     /**
-     * Ein Buch mit der ID suchen.
-     * @param id ID des gesuchten Buches
+     * Ein Film mit der ID suchen.
+     * @param id ID des gesuchten Films
      * @returns QueryBuilder
      */
     buildId({ id, mitSchauspielerinnen = false }: BuildIdParams) {
-        // QueryBuilder "buch" fuer Repository<Buch>
+        // QueryBuilder "film" fuer Repository<Film>
         const queryBuilder = this.#repo.createQueryBuilder(this.#filmAlias);
 
-        // Fetch-Join: aus QueryBuilder "buch" die Property "titel" ->  Tabelle "titel"
+        // Fetch-Join: aus QueryBuilder "film" die Property "titel" ->  Tabelle "titel"
         queryBuilder.innerJoinAndSelect(
             `${this.#filmAlias}.titel`,
             this.#distributorAlias,
         );
 
         if (mitSchauspielerinnen) {
-            // Fetch-Join: aus QueryBuilder "buch" die Property "abbildungen" -> Tabelle "abbildung"
+            // Fetch-Join: aus QueryBuilder "film" die Property "abbildungen" -> Tabelle "abbildung"
             queryBuilder.leftJoinAndSelect(
                 `${this.#filmAlias}.abbildungen`,
                 this.#schauspielerAlias,
@@ -91,7 +91,7 @@ export class QueryBuilder {
     }
 
     /**
-     * Bücher asynchron suchen.
+     * Filme asynchron suchen.
      * @param suchkriterien JSON-Objekt mit Suchkriterien
      * @returns QueryBuilder
      */
