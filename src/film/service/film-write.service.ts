@@ -25,6 +25,7 @@ import { type DeleteResult, Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
     IsbnExistsException,
+    TitelExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -37,18 +38,18 @@ import { MailService } from '../../mail/mail.service.js';
 import { getLogger } from '../../logger/logger.js';
 import { Distributor } from '../entity/distributor.entity';
 
-/** Typdefinitionen zum Aktualisieren eines Buches mit `update`. */
+/** Typdefinitionen zum Aktualisieren eines Films mit `update`. */
 export interface UpdateParams {
-    /** ID des zu aktualisierenden Buches. */
+    /** ID des zu aktualisierenden Films. */
     readonly id: number | undefined;
-    /** Buch-Objekt mit den aktualisierten Werten. */
+    /** Film-Objekt mit den aktualisierten Werten. */
     readonly film: Film;
     /** Versionsnummer für die aktualisierenden Werte. */
     readonly version: string;
 }
 
 /**
- * Die Klasse `BuchWriteService` implementiert den Anwendungskern für das
+ * Die Klasse `FilmWriteService` implementiert den Anwendungskern für das
  * Schreiben von Bücher und greift mit _TypeORM_ auf die DB zu.
  */
 @Injectable()
@@ -74,17 +75,17 @@ export class FilmWriteService {
     }
 
     /**
-     * Ein neues Buch soll angelegt werden.
-     * @param film Das neu abzulegende Buch
-     * @returns Die ID des neu angelegten Buches
-     * @throws IsbnExists falls die ISBN-Nummer bereits existiert
+     * Ein neuer Film soll angelegt werden.
+     * @param film Der neu abzulegende Film
+     * @returns Die ID des neu angelegten Films
+     * @throws TitelExists falls der Film-Titel bereits existiert
      */
     async create(film: Film): Promise<number> {
-        this.#logger.debug('create: buch=%o', film);
+        this.#logger.debug('create: film=%o', film);
         await this.#validateCreate(film);
 
         const filmDb = await this.#repo.save(film); // implizite Transaktion
-        this.#logger.debug('create: buchDb=%o', filmDb);
+        this.#logger.debug('create: filmDb=%o', filmDb);
 
         await this.#sendmail(filmDb);
 
@@ -92,25 +93,25 @@ export class FilmWriteService {
     }
 
     /**
-     * Ein vorhandenes Buch soll aktualisiert werden. "Destructured" Argument
-     * mit id (ID des zu aktualisierenden Buchs), buch (zu aktualisierendes Buch)
+     * Ein vorhandener Film soll aktualisiert werden. "Destructured" Argument
+     * mit id (ID des zu aktualisierenden Films), film (zu aktualisierender Film)
      * und version (Versionsnummer für optimistische Synchronisation).
      * @returns Die neue Versionsnummer gemäß optimistischer Synchronisation
-     * @throws NotFoundException falls kein Buch zur ID vorhanden ist
+     * @throws NotFoundException falls kein Film zur ID vorhanden ist
      * @throws VersionInvalidException falls die Versionsnummer ungültig ist
      * @throws VersionOutdatedException falls die Versionsnummer veraltet ist
      */
     // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
     async update({ id, film: film, version }: UpdateParams): Promise<number> {
         this.#logger.debug(
-            'update: id=%d, buch=%o, version=%s',
+            'update: id=%d, film=%o, version=%s',
             id,
             film,
             version,
         );
         if (id === undefined) {
             this.#logger.debug('update: Keine gueltige ID');
-            throw new NotFoundException(`Es gibt kein Buch mit der ID ${id}.`);
+            throw new NotFoundException(`Es gibt kein Film mit der ID ${id}.`);
         }
 
         const validateResult = await this.#validateUpdate(film, id, version);
@@ -129,10 +130,10 @@ export class FilmWriteService {
     }
 
     /**
-     * Ein Buch wird asynchron anhand seiner ID gelöscht.
+     * Ein Film wird asynchron anhand seiner ID gelöscht.
      *
-     * @param id ID des zu löschenden Buches
-     * @returns true, falls das Buch vorhanden war und gelöscht wurde. Sonst false.
+     * @param id ID des zu löschenden Films
+     * @returns true, falls der Film vorhanden war und gelöscht wurde. Sonst false.
      */
     async delete(id: number) {
         this.#logger.debug('delete: id=%d', id);
@@ -143,7 +144,7 @@ export class FilmWriteService {
 
         let deleteResult: DeleteResult | undefined;
         await this.#repo.manager.transaction(async (transactionalMgr) => {
-            // Das Buch zur gegebenen ID mit Titel und Abb. asynchron loeschen
+            // Den Film zur gegebenen ID mit Titel und Abb. asynchron loeschen
 
             // TODO "cascade" funktioniert nicht beim Loeschen
             const distributorId = film.distributor?.id;
@@ -166,17 +167,17 @@ export class FilmWriteService {
         );
     }
 
-    async #validateCreate({ isbn }: Film): Promise<undefined> {
-        this.#logger.debug('#validateCreate: isbn=%s', isbn);
-        if (await this.#repo.existsBy({ isbn })) {
-            throw new IsbnExistsException(isbn);
+    async #validateCreate({ titel }: Film): Promise<undefined> {
+        this.#logger.debug('#validateCreate: titel=%s', titel);
+        if (await this.#repo.existsBy({ titel })) {
+            throw new TitelExistsException(titel);
         }
     }
 
     async #sendmail(film: Film) {
-        const subject = `Neues Buch ${film.id}`;
+        const subject = `Neuer Film ${film.id}`;
         const distributor = film.distributor?.distributor ?? 'N/A';
-        const body = `Das Buch mit dem Titel <strong>${distributor}</strong> ist angelegt`;
+        const body = `Den Film mit dem Titel <strong>${distributor}</strong> ist angelegt`;
         await this.#mailService.sendmail({ subject, body });
     }
 
@@ -186,7 +187,7 @@ export class FilmWriteService {
         versionStr: string,
     ): Promise<Film> {
         this.#logger.debug(
-            '#validateUpdate: buch=%o, id=%s, versionStr=%s',
+            '#validateUpdate: film=%o, id=%s, versionStr=%s',
             film,
             id,
             versionStr,
@@ -197,7 +198,7 @@ export class FilmWriteService {
 
         const version = Number.parseInt(versionStr.slice(1, -1), 10);
         this.#logger.debug(
-            '#validateUpdate: buch=%o, version=%d',
+            '#validateUpdate: film=%o, version=%d',
             film,
             version,
         );
@@ -210,7 +211,7 @@ export class FilmWriteService {
             this.#logger.debug('#validateUpdate: versionDb=%d', version);
             throw new VersionOutdatedException(version);
         }
-        this.#logger.debug('#validateUpdate: buchDb=%o', filmDb);
+        this.#logger.debug('#validateUpdate: filmDb=%o', filmDb);
         return filmDb;
     }
 }
