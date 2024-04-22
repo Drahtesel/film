@@ -14,7 +14,9 @@ import {
 } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+
 import { DistributorDTO } from './distributorDTO.entity';
+import { type FilmArt } from '../entity/film.entity';
 import { SchauspielerDTO } from './schauspielerDTO.entity';
 import { Type } from 'class-transformer';
 
@@ -24,6 +26,9 @@ export const MAX_RATING = 5;
  * Entity-Klasse für Filme ohne TypeORM.
  */
 export class FilmDTOOhneRef {
+    @ApiProperty({ example: 'Die Verurteilten', type: String })
+    readonly titel!: string;
+
     @IsInt()
     @Min(0)
     @Max(MAX_RATING)
@@ -33,7 +38,7 @@ export class FilmDTOOhneRef {
     @IsOptional()
     @Matches(/^KINOFASSUNG$|^ORIGINAL$/u)
     @ApiProperty({ example: 'ORIGINAL', type: String })
-    readonly art: string | undefined;
+    readonly art: FilmArt | undefined;
 
     @IsPositive()
     @ApiProperty({ example: '123', type: Number })
@@ -76,6 +81,6 @@ export class FilmDTO extends FilmDTOOhneRef {
     @ValidateNested({ each: true })
     @Type(() => SchauspielerDTO)
     @ApiProperty({ type: [SchauspielerDTO] })
-    readonly schauspieler: SchauspielerDTO[] | undefined;
+    readonly schauspielerinnen: SchauspielerDTO[] | undefined;
 }
 /* eslint-enable max-classes-per-file */

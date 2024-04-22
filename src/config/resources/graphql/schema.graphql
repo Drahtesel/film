@@ -22,16 +22,16 @@ schema {
 
 "Funktionen, um Bücherdaten zu lesen"
 type Query {
-  buecher(suchkriterien: SuchkriterienInput): [Buch!]
+  filme(suchkriterien: SuchkriterienInput): [Film!]
 
-  buch(id: ID!): Buch
+  film(id: ID!): Film
 }
 
 "Funktionen, um Bücher neu anzulegen, zu aktualisieren oder zu löschen"
 type Mutation {
-  create(input: BuchInput!): CreatePayload
+  create(input: FilmInput!): CreatePayload
 
-  update(input: BuchUpdateInput!): UpdatePayload
+  update(input: FilmUpdateInput!): UpdatePayload
 
   delete(id: ID!): Boolean
 
@@ -40,33 +40,34 @@ type Mutation {
   refresh(refresh_token: String!): LoginResult
 }
 
-"Daten zum Titel eines Buches"
-type Titel {
-  titel: String!
-  untertitel: String
+"Daten zum Distributors eines Filmes"
+type Distributor {
+  name: String!
+  umsatz: Double
+  homepage: String
 }
 
-"Daten zum Titel eines Buches"
-type Abbildung {
-  beschriftung: String!
-  contentType: String
+"Daten zum Schauspieler eines Filmes"
+type Schauspieler {
+  name: String!
+  geburtsdatum: String
 }
 
 "Datenschema zu einem Buch, das gelesen wird"
-type Buch {
+type Film {
   # ID ist bei Apollo ein String
   id: Int!
   version: Int!
-  isbn: String!
+  imdbId: String!
+  laenge: Int
   rating: Int
   art: Art
   preis: Float!
-  lieferbar: Boolean
+  streambar: Boolean
   datum: String
-  homepage: String
   schlagwoerter: [String]
   # 1:1-Beziehung
-  titel: Titel!
+  distributor: Distributor!
   # field mit @ResolveField
   rabatt(short: Boolean): String!
 }
@@ -79,38 +80,39 @@ enum Art {
 
 "Suchkriterien für Bücher"
 input SuchkriterienInput {
-  titel: String
-  isbn: String
+  name: String
+  imdbId: String
   rating: Int
   art: Art
-  lieferbar: Boolean
+  streambar: Boolean
 }
 
 "Daten zum Titel eines neuen Buches"
-input TitelInput {
-  titel: String!
-  untertitel: String
+input DistributorInput {
+  name: String!
+  umsatz: double
+  homepage: String
 }
 
 "Daten zu den Abbildungen eines Buches"
-input AbbildungInput {
-  beschriftung: String!
-  contentType: String!
+input SchauspielerInput {
+  name: String!
+  geburtsdatum: String!
 }
 
 "Daten für ein neues Buch"
-input BuchInput {
-  isbn: String
+input FilmInput {
+  imdbId: String
+  laenge: Int
   rating: Int
   art: Art
   preis: Float
   rabatt: Float
-  lieferbar: Boolean
+  streambar: Boolean
   datum: String
-  homepage: String
   schlagwoerter: [String]
-  titel: TitelInput!
-  abbildungen: [AbbildungInput!]
+  distributor: DistributorInput!
+  schauspieler: [SchauspielerInput!]
 }
 
 type CreatePayload {
@@ -118,17 +120,17 @@ type CreatePayload {
 }
 
 "Daten für ein zu änderndes Buch"
-input BuchUpdateInput {
+input FilmUpdateInput {
   id: ID
   version: Int
-  isbn: String
+  imdbId: String
+  laenge: Int
   rating: Int
   art: Art
   preis: Float
   rabatt: Float
-  lieferbar: Boolean
+  streambar: Boolean
   datum: String
-  homepage: String
   schlagwoerter: [String]
 }
 

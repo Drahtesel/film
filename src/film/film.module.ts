@@ -17,9 +17,9 @@
 import { FilmGetController } from './rest/buch-get.controller.js';
 import { FilmMutationResolver } from './graphql/film-mutation.resolver.js';
 import { FilmQueryResolver } from './graphql/film-query.resolver.js';
-import { BuchReadService } from './service/film-read.service.js';
+import { FilmReadService } from './service/film-read.service.js';
 import { BuchWriteController } from './rest/buch-write.controller.js';
-import { BuchWriteService } from './service/film-write.service.js';
+import { FilmWriteService } from './service/film-write.service.js';
 import { KeycloakModule } from '../security/keycloak/keycloak.module.js';
 import { MailModule } from '../mail/mail.module.js';
 import { Module } from '@nestjs/common';
@@ -42,13 +42,13 @@ import { entities } from './entity/entities.js';
     controllers: [FilmGetController, BuchWriteController],
     // Provider sind z.B. Service-Klassen fuer DI
     providers: [
-        BuchReadService,
-        BuchWriteService,
+        FilmReadService,
+        FilmWriteService,
         FilmQueryResolver,
         FilmMutationResolver,
         QueryBuilder,
     ],
     // Export der Provider fuer DI in anderen Modulen
-    exports: [BuchReadService, BuchWriteService],
+    exports: [FilmReadService, FilmWriteService],
 })
 export class BuchModule {}

@@ -75,8 +75,8 @@ export class Film {
     readonly version: number | undefined;
 
     @Column()
-    @ApiProperty({ example: '0-0070-0644-6', type: String })
-    readonly imdbId!: string;
+    @ApiProperty({ example: 'Die Verurteilten', type: String })
+    readonly titel!: string;
 
     @Column('int')
     @ApiProperty({ example: 200, type: Number })
@@ -115,10 +115,6 @@ export class Film {
     @ApiProperty({ example: '2021-01-31' })
     readonly erscheinungsdatum: Date | string | undefined;
 
-    @Column('varchar')
-    @ApiProperty({ example: 'https://test.de/', type: String })
-    readonly homepage: string | undefined;
-
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;
 
@@ -153,7 +149,7 @@ export class Film {
         JSON.stringify({
             id: this.id,
             version: this.version,
-            imdbId: this.imdbId,
+            titel: this.titel,
             laenge: this.laenge,
             rating: this.rating,
             art: this.art,

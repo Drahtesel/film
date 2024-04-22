@@ -120,26 +120,28 @@ export class FilmMutationResolver {
             homepage: distributorDTO.homepage,
             film: undefined,
         };
-        const schauspielerinnen = filmDTO.schauspielerinnen?.map((schauspielerDTO) => {
-            const schauspieler: Schauspieler = {
-                id: undefined,
-                name: schauspielerDTO.name,
-                geburtsdatum: schauspielerDTO.geburtsdatum,
-                film: undefined,
-            };
-            return schauspielerinnen;
-        });
+        const schauspielerinnen = filmDTO.schauspielerinnen?.map(
+            (schauspielerDTO) => {
+                const schauspieler: Schauspieler = {
+                    id: undefined,
+                    name: schauspielerDTO.name,
+                    geburtsdatum: schauspielerDTO.geburtsdatum,
+                    film: undefined,
+                };
+                return schauspieler;
+            },
+        );
         const film: Film = {
             id: undefined,
             version: undefined,
-            imdbId: filmDTO.imdbId,
+            titel: filmDTO.titel,
             laenge: filmDTO.laenge,
             rating: filmDTO.rating,
             art: filmDTO.art,
             preis: filmDTO.preis,
             rabatt: filmDTO.rabatt,
             streambar: filmDTO.streambar,
-            datum: filmDTO.datum,
+            erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor,
             schauspielerinnen,
@@ -156,15 +158,14 @@ export class FilmMutationResolver {
         return {
             id: undefined,
             version: undefined,
-            imdbId: filmDTO.imdbId,
+            titel: filmDTO.titel,
             laenge: filmDTO.laenge,
             rating: filmDTO.rating,
             art: filmDTO.art,
             preis: filmDTO.preis,
             rabatt: filmDTO.rabatt,
             streambar: filmDTO.streambar,
-            datum: filmDTO.datum,
-            homepage: filmDTO.homepage,
+            erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor: undefined,
             schauspielerinnen: undefined,
