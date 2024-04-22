@@ -25,7 +25,7 @@ import { type DeleteResult, Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
     IsbnExistsException,
-    TitelExistsException,
+    FilmAlreadyExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
@@ -78,7 +78,7 @@ export class FilmWriteService {
      * Ein neuer Film soll angelegt werden.
      * @param film Der neu abzulegende Film
      * @returns Die ID des neu angelegten Films
-     * @throws TitelExists falls der Film-Titel bereits existiert
+     * @throws FilmAlreadyExists falls der Film bereits existiert
      */
     async create(film: Film): Promise<number> {
         this.#logger.debug('create: film=%o', film);
@@ -170,7 +170,7 @@ export class FilmWriteService {
     async #validateCreate({ titel }: Film): Promise<undefined> {
         this.#logger.debug('#validateCreate: titel=%s', titel);
         if (await this.#repo.existsBy({ titel })) {
-            throw new TitelExistsException(titel);
+            throw new FilmAlreadyExistsException(titel,erscheinungsdatum);
         }
     }
 
