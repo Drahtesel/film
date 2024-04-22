@@ -18,6 +18,6 @@ export class DistributorDTO {
 
     @IsOptional()
     @ApiProperty({ example: '1234.56', type: String })
-    readonly umsatz: string | undefined;
+    readonly umsatz: number | undefined;
 }
 /* eslint-enable @typescript-eslint/no-magic-numbers */

@@ -17,6 +17,7 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 import { DistributorDTO } from './distributorDTO.entity';
+import { type FilmArt } from '../entity/film.entity';
 import { SchauspielerDTO } from './schauspielerDTO.entity';
 import { Type } from 'class-transformer';
 
@@ -25,7 +26,7 @@ export const MAX_RATING = 5;
 /**
  * Entity-Klasse für Filme ohne TypeORM.
  */
-export class FilmDTOOhneRef {
+export class FilmDtoOhneRef {
     @IsInt()
     @Min(0)
     @Max(MAX_RATING)
@@ -40,7 +41,7 @@ export class FilmDTOOhneRef {
     @IsOptional()
     @Matches(/^KINOFASSUNG$|^ORIGINAL$/u)
     @ApiProperty({ example: 'ORIGINAL', type: String })
-    readonly art: string | undefined;
+    readonly art: FilmArt | undefined;
 
     @IsPositive()
     @ApiProperty({ example: '123', type: Number })
@@ -72,7 +73,7 @@ export class FilmDTOOhneRef {
     readonly schlagwoerter: string[] | undefined;
 }
 
-export class FilmDTO extends FilmDTOOhneRef {
+export class FilmDTO extends FilmDtoOhneRef {
     @ValidateNested()
     @Type(() => DistributorDTO)
     @ApiProperty({ type: DistributorDTO })
