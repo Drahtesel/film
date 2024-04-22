@@ -10,6 +10,7 @@ import {
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
+import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import {
     Body,
     Controller,
@@ -25,16 +26,16 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { FilmDTO, FilmDtoOhneRef } from './filmDTO.entity';
 import { Request, Response } from 'express';
 import { type Distributor } from '../entity/distributor.entity';
+
 import { type Film } from '../entity/film.entity';
 import { FilmWriteService } from '../service/film-write.service';
-import { getBaseUri } from './getBaseUri';
-import { getLogger } from '../../logger/logger';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
 import { type Schauspieler } from '../entity/schauspieler.entity';
+import { getBaseUri } from './getBaseUri';
+import { getLogger } from '../../logger/logger';
 import { paths } from '../../config/paths';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';

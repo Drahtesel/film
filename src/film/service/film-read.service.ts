@@ -33,7 +33,7 @@ export interface FindByIdParams {
     /** ID des gesuchten Films */
     readonly id: number;
     /** Sollen die Abbildungen mitgeladen werden? */
-    readonly mitSchauspielerinnen?: boolean;
+    readonly mitSchauspielerListe?: boolean;
 }
 
 /**
@@ -76,14 +76,14 @@ export class FilmReadService {
      * @throws NotFoundException falls kein Film mit der ID existiert
      */
     // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async findById({ id, mitSchauspielerinnen = false }: FindByIdParams) {
+    async findById({ id, mitSchauspielerListe = false }: FindByIdParams) {
         this.#logger.debug('findById: id=%d', id);
 
         // https://typeorm.io/working-with-repository
         // Das Resultat ist undefined, falls kein Datensatz gefunden
         // Lesen: Keine Transaktion erforderlich
         const film = await this.#queryBuilder
-            .buildId({ id, mitSchauspielerinnen })
+            .buildId({ id, mitSchauspielerListe })
             .getOne();
         if (film === null) {
             throw new NotFoundException(`Es gibt kein Film mit der ID ${id}.`);
@@ -98,10 +98,10 @@ export class FilmReadService {
                 film.toString(),
                 film.titel,
             );
-            if (mitSchauspielerinnen) {
+            if (mitSchauspielerListe) {
                 this.#logger.debug(
-                    'findById: abbildungen=%o',
-                    film.abbildungen,
+                    'findById: Schauspieler=%o',
+                    film.schauspielerListe,
                 );
             }
         }

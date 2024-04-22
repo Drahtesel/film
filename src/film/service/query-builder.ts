@@ -19,14 +19,13 @@
  * Das Modul besteht aus der Klasse {@linkcode QueryBuilder}.
  * @packageDocumentation
  */
-
-import { Schauspieler } from '../entity/schauspieler.entity.js';
-import { Buch as Film } from '../entity/buch.entity.js';
+import { Distributor } from '../entity/distributor.entity.js';
+import { Film } from '../entity/film.entity.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { Schauspieler } from '../entity/schauspieler.entity.js';
 import { type Suchkriterien } from './suchkriterien.js';
-import { Titel } from '../entity/titel.entity.js';
 import { getLogger } from '../../logger/logger.js';
 import { typeOrmModuleOptions } from '../../config/typeormOptions.js';
 
@@ -35,7 +34,7 @@ export interface BuildIdParams {
     /** ID des gesuchten Films. */
     readonly id: number;
     /** Sollen die Abbildungen mitgeladen werden? */
-    readonly mitSchauspielerinnen?: boolean;
+    readonly mitSchauspielerListe?: boolean;
 }
 /**
  * Die Klasse `QueryBuilder` implementiert das Lesen für Filme und greift
@@ -43,9 +42,9 @@ export interface BuildIdParams {
  */
 @Injectable()
 export class QueryBuilder {
-    readonly #filmAlias = `${Film.titel
+    readonly #filmAlias = `${Film.name
         .charAt(0)
-        .toLowerCase()}${Film.titel.slice(1)}`;
+        .toLowerCase()}${Film.name.slice(1)}`;
 
     readonly #distributorAlias = `${Distributor.name
         .charAt(0)
@@ -68,7 +67,7 @@ export class QueryBuilder {
      * @param id ID des gesuchten Films
      * @returns QueryBuilder
      */
-    buildId({ id, mitSchauspielerinnen = false }: BuildIdParams) {
+    buildId({ id, mitSchauspielerListe = false }: BuildIdParams) {
         // QueryBuilder "film" fuer Repository<Film>
         const queryBuilder = this.#repo.createQueryBuilder(this.#filmAlias);
 
@@ -78,7 +77,7 @@ export class QueryBuilder {
             this.#distributorAlias,
         );
 
-        if (mitSchauspielerinnen) {
+        if (mitSchauspielerListe) {
             // Fetch-Join: aus QueryBuilder "film" die Property "abbildungen" -> Tabelle "abbildung"
             queryBuilder.leftJoinAndSelect(
                 `${this.#filmAlias}.abbildungen`,
@@ -98,12 +97,12 @@ export class QueryBuilder {
     // z.B. { titel: 'a', rating: 5, javascript: true }
     // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
     // eslint-disable-next-line max-lines-per-function
-    build({ titel, javascript, typescript, ...props }: Suchkriterien) {
+    build({ distributor, drama, action, ...props }: Suchkriterien) {
         this.#logger.debug(
             'build: titel=%s, javascript=%s, typescript=%s, props=%o',
-            titel,
-            javascript,
-            typescript,
+            distributor,
+            drama,
+            action,
             props,
         );
 
@@ -120,34 +119,34 @@ export class QueryBuilder {
         // Titel in der Query: Teilstring des Titels und "case insensitive"
         // CAVEAT: MySQL hat keinen Vergleich mit "case insensitive"
         // type-coverage:ignore-next-line
-        if (titel !== undefined && typeof titel === 'string') {
+        if (distributor !== undefined && typeof distributor === 'string') {
             const ilike =
                 typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
             queryBuilder = queryBuilder.where(
-                `${this.#distributorAlias}.titel ${ilike} :titel`,
-                { titel: `%${titel}%` },
+                `${this.#distributorAlias}.name ${ilike} :name`,
+                { distributor: `%${distributor}%` },
             );
             useWhere = false;
         }
 
-        if (javascript === 'true') {
+        if (action === 'true') {
             queryBuilder = useWhere
                 ? queryBuilder.where(
-                      `${this.#filmAlias}.schlagwoerter like '%JAVASCRIPT%'`,
+                      `${this.#filmAlias}.schlagwoerter like '%ACTION%'`,
                   )
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.schlagwoerter like '%JAVASCRIPT%'`,
+                      `${this.#filmAlias}.schlagwoerter like '%ACTION%'`,
                   );
             useWhere = false;
         }
 
-        if (typescript === 'true') {
+        if (drama === 'true') {
             queryBuilder = useWhere
                 ? queryBuilder.where(
-                      `${this.#filmAlias}.schlagwoerter like '%TYPESCRIPT%'`,
+                      `${this.#filmAlias}.schlagwoerter like '%DRAMA%'`,
                   )
                 : queryBuilder.andWhere(
-                      `${this.#filmAlias}.schlagwoerter like '%TYPESCRIPT%'`,
+                      `${this.#filmAlias}.schlagwoerter like '%DRAMA%'`,
                   );
             useWhere = false;
         }

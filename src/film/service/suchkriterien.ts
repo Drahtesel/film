@@ -17,5 +17,7 @@ export interface Suchkriterien {
     readonly rabatt?: number;
     readonly streambar?: boolean;
     readonly erscheinungsdatum?: Date;
-    readonly schlagwoerter?: string[];
+    readonly drama?: string;
+    readonly action?: string;
+    readonly distributor?: string;
 }

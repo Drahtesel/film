@@ -113,7 +113,7 @@ export class Film {
 
     @Column('date')
     @ApiProperty({ example: '2021-01-31' })
-    readonly erscheinungsdatum: Date | string | undefined;
+    readonly erscheinungsdatum!: Date;
 
     @Column('simple-array')
     schlagwoerter: string[] | null | undefined;

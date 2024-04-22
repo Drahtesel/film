@@ -66,7 +66,7 @@ export class FilmDtoOhneRef {
     @IsISO8601({ strict: true })
     @IsOptional()
     @ApiProperty({ example: '2021-01-31' })
-    readonly erscheinungsdatum: Date | string | undefined;
+    readonly erscheinungsdatum!: Date;
 
     @ArrayUnique()
     @IsOptional()

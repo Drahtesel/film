@@ -22,21 +22,19 @@
  */
 
 import { type DeleteResult, Repository } from 'typeorm';
-import { Injectable, NotFoundException } from '@nestjs/common';
 import {
-    IsbnExistsException,
     FilmAlreadyExistsException,
     VersionInvalidException,
     VersionOutdatedException,
 } from './exceptions.js';
-import { Schauspieler } from '../entity/schauspieler.entity.js';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Distributor } from '../entity/distributor.entity.js';
 import { Film } from '../entity/film.entity.js';
 import { FilmReadService } from './film-read.service.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MailService } from '../../mail/mail.service.js';
+import { Schauspieler } from '../entity/schauspieler.entity.js';
 import { getLogger } from '../../logger/logger.js';
-import { Distributor } from '../entity/distributor.entity';
 
 /** Typdefinitionen zum Aktualisieren eines Films mit `update`. */
 export interface UpdateParams {
@@ -102,7 +100,7 @@ export class FilmWriteService {
      * @throws VersionOutdatedException falls die Versionsnummer veraltet ist
      */
     // https://2ality.com/2015/01/es6-destructuring.html#simulating-named-parameters-in-javascript
-    async update({ id, film: film, version }: UpdateParams): Promise<number> {
+    async update({ id, film, version }: UpdateParams): Promise<number> {
         this.#logger.debug(
             'update: id=%d, film=%o, version=%s',
             id,
@@ -139,7 +137,7 @@ export class FilmWriteService {
         this.#logger.debug('delete: id=%d', id);
         const film = await this.#readService.findById({
             id,
-            mitSchauspielerinnen: true,
+            mitSchauspielerListe: true,
         });
 
         let deleteResult: DeleteResult | undefined;
@@ -151,8 +149,8 @@ export class FilmWriteService {
             if (distributorId !== undefined) {
                 await transactionalMgr.delete(Distributor, distributorId);
             }
-            const schauspielerinnen = film.schauspielerinnen ?? [];
-            for (const schauspieler of schauspielerinnen) {
+            const schauspielerListe = film.schauspielerListe ?? [];
+            for (const schauspieler of schauspielerListe) {
                 await transactionalMgr.delete(Schauspieler, schauspieler.id);
             }
 
@@ -167,17 +165,24 @@ export class FilmWriteService {
         );
     }
 
-    async #validateCreate({ titel }: Film): Promise<undefined> {
-        this.#logger.debug('#validateCreate: titel=%s', titel);
-        if (await this.#repo.existsBy({ titel })) {
-            throw new FilmAlreadyExistsException(titel,erscheinungsdatum);
+    async #validateCreate({
+        titel,
+        erscheinungsdatum,
+    }: Film): Promise<undefined> {
+        this.#logger.debug(
+            '#validateCreate: titel=%s, erscheinungsdatum=%o',
+            titel,
+            erscheinungsdatum,
+        );
+        if (await this.#repo.existsBy({ titel, erscheinungsdatum })) {
+            throw new FilmAlreadyExistsException(titel, erscheinungsdatum);
         }
     }
 
     async #sendmail(film: Film) {
         const subject = `Neuer Film ${film.id}`;
-        const distributor = film.distributor?.distributor ?? 'N/A';
-        const body = `Den Film mit dem Titel <strong>${distributor}</strong> ist angelegt`;
+        const { titel } = film;
+        const body = `Den Film mit dem Titel <strong>${titel}</strong> ist angelegt`;
         await this.#mailService.sendmail({ subject, body });
     }
 
