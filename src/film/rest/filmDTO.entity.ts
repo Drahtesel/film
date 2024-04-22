@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable max-classes-per-file */
 import {
     ArrayUnique,
@@ -9,6 +10,7 @@ import {
     IsPositive,
     Matches,
     Max,
+    MaxLength,
     Min,
     ValidateNested,
 } from 'class-validator';
@@ -25,8 +27,10 @@ export const MAX_RATING = 5;
 /**
  * Entity-Klasse für Filme ohne TypeORM.
  */
-export class FilmDTOOhneRef {
-    @ApiProperty({ example: 'Die Verurteilten', type: String })
+export class FilmDtoOhneRef {
+    @Matches('^\\w.*')
+    @MaxLength(40)
+    @ApiProperty({ example: 'Der Film', type: String })
     readonly titel!: string;
 
     @IsInt()
@@ -70,7 +74,7 @@ export class FilmDTOOhneRef {
     readonly schlagwoerter: string[] | undefined;
 }
 
-export class FilmDTO extends FilmDTOOhneRef {
+export class FilmDTO extends FilmDtoOhneRef {
     @ValidateNested()
     @Type(() => DistributorDTO)
     @ApiProperty({ type: DistributorDTO })
@@ -83,4 +87,5 @@ export class FilmDTO extends FilmDTOOhneRef {
     @ApiProperty({ type: [SchauspielerDTO] })
     readonly schauspielerinnen: SchauspielerDTO[] | undefined;
 }
+/* eslint-enable @typescript-eslint/no-magic-numbers */
 /* eslint-enable max-classes-per-file */
