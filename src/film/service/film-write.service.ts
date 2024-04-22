@@ -138,7 +138,7 @@ export class FilmWriteService {
         this.#logger.debug('delete: id=%d', id);
         const film = await this.#readService.findById({
             id,
-            mitAbbildungen: true,
+            mitSchauspielerinnen: true,
         });
 
         let deleteResult: DeleteResult | undefined;

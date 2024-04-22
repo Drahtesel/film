@@ -16,25 +16,25 @@
  */
 
 /**
- * Das Modul besteht aus der Klasse {@linkcode BuchReadService}.
+ * Das Modul besteht aus der Klasse {@linkcode FilmReadService}.
  * @packageDocumentation
  */
 
-import { type BuchArt } from './../entity/buch.entity.js';
+import { type FilmArt } from './../entity/film.entity.js';
 
 /**
- * Typdefinition für `BuchReadService.find()`und `QueryBuilder.build()`
+ * Typdefinition für `FilmReadService.find()`und `QueryBuilder.build()`
  */
 export interface Suchkriterien {
-    readonly isbn?: string;
+    readonly titel?: string;
+    readonly laenge?: number;
     readonly rating?: number;
-    readonly art?: BuchArt;
+    readonly art?: FilmArt;
     readonly preis?: number;
     readonly rabatt?: number;
-    readonly lieferbar?: boolean;
+    readonly streambar?: boolean;
     readonly datum?: string;
-    readonly homepage?: string;
     readonly javascript?: string;
     readonly typescript?: string;
-    readonly titel?: string;
+    readonly distributor?: string;
 }
