@@ -85,7 +85,7 @@ export class FilmDTO extends FilmDtoOhneRef {
     @ValidateNested({ each: true })
     @Type(() => SchauspielerDTO)
     @ApiProperty({ type: [SchauspielerDTO] })
-    readonly schauspielerinnen: SchauspielerDTO[] | undefined;
+    readonly schauspielerListe: SchauspielerDTO[] | undefined;
 }
 /* eslint-enable @typescript-eslint/no-magic-numbers */
 /* eslint-enable max-classes-per-file */

@@ -30,7 +30,7 @@ import { FilmReadService } from '../service/film-read.service';
 import { getBaseUri } from './getBaseUri';
 import { getLogger } from '../../logger/logger';
 import { paths } from '../../config/paths';
-import { Public } from 'nest-keycloak-connect'; // Fixed import order
+import { Public } from 'nest-keycloak-connect';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
 import { type Suchkriterien } from '../service/suchkriterien';
 
@@ -56,7 +56,7 @@ export type DistributorModel = Omit<Distributor, 'film' | 'id'>;
 
 export type FilmModel = Omit<
     Film,
-    | 'schauspieler'
+    | 'schauspielerListe'
     | 'aktualisiert'
     | 'erzeugt'
     | 'id'
@@ -158,7 +158,7 @@ export class FilmGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const film: Film = await this.#service.findById({ id });
+        const film = await this.#service.findById({ id });
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug('getById: film=%s', film.toString());
             this.#logger.debug('getById: distributor=%o', film.distributor);
@@ -195,7 +195,7 @@ export class FilmGetController {
             return res.sendStatus(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        const filme: Film[] = await this.#service.find(query);
+        const filme = await this.#service.find(query);
         this.#logger.debug('get: %o', filme);
 
         // HATEOAS

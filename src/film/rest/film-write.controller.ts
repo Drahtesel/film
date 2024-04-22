@@ -25,12 +25,12 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
+import { AuthGuard, Roles } from 'nest-keycloak-connect';
 import { FilmDTO, FilmDtoOhneRef } from './filmDTO.entity';
 import { Request, Response } from 'express';
-
-import { AuthGuard } from 'nest-keycloak-connect';
 import { type Distributor } from '../entity/distributor.entity';
 import { type Film } from '../entity/film.entity';
+import { FilmWriteService } from '../service/film-write.service';
 import { getBaseUri } from './getBaseUri';
 import { getLogger } from '../../logger/logger';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
@@ -147,15 +147,17 @@ export class FilmWriteController {
             umsatz: distributorDTO.umsatz,
             film: undefined,
         };
-        const schauspielerPl = filmDTO.schauspieler?.map((schauspielerDTO) => {
-            const schauspieler: Schauspieler = {
-                id: undefined,
-                name: schauspielerDTO.name,
-                geburtsdatum: schauspielerDTO.geburtsdatum,
-                film: undefined,
-            };
-            return schauspieler;
-        });
+        const schauspielerPl = filmDTO.schauspielerListe?.map(
+            (schauspielerDTO) => {
+                const schauspieler: Schauspieler = {
+                    id: undefined,
+                    name: schauspielerDTO.name,
+                    geburtsdatum: schauspielerDTO.geburtsdatum,
+                    film: undefined,
+                };
+                return schauspieler;
+            },
+        );
         const film = {
             id: undefined,
             version: undefined,
@@ -169,14 +171,14 @@ export class FilmWriteController {
             erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor,
-            schauspieler: schauspielerPl,
+            schauspielerListe: schauspielerPl,
             erzeugt: new Date(),
             aktualisiert: new Date(),
         };
 
         // Rueckwaertsverweise
         film.distributor = distributor;
-        film.schauspieler?.forEach((schauspieler) => {
+        film.schauspielerListe?.forEach((schauspieler) => {
             schauspieler.film = film;
         });
         return film;
@@ -196,7 +198,7 @@ export class FilmWriteController {
             erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor: undefined,
-            schauspieler: undefined,
+            schauspielerListe: undefined,
             erzeugt: undefined,
             aktualisiert: new Date(),
         };

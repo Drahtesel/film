@@ -37,7 +37,7 @@ export class Schauspieler {
     @Column('date')
     readonly geburtsdatum: Date | undefined;
 
-    @ManyToOne(() => Film, (film) => film.schauspielerinnen)
+    @ManyToOne(() => Film, (film) => film.schauspielerListe)
     @JoinColumn({ name: 'film_id' })
     film: Film | undefined;
 
