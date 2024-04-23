@@ -23,16 +23,16 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-import { type Distributor } from '../entity/distributor.entity';
-import { type Film } from '../entity/film.entity';
-import { FilmArt } from '../entity/film.entity';
-import { FilmReadService } from '../service/film-read.service';
+import { type Distributor } from '../entity/distributor.entity.js';
+import { type Film } from '../entity/film.entity.js';
+import { FilmArt } from '../entity/film.entity.js';
+import { FilmReadService } from '../service/film-read.service.js';
 import { Public } from 'nest-keycloak-connect';
-import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
-import { type Suchkriterien } from '../service/suchkriterien';
-import { getBaseUri } from './getBaseUri';
-import { getLogger } from '../../logger/logger';
-import { paths } from '../../config/paths';
+import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
+import { type Suchkriterien } from '../service/suchkriterien.js';
+import { getBaseUri } from './getBaseUri.js';
+import { getLogger } from '../../logger/logger.js';
+import { paths } from '../../config/paths.js';
 
 export interface Link {
     readonly href: string;

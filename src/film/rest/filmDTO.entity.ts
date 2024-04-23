@@ -17,9 +17,9 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { DistributorDTO } from './distributorDTO.entity';
-import { type FilmArt } from '../entity/film.entity';
-import { SchauspielerDTO } from './schauspielerDTO.entity';
+import { DistributorDTO } from './distributorDTO.entity.js';
+import { type FilmArt } from '../entity/film.entity.js';
+import { SchauspielerDTO } from './schauspielerDTO.entity.js';
 import { Type } from 'class-transformer';
 
 export const MAX_RATING = 5;
