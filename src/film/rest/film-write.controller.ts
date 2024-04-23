@@ -26,17 +26,17 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { FilmDTO, FilmDtoOhneRef } from './filmDTO.entity';
+import { FilmDTO, FilmDtoOhneRef } from './filmDTO.entity.js';
 import { Request, Response } from 'express';
-import { type Distributor } from '../entity/distributor.entity';
+import { type Distributor } from '../entity/distributor.entity.js';
 
-import { type Film } from '../entity/film.entity';
-import { FilmWriteService } from '../service/film-write.service';
-import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
-import { type Schauspieler } from '../entity/schauspieler.entity';
-import { getBaseUri } from './getBaseUri';
-import { getLogger } from '../../logger/logger';
-import { paths } from '../../config/paths';
+import { type Film } from '../entity/film.entity.js';
+import { FilmWriteService } from '../service/film-write.service.js';
+import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
+import { type Schauspieler } from '../entity/schauspieler.entity.js';
+import { getBaseUri } from './getBaseUri.js';
+import { getLogger } from '../../logger/logger.js';
+import { paths } from '../../config/paths.js';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';
 

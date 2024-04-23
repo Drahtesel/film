@@ -27,7 +27,7 @@ import {
 import { type DataSourceOptions } from 'typeorm';
 import { Film } from '../film/entity/film.entity.js';
 import { dbType } from './db.js';
-import { entities } from '../film/entity/entities';
+import { entities } from '../film/entity/entities.js';
 import { loggerDefaultValue } from './logger.js';
 import { nodeConfig } from './node.js';
 import { readFileSync } from 'node:fs';
