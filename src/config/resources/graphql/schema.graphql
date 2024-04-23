@@ -43,7 +43,7 @@ type Mutation {
 "Daten zum Distributors eines Filmes"
 type Distributor {
   name: String!
-  umsatz: Double
+  umsatz: Float
   homepage: String
 }
 
@@ -90,7 +90,7 @@ input SuchkriterienInput {
 "Daten zum Titel eines neuen Buches"
 input DistributorInput {
   name: String!
-  umsatz: double
+  umsatz: Float
   homepage: String
 }
 
