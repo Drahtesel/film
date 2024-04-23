@@ -27,12 +27,12 @@ import { type Distributor } from '../entity/distributor.entity';
 import { type Film } from '../entity/film.entity';
 import { FilmArt } from '../entity/film.entity';
 import { FilmReadService } from '../service/film-read.service';
-import { getBaseUri } from './getBaseUri';
-import { getLogger } from '../../logger/logger';
-import { paths } from '../../config/paths';
 import { Public } from 'nest-keycloak-connect';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor';
 import { type Suchkriterien } from '../service/suchkriterien';
+import { getBaseUri } from './getBaseUri';
+import { getLogger } from '../../logger/logger';
+import { paths } from '../../config/paths';
 
 export interface Link {
     readonly href: string;

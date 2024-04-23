@@ -120,7 +120,7 @@ export class FilmMutationResolver {
             homepage: distributorDTO.homepage,
             film: undefined,
         };
-        const schauspielerinnen = filmDTO.schauspielerinnen?.map(
+        const schauspielerListe = filmDTO.schauspielerListe?.map(
             (schauspielerDTO) => {
                 const schauspieler: Schauspieler = {
                     id: undefined,
@@ -144,7 +144,7 @@ export class FilmMutationResolver {
             erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor,
-            schauspielerinnen,
+            schauspielerListe,
             erzeugt: new Date(),
             aktualisiert: new Date(),
         };
@@ -168,7 +168,7 @@ export class FilmMutationResolver {
             erscheinungsdatum: filmDTO.erscheinungsdatum,
             schlagwoerter: filmDTO.schlagwoerter,
             distributor: undefined,
-            schauspielerinnen: undefined,
+            schauspielerListe: undefined,
             erzeugt: undefined,
             aktualisiert: new Date(),
         };
