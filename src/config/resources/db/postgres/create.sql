@@ -68,9 +68,9 @@ CREATE TABLE IF NOT EXISTS film (
 
 CREATE TABLE IF NOT EXISTS distributor (
     id          integer GENERATED ALWAYS AS IDENTITY(START WITH 1000) PRIMARY KEY USING INDEX TABLESPACE filmspace,
-    name       varchar(40) NOT NULL,
-    umsatz     decimal(9,2),
-    homepage   varchar(64),
+    name        varchar(40) NOT NULL,
+    umsatz      decimal(9,2),
+    homepage    varchar(64),
     film_id     integer NOT NULL UNIQUE USING INDEX TABLESPACE filmspace REFERENCES film
 ) TABLESPACE filmspace;
 

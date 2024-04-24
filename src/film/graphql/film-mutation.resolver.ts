@@ -77,7 +77,7 @@ export class FilmMutationResolver {
         const film = this.#filmDtoToFilm(filmDTO);
         const id = await this.#service.create(film);
         // TODO BadUserInputError
-        this.#logger.debug('createBuch: id=%d', id);
+        this.#logger.debug('createFilm: id=%d', id);
         const payload: CreatePayload = { id };
         return payload;
     }
@@ -107,7 +107,7 @@ export class FilmMutationResolver {
         const idStr = id.id;
         this.#logger.debug('delete: id=%s', idStr);
         const deletePerformed = await this.#service.delete(idStr);
-        this.#logger.debug('deleteBuch: deletePerformed=%s', deletePerformed);
+        this.#logger.debug('deleteFilm: deletePerformed=%s', deletePerformed);
         return deletePerformed;
     }
 
