@@ -86,7 +86,9 @@ export class FilmReadService {
             .buildId({ id, mitSchauspielerListe })
             .getOne();
         if (film === null) {
-            throw new NotFoundException(`Es gibt kein Film mit der ID ${id}.`);
+            throw new NotFoundException(
+                `Es gibt keinen Film mit der ID ${id}.`,
+            );
         }
         if (film.schlagwoerter === null) {
             film.schlagwoerter = [];
@@ -94,9 +96,9 @@ export class FilmReadService {
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
-                'findById: film=%s, titel=%o',
+                'findById: film=%s, distributor=%o',
                 film.toString(),
-                film.titel,
+                film.distributor,
             );
             if (mitSchauspielerListe) {
                 this.#logger.debug(
@@ -156,8 +158,8 @@ export class FilmReadService {
         keys.forEach((key) => {
             if (
                 !this.#filmProps.includes(key) &&
-                key !== 'javascript' &&
-                key !== 'typescript'
+                key !== 'action' &&
+                key !== 'drama'
             ) {
                 this.#logger.debug(
                     '#checkKeys: ungueltiges Suchkriterium "%s"',

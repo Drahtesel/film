@@ -73,14 +73,14 @@ export class QueryBuilder {
 
         // Fetch-Join: aus QueryBuilder "film" die Property "titel" ->  Tabelle "titel"
         queryBuilder.innerJoinAndSelect(
-            `${this.#filmAlias}.titel`,
+            `${this.#filmAlias}.distributor`,
             this.#distributorAlias,
         );
 
         if (mitSchauspielerListe) {
             // Fetch-Join: aus QueryBuilder "film" die Property "abbildungen" -> Tabelle "abbildung"
             queryBuilder.leftJoinAndSelect(
-                `${this.#filmAlias}.abbildungen`,
+                `${this.#filmAlias}.schauspielerListe`,
                 this.#schauspielerAlias,
             );
         }
@@ -99,7 +99,7 @@ export class QueryBuilder {
     // eslint-disable-next-line max-lines-per-function
     build({ distributor, drama, action, ...props }: Suchkriterien) {
         this.#logger.debug(
-            'build: titel=%s, javascript=%s, typescript=%s, props=%o',
+            'build: distributor=%s, drama=%s, action=%s, props=%o',
             distributor,
             drama,
             action,
@@ -107,7 +107,10 @@ export class QueryBuilder {
         );
 
         let queryBuilder = this.#repo.createQueryBuilder(this.#filmAlias);
-        queryBuilder.innerJoinAndSelect(`${this.#filmAlias}.titel`, 'titel');
+        queryBuilder.innerJoinAndSelect(
+            `${this.#filmAlias}.distributor`,
+            'distributors',
+        );
 
         // z.B. { titel: 'a', rating: 5, javascript: true }
         // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
