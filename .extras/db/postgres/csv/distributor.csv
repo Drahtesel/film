@@ -1,7 +1,7 @@
-id;name;umsatz;film_id
-1;WarnerBros;1200000;1
-20;Universal;2000000;20
-30;Gamma;350000;30
-40;Delta;750000;40
-50;Epsilon;130000000;50
-60;Phi;2754000;60
+id;name;umsatz;homepage;film_id
+1;WarnerBros;1200000;https://acme.it;1
+20;Universal;2000000;https://acme.it;20
+30;Gamma;350000;https://acme.it;30
+40;Delta;750000;https://acme.it;40
+50;Epsilon;130000000;https://acme.it;50
+60;Phi;2754000;https://acme.it;60
