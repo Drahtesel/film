@@ -109,7 +109,9 @@ export class FilmWriteService {
         );
         if (id === undefined) {
             this.#logger.debug('update: Keine gueltige ID');
-            throw new NotFoundException(`Es gibt keinen Film mit der ID ${id}.`);
+            throw new NotFoundException(
+                `Es gibt keinen Film mit der ID ${id}.`,
+            );
         }
 
         const validateResult = await this.#validateUpdate(film, id, version);
