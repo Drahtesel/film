@@ -1,15 +1,18 @@
 {
 	"info": {
+		"_postman_id": "5332cdb1-6e67-43fa-a1ce-538ad831e142",
 		"name": "GraphQL",
 		"description": "GraphQL-Schnittstelle",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30219124",
+		"_collection_link": "https://crimson-meteor-915939.postman.co/workspace/Film~7d8b577e-5288-454f-96a2-1fd7424ef7c9/collection/30219124-5332cdb1-6e67-43fa-a1ce-538ad831e142?action=share&source=collection_link&creator=30219124"
 	},
 	"item": [
 		{
 			"name": "Query",
 			"item": [
 				{
-					"name": "Suche Buch mit ID 1",
+					"name": "Suche Film mit ID 1",
 					"event": [
 						{
 							"listen": "test",
@@ -25,18 +28,18 @@
 									"});\r",
 									"pm.test('Body mit den Properties', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buch } = body.data;\r",
-									"    const { isbn, version, rating, art, preis, lieferbar, datum, homepage, schlagwoerter, titel, rabatt } = buch;\r",
-									"    pm.expect(isbn).to.be.a('string');\r",
+									"    const { film } = body.data;\r",
+									"    const { version, titel, laenge, rating, filmart, preis, streambar, datum, schlagwoerter, distributor, rabatt } = film;\r",
 									"    pm.expect(version).to.be.a('number').that.is.gte(0);\r",
+									"    pm.expect(titel).to.be.a('string');\r",
+									"    pm.expect(laenge).to.be.a('number').that.is.gt(0);\r",
 									"    pm.expect(rating).to.be.a('number').that.is.gte(0);\r",
-									"    pm.expect(art).to.be.a('string');\r",
+									"    pm.expect(filmart).to.be.a('string');\r",
 									"    pm.expect(preis).to.be.a('number').that.is.gte(0);\r",
-									"    pm.expect(lieferbar).to.be.a('boolean');\r",
+									"    pm.expect(streambar).to.be.a('boolean');\r",
 									"    pm.expect(datum).to.be.a('string');\r",
-									"    pm.expect(homepage).to.be.a('string');\r",
 									"    pm.expect(schlagwoerter).to.be.an('array');\r",
-									"    pm.expect(titel.titel).to.be.a('string');\r",
+									"    pm.expect(distributor.name).to.be.a('string');\r",
 									"    pm.expect(rabatt).to.match(/ %$/u);\r",
 									"});"
 								],
@@ -57,7 +60,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($id: ID! = \"1\") {\r\n  buch(id: $id) {\r\n    isbn\r\n    version\r\n    rating\r\n    art\r\n    preis\r\n    lieferbar\r\n    datum\r\n    homepage\r\n    schlagwoerter\r\n    titel {\r\n      titel\r\n    }\r\n    rabatt(short: true)\r\n  }\r\n}",
+								"query": "query ($id: ID! = \"1\") {\r\n  film(id: $id) {\r\n    version\r\n    titel\r\n    laenge\r\n    rating\r\n    art\r\n    preis\r\n    streambar\r\n    erscheinungsdatum\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n    rabatt(short: true)\r\n  }\r\n}",
 								"variables": "{\r\n  \"id\": \"1\"\r\n}"
 							}
 						},
@@ -71,63 +74,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche isbn von einem Buch mit nicht-vorhandener 999999",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 200', () => {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});\r",
-									"pm.test('Body mit errors', () => {\r",
-									"    const body = pm.response.json();\r",
-									"    const { errors } = body;\r",
-									"    pm.expect(errors).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    const { message, path, extensions } = errors[0];\r",
-									"    pm.expect(message).to.include('999999');\r",
-									"    pm.expect(path).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    pm.expect(path[0]).to.be.equal('buch');\r",
-									"    pm.expect(extensions.code).to.be.equal('BAD_USER_INPUT');\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query ($id: ID! = \"1\") {\r\n  buch(id: $id) {\r\n    isbn\r\n  }\r\n}",
-								"variables": "{\r\n  \"id\": \"999999\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{graphql_url}}",
-							"host": [
-								"{{graphql_url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Suche id, version und titel von allen Buechern",
+					"name": "Suche id, version, titel und distributor von allen Filmen",
 					"event": [
 						{
 							"listen": "test",
@@ -143,14 +90,15 @@
 									"});\r",
 									"pm.test('Body mit den Properties', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { id, version, art, titel } = buch;\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { id, version, art, titel, distributor } = film;\r",
 									"        pm.expect(id).to.be.a('number').that.is.gte(0);\r",
 									"        pm.expect(version).to.be.a('number').that.is.gte(0);\r",
 									"        pm.expect(art).to.be.a('string');\r",
-									"        pm.expect(titel.titel).to.be.a('string');\r",
+									"        pm.expect(titel).to.be.a('string');\r",
+									"        pm.expect(distributor.name).to.be.a('string');\r",
 									"    });\r",
 									"});"
 								],
@@ -171,7 +119,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "{\r\n  buecher {\r\n    id\r\n    version\r\n    art\r\n    titel {\r\n      titel\r\n    }\r\n  }\r\n}",
+								"query": "{\r\n  filme {\r\n    id\r\n    version\r\n    titel\r\n    art\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -185,7 +133,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche art von Buechern mit Titel Alpha",
+					"name": "Suche art von Filmen mit Distributor WarnerBros",
 					"event": [
 						{
 							"listen": "test",
@@ -199,12 +147,12 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body mit art', () => {\r",
+									"pm.test('Body mit filmart', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.map(buch => buch.art)\r",
-									"        .forEach(art => pm.expect(art).to.be.a('string'));\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.map(film => film.filmart)\r",
+									"        .forEach(filmart => pm.expect(filmart).to.be.a('string'));\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -224,8 +172,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($titel: String = \"Alpha\") {\r\n  buecher(suchkriterien: {titel: $titel}) {\r\n    art\r\n  }\r\n}",
-								"variables": "{\r\n  \"titel\": \"Alpha\"\r\n}"
+								"query": "query ($name: String = \"Alpha\") {\r\n  filme(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n  }\r\n}",
+								"variables": "{\r\n  \"name\": \"WarnerBros\"\r\n}"
 							}
 						},
 						"url": {
@@ -238,7 +186,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche art, schlagwoerter, titel von Buechern mit Teilstring \"ta\" im Titel",
+					"name": "Suche filmart, schlagwoerter, distributor von Filmen mit Teilstring \"ta\" im Titel",
 					"event": [
 						{
 							"listen": "test",
@@ -252,15 +200,15 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body mit art, schlagwoerter, titel', () => {\r",
+									"pm.test('Body mit filmart, schlagwoerter, distributor', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { art, schlagwoerter, titel } = buch;\r",
-									"        pm.expect(art).to.be.a('string');\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { filmart, schlagwoerter, distributor } = film;\r",
+									"        pm.expect(filmart).to.be.a('string');\r",
 									"        pm.expect(schlagwoerter).to.be.an('array');\r",
-									"        pm.expect(titel.titel).to.be.a('string').that.includes('ta');\r",
+									"        pm.expect(distributor.name).to.be.a('string').that.includes('ta');\r",
 									"    });\r",
 									"});"
 								],
@@ -281,8 +229,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($titel: String = \"a\") {\r\n  buecher(suchkriterien: {titel: $titel}) {\r\n    art\r\n    schlagwoerter\r\n    titel {\r\n      titel\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"titel\": \"ta\"\r\n}"
+								"query": "query ($name: String = \"a\") {\r\n  buecher(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
+								"variables": "{\r\n  \"name\": \"ta\"\r\n}"
 							}
 						},
 						"url": {
@@ -295,7 +243,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit nicht-vorhandenem Titel",
+					"name": "Suche von Filmen mit nicht-vorhandenem Distributor",
 					"event": [
 						{
 							"listen": "test",
@@ -314,9 +262,9 @@
 									"    const { errors } = body;\r",
 									"    pm.expect(errors).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    const { message, path, extensions } = errors[0];\r",
-									"    pm.expect(message).to.be.a('string').that.includes('titel');\r",
+									"    pm.expect(message).to.be.a('string').that.includes('name');\r",
 									"    pm.expect(path).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    pm.expect(path[0]).to.be.equal('buecher');\r",
+									"    pm.expect(path[0]).to.be.equal('filme');\r",
 									"    pm.expect(extensions.code).to.be.equal('BAD_USER_INPUT');\r",
 									"});"
 								],
@@ -337,8 +285,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($titel: String = \"Nichtvorhanden\") {\r\n  buecher(suchkriterien: {titel: $titel}) {\r\n    art\r\n  }\r\n}",
-								"variables": "{\r\n  \"titel\": \"Nichtvorhanden\"\r\n}"
+								"query": "query ($name: String = \"Nichtvorhanden\") {\r\n  buecher(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n  }\r\n}",
+								"variables": "{\r\n  \"name\": \"Nichtvorhanden\"\r\n}"
 							}
 						},
 						"url": {
@@ -351,7 +299,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit rating 2",
+					"name": "Suche von Filmen mit rating 2",
 					"event": [
 						{
 							"listen": "test",
@@ -367,12 +315,12 @@
 									"});\r",
 									"pm.test('Body mit rating und titel', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { rating, titel } = buch;\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { rating, distributor } = film;\r",
 									"        pm.expect(rating).to.be.a('number').that.is.eq(2);\r",
-									"        pm.expect(titel.titel).to.be.a('string')\r",
+									"        pm.expect(distributor.name).to.be.a('string')\r",
 									"    });\r",
 									"});"
 								],
@@ -393,7 +341,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($rating: Int = 2) {\r\n  buecher(suchkriterien: {rating: $rating}) {\r\n    rating\r\n    titel {\r\n        titel\r\n    }\r\n  }\r\n}",
+								"query": "query ($rating: Int = 2) {\r\n  filme(suchkriterien: {rating: $rating}) {\r\n    rating\r\n    distributor {\r\n        name\r\n    }\r\n  }\r\n}",
 								"variables": "{\r\n  \"rating\": 2\r\n}"
 							}
 						},
@@ -407,7 +355,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit nicht-vorhandenem rating",
+					"name": "Suche von Filme mit nicht-vorhandenem rating",
 					"event": [
 						{
 							"listen": "test",
@@ -428,7 +376,7 @@
 									"    const { message, path, extensions } = errors[0];\r",
 									"    pm.expect(message).to.be.a('string').that.includes('rating');\r",
 									"    pm.expect(path).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    pm.expect(path[0]).to.be.equal('buecher');\r",
+									"    pm.expect(path[0]).to.be.equal('filme');\r",
 									"    pm.expect(extensions.code).to.be.equal('BAD_USER_INPUT');\r",
 									"});"
 								],
@@ -449,7 +397,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($rating: Int = 99) {\r\n  buecher(suchkriterien: {rating: $rating}) {\r\n    art\r\n  }\r\n}",
+								"query": "query ($rating: Int = 99) {\r\n  filme(suchkriterien: {rating: $rating}) {\r\n    filmartart\r\n  }\r\n}",
 								"variables": "{\r\n  \"rating\": 99\r\n}"
 							}
 						},
@@ -463,7 +411,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit Art KINDLE",
+					"name": "Suche von Filme mit Art ORIGINAL",
 					"event": [
 						{
 							"listen": "test",
@@ -477,14 +425,14 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body mit art und titel', () => {\r",
+									"pm.test('Body mit filmart und distributor', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { art, titel } = buch;\r",
-									"        pm.expect(art).to.be.a('string').that.is.eq('KINDLE');\r",
-									"        pm.expect(titel.titel).to.be.a('string').that.is.not.empty;\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { filmart, distributor } = film;\r",
+									"        pm.expect(filmart).to.be.a('string').that.is.eq('ORIGINAL');\r",
+									"        pm.expect(distributor.name).to.be.a('string').that.is.not.empty;\r",
 									"    });\r",
 									"});"
 								],
@@ -505,8 +453,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($art: Art = KINDLE) {\r\n  buecher(suchkriterien: {art: $art}) {\r\n    art\r\n    titel {\r\n      titel\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"art\": \"KINDLE\"\r\n}"
+								"query": "query ($filmart: Filmart = ORIGINAL) {\r\n  filme(suchkriterien: {filmart: $filmart}) {\r\n    filmart\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
+								"variables": "{\r\n  \"filmart\": \"ORIGINAL\"\r\n}"
 							}
 						},
 						"url": {
@@ -519,7 +467,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit ungueltiger Art",
+					"name": "Suche von Filmen mit ungueltiger Art",
 					"event": [
 						{
 							"listen": "test",
@@ -558,8 +506,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($art: String = \"UNGUELTIG\") {\r\n  buecher(suchkriterien: {art: $art}) {\r\n    art\r\n  }\r\n}",
-								"variables": "{\r\n  \"art\": \"UNGUELTIG\"\r\n}"
+								"query": "query ($filmart: String = \"UNGUELTIG\") {\r\n  filme(suchkriterien: {filmart: $filmart}) {\r\n    filmart\r\n  }\r\n}",
+								"variables": "{\r\n  \"filmart\": \"UNGUELTIG\"\r\n}"
 							}
 						},
 						"url": {
@@ -572,7 +520,7 @@
 					"response": []
 				},
 				{
-					"name": "Suche von Buechern mit lieferbar=true",
+					"name": "Suche von Filmen mit streambar=true",
 					"event": [
 						{
 							"listen": "test",
@@ -586,14 +534,14 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body mit lieferbar und titel', () => {\r",
+									"pm.test('Body mit streambar und distributor', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body.data;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { lieferbar, titel } = buch;\r",
-									"        pm.expect(lieferbar).to.be.true;\r",
-									"        pm.expect(titel.titel).to.be.a('string').that.is.not.empty;\r",
+									"    const { filme } = body.data;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { streambar, distributor } = film;\r",
+									"        pm.expect(streambar).to.be.true;\r",
+									"        pm.expect(distributor.name).to.be.a('string').that.is.not.empty;\r",
 									"    });\r",
 									"});"
 								],
@@ -614,8 +562,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($lieferbar: Boolean = true) {\r\n  buecher(suchkriterien: {lieferbar: $lieferbar}) {\r\n    lieferbar\r\n    titel {\r\n      titel\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"lieferbar\": true\r\n}"
+								"query": "query ($streambar: Boolean = true) {\r\n  filme(suchkriterien: {streambar: $streambar}) {\r\n    streambar\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
+								"variables": "{\r\n  \"streambar\": true\r\n}"
 							}
 						},
 						"url": {
@@ -768,7 +716,7 @@
 			"name": "Mutation",
 			"item": [
 				{
-					"name": "Neues Buch",
+					"name": "Neuer Film",
 					"event": [
 						{
 							"listen": "test",
@@ -805,7 +753,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  create(\r\n    input: {\r\n      isbn: \"978-0-321-19368-1\",\r\n      rating: 1,\r\n      art: KINDLE,\r\n      preis: 99.99,\r\n      rabatt: 0.123,\r\n      lieferbar: true,\r\n      datum: \"2022-01-31\",\r\n      homepage: \"https://create.mutation\",\r\n      schlagwoerter: [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n      titel: {\r\n        titel: \"Titelcreatemutation\",\r\n        untertitel: \"untertitelcreatemutation\"\r\n      },\r\n      abbildungen: [{\r\n        beschriftung: \"Abb. 1\",\r\n        contentType: \"img/png\"\r\n      }]\r\n    }\r\n  ) {\r\n      id\r\n  }\r\n}",
+								"query": "mutation {\r\n  create(\r\n    input: {\r\n      titel: \"Die Verurteilten\",\r\n      laenge: 142,\r\n      rating: 5,\r\n      filmart: KINOFASSUNG,\r\n      preis: 99.99,\r\n      rabatt: 0.123,\r\n      streambar: true,\r\n      erscheinungsdatum: \"1994-01-31\",\r\n      homepage: \"https://create.mutation\",\r\n      schlagwoerter: [\"ACTION\", \"DRAMA\"],\r\n      distributor: {\r\n        name: \"CastleRockEntertainment\",\r\n        umsatz: 73300000\r\n      },\r\n      schauspielerListe: [{\r\n        name: \"Freeman\",\r\n        geburtsdatum: \"1937-01-07\"\r\n      }]\r\n    }\r\n  ) {\r\n      id\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -819,7 +767,7 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch mit ungültigen Daten",
+					"name": "Neuer Film mit ungültigen Daten",
 					"event": [
 						{
 							"listen": "test",
@@ -839,7 +787,7 @@
 									"    pm.expect(errors).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    const { message, path, extensions } = errors[0];\r",
 									"    pm.expect(message).to.be.a('string');\r",
-									"    const props = ['titel.titel', 'isbn', 'rating', 'preis', 'datum', 'homepage'];\r",
+									"    const props = ['distributor.name', 'name', 'laenge', 'rating', 'preis', 'erscheinungsdatum' ];\r",
 									"    props.forEach(prop => pm.expect(message).to.include(prop));\r",
 									"    pm.expect(path).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    pm.expect(path[0]).to.be.equal('create');\r",
@@ -863,7 +811,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  create(\r\n    input: {\r\n      isbn: \"falsche-isbn\",\r\n      rating: 999,\r\n      art: DRUCKAUSGABE,\r\n      preis: -1,\r\n      rabatt: 0,\r\n      lieferbar: true,\r\n      datum: \"12345-123-123\",\r\n      homepage: \"anyHomepage\",\r\n      schlagwoerter: [\"JAVASCRIPT\"],\r\n      titel: {\r\n        titel: \"?!\"\r\n        untertitel: \"mutationinvalid\"\r\n      }\r\n    }\r\n  ) {\r\n      id\r\n  }\r\n}",
+								"query": "mutation {\r\n  create(\r\n    input: {\r\n      titel: \"?!?!?!\",\r\n      laenge: -1\r\n      rating: 999,\r\n      filmart: KINOFASSUNG,\r\n      preis: -1,\r\n      rabatt: 0,\r\n      streambar: true,\r\n      erscheinungsdatum: \"12345-123-123\",\r\n      schlagwoerter: [\"ACTION\"],\r\n      distributor: {\r\n        name: \"?!\"\r\n        umsatz: 0\r\n      }\r\n    }\r\n  ) {\r\n      id\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -877,7 +825,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch mit ID 40 aktualisieren",
+					"name": "Film mit ID 40 aktualisieren",
 					"event": [
 						{
 							"listen": "test",
@@ -914,7 +862,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: \"40\",\r\n      version: 0,\r\n      isbn: \"978-0-007-09732-6\",\r\n      rating: 5,\r\n      art: KINDLE,\r\n      preis: 444.44,\r\n      rabatt: 0.099,\r\n      lieferbar: false,\r\n      datum: \"2022-04-04\",\r\n      homepage: \"https://update.mutation\",\r\n      schlagwoerter: [\"JAVASCRIPT\", \"TYPESCRIPT\"]\r\n    }\r\n  ) {\r\n      version\r\n  }\r\n}",
+								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: \"40\",\r\n      version: 0,\r\n      titel: \"Dark Knight\",\r\n      laenge: 200,\r\n      rating: 5,\r\n      filmart: KINOFASSUNG,\r\n      preis: 89.99,\r\n      rabatt: 0.13,\r\n      streambar: false,\r\n      erscheinungsdatum: \"2007-01-31\",\r\n      schlagwoerter: [\"ACTION\", \"DRAMA\"] \r\n    } \r\n  )\r\n}",
 								"variables": ""
 							}
 						},
@@ -928,7 +876,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch mit ID 40 mit ungültigen Daten aktualisieren",
+					"name": "Film mit ID 40 mit ungültigen Daten aktualisieren",
 					"event": [
 						{
 							"listen": "test",
@@ -948,7 +896,7 @@
 									"    pm.expect(errors).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    const { message, path, extensions } = errors[0];\r",
 									"    pm.expect(message).to.be.a('string');\r",
-									"    const props = ['isbn', 'preis', 'datum', 'homepage'];\r",
+									"    const props = ['titel', 'laenge', 'preis', 'erscheinungsdatum'];\r",
 									"    props.forEach(prop => pm.expect(message).to.include(prop));\r",
 									"    pm.expect(path).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    pm.expect(path[0]).to.be.equal('update');\r",
@@ -972,7 +920,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: 40,\r\n      version: 0,\r\n      isbn: \"falsche-ISBN\",\r\n      rating: -1,\r\n      art: KINDLE,\r\n      preis: -1,\r\n      rabatt: 2,\r\n      lieferbar: false,\r\n      datum: \"12345-123-123\",\r\n      homepage: \"anyHomepage\"\r\n    }\r\n  ) {\r\n      version\r\n  }\r\n}",
+								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: 40,\r\n      version: 0,\r\n      titel: \"?!?!?!\",\r\n      laenge: -1\r\n      rating: 999,\r\n      filmart: KINOFASSUNG,\r\n      preis: -1,\r\n      rabatt: 0,\r\n      streambar: true,\r\n      erscheinungsdatum: \"12345-123-123\",\r\n      schlagwoerter: [\"ACTION\"]\r\n    }\r\n  ) {\r\n      version\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -986,7 +934,7 @@
 					"response": []
 				},
 				{
-					"name": "Nicht-Vorhandenes Buch aktualisieren",
+					"name": "Nicht-Vorhandenes Film aktualisieren",
 					"event": [
 						{
 							"listen": "test",
@@ -1028,7 +976,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: \"999999\",\r\n      version: 0,\r\n      isbn: \"978-0-007-09732-6\",\r\n      rating: 5,\r\n      art: DRUCKAUSGABE,\r\n      preis: 99.99,\r\n      rabatt: 0.099,\r\n      lieferbar: false,\r\n      datum: \"2022-02-01\",\r\n      schlagwoerter: [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n      homepage: \"https://nicht.vorhanden.de/\"\r\n    }\r\n  ) {\r\n      version\r\n  }\r\n}",
+								"query": "mutation {\r\n  update(\r\n    input: {\r\n      id: \"999999\",\r\n      version: 0,\r\n      titel: \"Brücke nach Terabithia\",\r\n      laenge: 98\r\n      rating: 5,\r\n      art: DRUCKAUSGABE,\r\n      preis: 99.99,\r\n      rabatt: 0.099,\r\n      streambar: false,\r\n      erscheinungsdatum: \"2005-02-01\",\r\n      schlagwoerter: [\"DRAMA\"],\r\n    }\r\n  ) {\r\n      version\r\n  }\r\n}",
 								"variables": ""
 							}
 						},
@@ -1042,7 +990,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch mit ID 60 löschen",
+					"name": "Film mit ID 60 löschen",
 					"event": [
 						{
 							"listen": "test",
