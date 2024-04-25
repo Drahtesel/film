@@ -64,7 +64,7 @@ type Film {
   art: Art
   preis: Float!
   streambar: Boolean
-  datum: String
+  erscheinungsdatum: String
   schlagwoerter: [String]
   # 1:1-Beziehung
   distributor: Distributor!
@@ -74,13 +74,12 @@ type Film {
 
 "Enum-Typ für die Art eines Buches"
 enum Art {
-  DRUCKAUSGABE
-  KINDLE
+  ORIGINAL
+  KINOFASSUNG
 }
 
 "Suchkriterien für Bücher"
 input SuchkriterienInput {
-  name: String
   titel: String
   rating: Int
   art: Art
@@ -109,7 +108,7 @@ input FilmInput {
   preis: Float
   rabatt: Float
   streambar: Boolean
-  datum: String
+  erscheinungsdatum: String
   schlagwoerter: [String]
   distributor: DistributorInput!
   schauspieler: [SchauspielerInput!]
@@ -130,7 +129,7 @@ input FilmUpdateInput {
   preis: Float
   rabatt: Float
   streambar: Boolean
-  datum: String
+  erscheinungsdatum: String
   schlagwoerter: [String]
 }
 

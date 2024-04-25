@@ -28,7 +28,7 @@
 --     docker compose up db
 -- (3) 2. PowerShell:
 --     cd .extras\compose\db\postgres
---     docker compose exec db bash
+--    
 --        chown postgres:postgres /var/lib/postgresql/tablespace
 --        chown postgres:postgres /var/lib/postgresql/tablespace/film
 --        chown postgres:postgres /var/lib/postgresql/key.pem
@@ -81,3 +81,4 @@ GRANT ALL ON DATABASE film TO film;
 
 -- https://www.postgresql.org/docs/10/sql-createtablespace.html
 CREATE TABLESPACE filmspace OWNER film LOCATION '/var/lib/postgresql/tablespace/film';
+ docker compose exec db bash

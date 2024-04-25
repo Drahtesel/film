@@ -1,4 +1,4 @@
-id;version;titel;laenge;rating;art;preis;rabatt;streambar;erscheinungsdatum;schlagwoerter;erzeugt;aktualisiert
+id;version;titel;laenge;rating;filmart;preis;rabatt;streambar;erscheinungsdatum;schlagwoerter;erzeugt;aktualisiert
 1;0;Film1;120;4;KINOFASSUNG;11.1;0.011;true;2022-02-01;DRAMA;2022-02-01 00:00:00;2022-02-01 00:00:00
 20;0;Film2;98;2;ORIGINAL;22.2;0.022;true;2022-02-02;ACTION;2022-02-02 00:00:00;2022-02-02 00:00:00
 30;0;Film3;117;3;KINOFASSUNG;33.3;0.033;true;2022-02-03;DRAMA,ACTION;2022-02-03 00:00:00;2022-02-03 00:00:00

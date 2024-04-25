@@ -25,7 +25,7 @@ import { Request, Response } from 'express';
 
 import { type Distributor } from '../entity/distributor.entity.js';
 import { type Film } from '../entity/film.entity.js';
-import { FilmArt } from '../entity/film.entity.js';
+import { Art } from '../entity/film.entity.js';
 import { FilmReadService } from '../service/film-read.service.js';
 import { Public } from 'nest-keycloak-connect';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
@@ -84,7 +84,7 @@ export class FilmQuery implements Suchkriterien {
     declare readonly rating: number;
 
     @ApiProperty({ required: false })
-    declare readonly art: FilmArt;
+    declare readonly art: Art;
 
     @ApiProperty({ required: false })
     declare readonly laenge: number;

@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS film (
                   -- https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-CHECK-CONSTRAINTS
                   -- https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-POSIX-REGEXP
     rating        integer NOT NULL CHECK (rating >= 0 AND rating <= 5),
-    art           filmart,
+    filmart       filmart,
                   -- https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-NUMERIC-DECIMAL
                   -- 10 Stellen, davon 2 Nachkommastellen
     preis         decimal(8,2) NOT NULL,

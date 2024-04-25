@@ -58,7 +58,7 @@ import { dbType } from '../../config/db.js';
 /**
  * Alias-Typ für gültige Strings bei der Art eines Buches.
  */
-export type FilmArt = 'KINOFASSUNG' | 'ORIGINAL';
+export type Art = 'KINOFASSUNG' | 'ORIGINAL';
 
 /**
  * Entity-Klasse zu einem relationalen Tabelle
@@ -88,7 +88,7 @@ export class Film {
 
     @Column('varchar')
     @ApiProperty({ example: 'KINOFASSUNG', type: String })
-    readonly art: FilmArt | undefined;
+    readonly art: Art | undefined;
 
     @Column('decimal', {
         precision: 8,
