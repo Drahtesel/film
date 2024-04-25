@@ -61,7 +61,7 @@ type Film {
   titel: String!
   laenge: Int
   rating: Int
-  art: Art
+  filmart: Filmart
   preis: Float!
   streambar: Boolean
   erscheinungsdatum: String
@@ -73,7 +73,7 @@ type Film {
 }
 
 "Enum-Typ für die Art eines Buches"
-enum Art {
+enum Filmart {
   ORIGINAL
   KINOFASSUNG
 }
@@ -82,7 +82,7 @@ enum Art {
 input SuchkriterienInput {
   titel: String
   rating: Int
-  art: Art
+  filmart: Filmart
   streambar: Boolean
 }
 
@@ -104,7 +104,7 @@ input FilmInput {
   titel: String
   laenge: Int
   rating: Int
-  art: Art
+  filmart: Filmart
   preis: Float
   rabatt: Float
   streambar: Boolean
@@ -125,7 +125,7 @@ input FilmUpdateInput {
   titel: String
   laenge: Int
   rating: Int
-  art: Art
+  filmart: Filmart
   preis: Float
   rabatt: Float
   streambar: Boolean

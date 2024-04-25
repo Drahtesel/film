@@ -16,8 +16,8 @@ import {
 } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { type Art } from '../entity/film.entity.js';
 import { DistributorDTO } from './distributorDTO.entity.js';
+import { type Filmart } from '../entity/film.entity.js';
 import { SchauspielerDTO } from './schauspielerDTO.entity.js';
 import { Type } from 'class-transformer';
 
@@ -41,7 +41,7 @@ export class FilmDtoOhneRef {
     @IsOptional()
     @Matches(/^KINOFASSUNG$|^ORIGINAL$/u)
     @ApiProperty({ example: 'ORIGINAL', type: String })
-    readonly art: Art | undefined;
+    readonly filmart: Filmart | undefined;
 
     @IsPositive()
     @ApiProperty({ example: '123', type: Number })

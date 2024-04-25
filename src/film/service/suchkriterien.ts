@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import { type Art } from '../entity/film.entity';
+import { type Filmart } from '../entity/film.entity';
 
 /**
  * Typdefinition für FilmReadService().find und QueryBuilder.build().
@@ -11,7 +11,7 @@ import { type Art } from '../entity/film.entity';
 export interface Suchkriterien {
     readonly titel?: string;
     readonly rating?: number;
-    readonly art?: Art;
+    readonly art?: Filmart;
     readonly laenge?: number;
     readonly preis?: number;
     readonly rabatt?: number;

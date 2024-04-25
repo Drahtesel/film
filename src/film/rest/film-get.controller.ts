@@ -25,8 +25,8 @@ import { Request, Response } from 'express';
 
 import { type Distributor } from '../entity/distributor.entity.js';
 import { type Film } from '../entity/film.entity.js';
-import { Art } from '../entity/film.entity.js';
 import { FilmReadService } from '../service/film-read.service.js';
+import { Filmart } from '../entity/film.entity.js';
 import { Public } from 'nest-keycloak-connect';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { type Suchkriterien } from '../service/suchkriterien.js';
@@ -84,7 +84,7 @@ export class FilmQuery implements Suchkriterien {
     declare readonly rating: number;
 
     @ApiProperty({ required: false })
-    declare readonly art: Art;
+    declare readonly filmart: Filmart;
 
     @ApiProperty({ required: false })
     declare readonly laenge: number;
@@ -229,7 +229,7 @@ export class FilmGetController {
         const filmModel: FilmModel = {
             titel: film.titel,
             rating: film.rating,
-            art: film.art,
+            filmart: film.filmart,
             laenge: film.laenge,
             preis: film.preis,
             rabatt: film.rabatt,
