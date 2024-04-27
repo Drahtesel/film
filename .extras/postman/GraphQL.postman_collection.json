@@ -34,7 +34,7 @@
 									"    pm.expect(titel).to.be.a('string');\r",
 									"    pm.expect(laenge).to.be.a('number').that.is.gt(0);\r",
 									"    pm.expect(rating).to.be.a('number').that.is.gte(0);\r",
-									"    pm.expect(filmart).to.be.a('string');\r",
+									"    pm.expect(art).to.be.a('string');\r",
 									"    pm.expect(preis).to.be.a('number').that.is.gte(0);\r",
 									"    pm.expect(streambar).to.be.a('boolean');\r",
 									"    pm.expect(datum).to.be.a('string');\r",
@@ -43,7 +43,8 @@
 									"    pm.expect(rabatt).to.match(/ %$/u);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -60,7 +61,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($id: ID! = \"1\") {\r\n  film(id: $id) {\r\n    version\r\n    titel\r\n    laenge\r\n    rating\r\n    art\r\n    preis\r\n    streambar\r\n    erscheinungsdatum\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n    rabatt(short: true)\r\n  }\r\n}",
+								"query": "query ($id: ID! = \"1\") {\r\n  film(id: $id) {\r\n    version\r\n    titel\r\n    laenge\r\n    rating\r\n    filmart\r\n    preis\r\n    streambar\r\n    erscheinungsdatum\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n    rabatt(short: true)\r\n  }\r\n}",
 								"variables": "{\r\n  \"id\": \"1\"\r\n}"
 							}
 						},
@@ -736,11 +737,39 @@
 									"    pm.expect(data.create.id).to.be.a('number').that.is.gte(0);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
