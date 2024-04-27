@@ -70,7 +70,7 @@ export class FilmWriteController {
         const film = this.#filmDtoTofilm(filmDTO);
         const id = await this.#service.create(film);
 
-        const location = `${getBaseUri(req)}${id}`;
+        const location = `${getBaseUri(req)}/${id}`;
         this.#logger.debug('post: location=%s', location);
         return res.location(location).send();
     }

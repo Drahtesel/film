@@ -24,35 +24,35 @@
 -- https://sqlite.org/lang_createindex.html
 -- https://stackoverflow.com/questions/37619526/how-can-i-change-the-default-sqlite-timezone
 
-CREATE TABLE IF NOT EXISTS buch (
+CREATE TABLE IF NOT EXISTS film (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
     version        INTEGER NOT NULL DEFAULT 0,
-    isbn           TEXT NOT NULL UNIQUE,
+    titel          TEXT NOT NULL,
+    laenge         INTEGER NOT NULL,
     rating         INTEGER NOT NULL CHECK (rating >= 0 AND rating <= 5),
-    art            TEXT,
+    filmart        TEXT,
     preis          REAL,
     rabatt         REAL,
-    lieferbar      INTEGER NOT NULL CHECK (lieferbar = 0 OR lieferbar = 1) DEFAULT 0,
-    datum          TEXT,
-    homepage       TEXT,
+    streambar      INTEGER NOT NULL CHECK (streambar = 0 OR streambar = 1) DEFAULT 0,
+    erscheinungsdatum          TEXT,
     schlagwoerter  TEXT,
     erzeugt        TEXT NOT NULL,
     aktualisiert   TEXT NOT NULL
 );
-CREATE INDEX IF NOT EXISTS buch_isbn_idx ON buch(isbn);
+CREATE INDEX IF NOT EXISTS film_titel_idx ON film(titel);
 
-CREATE TABLE IF NOT EXISTS titel (
+CREATE TABLE IF NOT EXISTS distributor (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    titel       TEXT NOT NULL,
-    untertitel  TEXT,
-    buch_id     INTEGER NOT NULL UNIQUE REFERENCES buch
+    name        TEXT NOT NULL,
+    homepage    TEXT,
+    umsatz      REAL,
+    film_id     INTEGER NOT NULL UNIQUE REFERENCES film
 );
 
-
-CREATE TABLE IF NOT EXISTS abbildung (
+CREATE TABLE IF NOT EXISTS schauspieler (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    beschriftung    TEXT NOT NULL,
-    content_type    TEXT NOT NULL,
-    buch_id         INTEGER NOT NULL REFERENCES buch
+    name            TEXT NOT NULL,
+    geburtsdatum    TEXT NOT NULL,
+    film_id         INTEGER NOT NULL REFERENCES film
 );
-CREATE INDEX IF NOT EXISTS abbildung_buch_id_idx ON abbildung(buch_id);
+CREATE INDEX IF NOT EXISTS schauspieler_film_id_idx ON schauspieler(film_id);

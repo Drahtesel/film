@@ -1673,7 +1673,7 @@
 									"pm.test('Fehlermeldung im Response Body', () => {\r",
 									"    const body = pm.response.json();\r",
 									"    const { message } = body;\r",
-									"    pm.expect(message).to.be.a('string').that.includes('ISBN');\r",
+									"    pm.expect(message).to.be.a('string').that.includes('Erscheinungsdatum');\r",
 									"});"
 								],
 								"type": "text/javascript",
@@ -1720,7 +1720,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\":{\r\n        \"name\": \"Der Distributor\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"titel\": \"Perry Otter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\":{\r\n        \"name\": \"Der Distributor\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1895,7 +1895,7 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch ohne Login",
+					"name": "Neuer Film ohne Login",
 					"event": [
 						{
 							"listen": "test",
@@ -2778,7 +2778,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "999999"
+									"value": ""
 								}
 							]
 						}
