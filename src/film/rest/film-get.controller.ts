@@ -22,7 +22,6 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-
 import { type Distributor } from '../entity/distributor.entity.js';
 import { type Film } from '../entity/film.entity.js';
 import { FilmReadService } from '../service/film-read.service.js';
@@ -218,7 +217,7 @@ export class FilmGetController {
                   update: { href: `${baseUri}/${id}` },
                   remove: { href: `${baseUri}/${id}` },
               }
-            : { self: { href: `${baseUri}/$id` } };
+            : { self: { href: `${baseUri}/${id}` } };
 
         this.#logger.debug('#toModel: film=%o, links=%o', film, links);
         const distributorModel: DistributorModel = {

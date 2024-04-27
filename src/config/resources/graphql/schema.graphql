@@ -68,6 +68,8 @@ type Film {
   schlagwoerter: [String]
   # 1:1-Beziehung
   distributor: Distributor!
+  # 1:n-Beziehung'
+  schauspielerListe: [Schauspieler!]
   # field mit @ResolveField
   rabatt(short: Boolean): String!
 }
@@ -80,6 +82,7 @@ enum Filmart {
 
 "Suchkriterien für Bücher"
 input SuchkriterienInput {
+  distributor: String
   titel: String
   rating: Int
   filmart: Filmart
@@ -111,7 +114,7 @@ input FilmInput {
   erscheinungsdatum: String
   schlagwoerter: [String]
   distributor: DistributorInput!
-  schauspieler: [SchauspielerInput!]
+  schauspielerListe: [SchauspielerInput!]
 }
 
 type CreatePayload {

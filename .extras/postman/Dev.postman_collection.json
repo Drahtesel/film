@@ -1,8 +1,11 @@
 {
 	"info": {
+		"_postman_id": "649eb952-3eba-4931-940b-5dd49f3ce75a",
 		"name": "Dev",
 		"description": "Aufgaben beim Entwickeln, z.B. die Test-DB neu laden.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30249920",
+		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-649eb952-3eba-4931-940b-5dd49f3ce75a?action=share&source=collection_link&creator=30249920"
 	},
 	"item": [
 		{
@@ -19,9 +22,10 @@
 							"        'Content-Type': 'application/x-www-form-urlencoded'\r",
 							"    },\r",
 							"    body: 'username=admin&password=p',\r",
-							"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().token));"
+							"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -41,7 +45,8 @@
 							"    pm.expect(body.db_populate).to.be.equal('success');\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],

@@ -115,7 +115,7 @@ export class FilmWriteController {
             const msg = 'Header "If-Match" fehlt';
             this.#logger.debug('put: msg=%s', msg);
             return res
-                .status(HttpStatus.PRECONDITION_FAILED)
+                .status(HttpStatus.PRECONDITION_REQUIRED)
                 .set('Content-Type', 'application/json')
                 .send(msg);
         }

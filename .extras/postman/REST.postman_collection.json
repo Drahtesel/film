@@ -1,8 +1,11 @@
 {
 	"info": {
+		"_postman_id": "1581cf52-dcc7-4a11-a974-3fcb12710008",
 		"name": "REST",
 		"description": "REST-Schnittstelle",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30249920",
+		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-1581cf52-dcc7-4a11-a974-3fcb12710008?action=share&source=collection_link&creator=30249920"
 	},
 	"item": [
 		{
@@ -28,7 +31,8 @@
 									"    pm.expect(body._links.self.href).to.be.a('string').that.matches(/\\/rest\\/1$/u);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -56,10 +60,9 @@
 							],
 							"variable": [
 								{
-									"id": 0,
 									"key": "id",
 									"value": "1",
-									"description": "Buch ID"
+									"description": "Film ID"
 								}
 							]
 						}
@@ -81,7 +84,8 @@
 									"    pm.expect(body).to.be.a('string').that.is.empty;\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -116,7 +120,7 @@
 								{
 									"key": "id",
 									"value": "1",
-									"description": "Buch ID"
+									"description": "Film ID"
 								}
 							]
 						}
@@ -143,7 +147,8 @@
 									"    pm.expect(body._links.self.href).to.be.a('string').that.matches(/\\/rest\\/1$/u);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -178,7 +183,7 @@
 								{
 									"key": "id",
 									"value": "1",
-									"description": "Buch ID"
+									"description": "Film ID"
 								}
 							]
 						}
@@ -208,7 +213,8 @@
 									"    pm.expect(statusCode).to.be.equal(404);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -238,7 +244,7 @@
 								{
 									"key": "id",
 									"value": "999999",
-									"description": "Buch ID"
+									"description": "Film ID"
 								}
 							]
 						}
@@ -257,7 +263,8 @@
 									"});\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -279,7 +286,7 @@
 								{
 									"key": "id",
 									"value": "xy",
-									"description": "Buch ID"
+									"description": "Film ID"
 								}
 							]
 						}
@@ -330,120 +337,31 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: mind. 1 Buch und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: mind. 1 Film und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.map(buch => buch._links.self.href)\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.map(film => film._links.self.href)\r",
 									"        .forEach(href => pm.expect(href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u));\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
@@ -456,7 +374,7 @@
 					"response": []
 				},
 				{
-					"name": "Teilstring \"ta\" des Titels",
+					"name": "Teilstring \"Star\" des Titels",
 					"event": [
 						{
 							"listen": "test",
@@ -470,134 +388,45 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Titel enthaelt \"ta\" und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Titel enthaelt \"lm\" und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { titel, _links } = buch;\r",
-									"        pm.expect(titel.titel).to.be.a('string').that.includes('ta');\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { titel, _links } = film;\r",
+									"        pm.expect(titel).to.be.a('string').that.includes('Star');\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?titel=ta",
+							"raw": "{{rest_url}}?titel=Star",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
 									"key": "titel",
-									"value": "ta"
+									"value": "Star"
 								}
 							]
 						}
@@ -744,7 +573,7 @@
 					"response": []
 				},
 				{
-					"name": "ISBN 978-3-897-22583-1",
+					"name": "Titel \"StarTrekWars\"",
 					"event": [
 						{
 							"listen": "test",
@@ -758,132 +587,43 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: ISBN und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Titel und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.has.a.lengthOf(1);\r",
-									"    const { isbn, _links } = buecher[0];\r",
-									"    pm.expect(isbn).to.be.a('string').that.includes('978-3-897-22583-1');\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.has.a.lengthOf(1);\r",
+									"    const { titel, _links } = filme[0];\r",
+									"    pm.expect(titel).to.be.a('string').that.includes('StarTrekWars');\r",
 									"    pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?isbn=978-3-897-22583-1",
+							"raw": "{{rest_url}}?titel=StarTrekWars",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "isbn",
-									"value": "978-3-897-22583-1"
+									"key": "titel",
+									"value": "StarTrekWars"
 								}
 							]
 						}
@@ -891,7 +631,7 @@
 					"response": []
 				},
 				{
-					"name": "Schlagwort JAVASCRIPT",
+					"name": "Schlagwort DRAMA",
 					"event": [
 						{
 							"listen": "test",
@@ -905,133 +645,42 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Schlagwort JAVASCRIPT und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Schlagwort DRAMA und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('JAVASCRIPT');\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { schlagwoerter, _links } = film;\r",
+									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('DRAMA');\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?javascript=true",
+							"raw": "{{rest_url}}?drama=true",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "javascript",
+									"key": "drama",
 									"value": "true"
 								}
 							]
@@ -1040,7 +689,7 @@
 					"response": []
 				},
 				{
-					"name": "Schlagwort TYPESCRIPT",
+					"name": "Schlagwort ACTION",
 					"event": [
 						{
 							"listen": "test",
@@ -1054,133 +703,42 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Schlagwort ACTION und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('TYPESCRIPT');\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { schlagwoerter, _links } = film;\r",
+									"        pm.expect(schlagwoerter).to.be.an('array').that.includes('ACTION');\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?typescript=true",
+							"raw": "{{rest_url}}?action=true",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "typescript",
+									"key": "action",
 									"value": "true"
 								}
 							]
@@ -1189,7 +747,7 @@
 					"response": []
 				},
 				{
-					"name": "Schlagwoerter JAVASCRIPT und TYPESCRIPT",
+					"name": "Schlagwoerter ACTION und DRAMA",
 					"event": [
 						{
 							"listen": "test",
@@ -1203,137 +761,51 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Schlagwoerter JAVASCRIPT und TYPESCRIPT sowie Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Schlagwoerter DRAMA und ACION sowie Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(buch => {\r",
 									"        const { schlagwoerter, _links } = buch;\r",
-									"        pm.expect(schlagwoerter).to.be.an('array').that.includes.members(['JAVASCRIPT', 'TYPESCRIPT']);\r",
+									"        pm.expect(schlagwoerter).to.be.an('array').that.includes.members(['ACTION', 'DRAMA']);\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept-encoding": true,
+							"connection": true,
+							"accept": true,
+							"user-agent": true
+						}
+					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?javascript=true&typescript=true",
+							"raw": "{{rest_url}}?action=true&drama=true",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "javascript",
+									"key": "action",
 									"value": "true"
 								},
 								{
-									"key": "typescript",
+									"key": "drama",
 									"value": "true"
 								}
 							]
@@ -1342,7 +814,7 @@
 					"response": []
 				},
 				{
-					"name": "Buchart KINDLE",
+					"name": "Filmart ORIGINAL",
 					"event": [
 						{
 							"listen": "test",
@@ -1356,18 +828,19 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: FIlmart ORIGINAL und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { art, _links } = buch;\r",
-									"        pm.expect(art).to.be.equal('KINDLE');\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { filmart, _links } = film;\r",
+									"        pm.expect(filmart).to.be.equal('ORIGINAL');\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1375,115 +848,20 @@
 						"method": "GET",
 						"header": [
 							{
-								"name": "cache-control",
-								"sortOrder": 2,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added \"Cache-Control: no-cache\" as a precautionary measure to prevent the server from returning stale response when one makes repeated requests.\n\nYou can remove this header in the app settings or enter a new one with a different value.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Cache-Control",
-								"value": "no-cache",
-								"system": true,
-								"type": "text",
-								"id": 0
-							},
-							{
-								"name": "postman-token",
-								"sortOrder": 3,
-								"infoTitle": "We recommend using this header",
-								"info": "The Postman-Token header appends a random UUID to every outgoing request. Postman adds this header for API developers to better debug requests sent and to ensure separate requests appear distinct to the receiving server.\n\nYou can remove this header in the app settings.",
-								"allowedToToggle": false,
-								"disableEdit": true,
-								"previewSettingsLink": "Go to settings",
-								"key": "Postman-Token",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 1
-							},
-							{
-								"name": "host",
-								"sortOrder": 6,
-								"infoTitle": "We recommend using this header",
-								"info": "The Host header is added to identify the domain name for which a request is being sent to the server. This header is implicitly sent by every HTTP client.\n\nYou can remove the header or enter a new one with a different value. It is most likely that without this header, your request will return an HTTP 400 error.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Host",
-								"value": "<calculated when request is sent>",
-								"system": true,
-								"type": "text",
-								"id": 2
-							},
-							{
-								"name": "user-agent",
-								"sortOrder": 7,
-								"infoTitle": "We recommend using this header",
-								"info": "The User-Agent header is added to help the server identify Postman as the HTTP requesting application or client.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "User-Agent",
-								"value": "PostmanRuntime/7.31.1",
-								"system": true,
-								"type": "text",
-								"id": 3
-							},
-							{
-								"name": "accept",
-								"sortOrder": 8,
-								"infoTitle": "We recommend using this header",
-								"info": "The \"Accept: */*\" header is added to tell the server that Postman can understand and process all forms of response content types.\n\nIt is recommended that this header be sent, but you can remove the header or enter a new one with a different value.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept",
-								"value": "*/*",
-								"system": true,
-								"type": "text",
-								"id": 4,
-								"disabled": true
-							},
-							{
-								"name": "accept-encoding",
-								"sortOrder": 9,
-								"infoTitle": "We recommend using this header",
-								"info": "The Accept-Encoding header is added to indicate to the server that Postman HTTP client supports a defined list of content-encoding or compression algorithms as response.\n\nYou can remove the header or enter a new one with a different value. Doing that may not accurately render the response within the app.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Accept-Encoding",
-								"value": "gzip, deflate, br",
-								"system": true,
-								"type": "text",
-								"id": 5
-							},
-							{
-								"name": "connection",
-								"sortOrder": 10,
-								"infoTitle": "We recommend using this header",
-								"info": "Postman added the Connection header to indicate the server to keep the underlying network connection open once the current response is received. This allows Postman to reuse the same connection for faster response times in subsequent requests to the same server.\n\nYou can remove this header or enter a new one with a different value, such as `Connection: Close` to control this behaviour.",
-								"allowedToToggle": true,
-								"disableEdit": true,
-								"key": "Connection",
-								"value": "keep-alive",
-								"system": true,
-								"type": "text",
-								"id": 6
-							},
-							{
 								"key": "Accept",
 								"value": "application/hal+json",
-								"type": "text",
-								"id": 7
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?art=KINDLE",
+							"raw": "{{rest_url}}?filmart=ORIGINAL",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
-									"key": "art",
-									"value": "KINDLE"
+									"key": "filmart",
+									"value": "ORIGINAL"
 								}
 							]
 						}
@@ -1505,18 +883,19 @@
 									"    const contentType = response.headers.get('Content-Type');\r",
 									"    pm.expect(contentType).to.match(/^application\\/hal\\+json(; charset=utf-8)?/u);\r",
 									"});\r",
-									"pm.test('Body: Schlagwort TYPESCRIPT und Self-Link vorhanden', () => {\r",
+									"pm.test('Body: Rating 1 und Self-Link vorhanden', () => {\r",
 									"    const body = pm.response.json();\r",
-									"    const { buecher } = body._embedded;\r",
-									"    pm.expect(buecher).to.be.an('array').that.is.not.empty;\r",
-									"    buecher.forEach(buch => {\r",
-									"        const { rating, _links } = buch;\r",
+									"    const { filme } = body._embedded;\r",
+									"    pm.expect(filme).to.be.an('array').that.is.not.empty;\r",
+									"    filme.forEach(film => {\r",
+									"        const { rating, _links } = film;\r",
 									"        pm.expect(rating).to.be.equal(1);\r",
 									"        pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"    });\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1968,11 +1347,11 @@
 									"    pm.expect(access_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
 									"    pm.expect(expires_in).to.be.equal(1800);\r",
 									"    pm.expect(refresh_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
-									"    pm.expect(refresh_expires_in).to.be.equal(3600);\r",
-									"    pm.expect(roles).to.be.an('array').that.is.not.empty;\r",
+									"    pm.expect(refresh_expires_in).to.be.equal(36000);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2023,9 +1402,25 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test('Statuscode 200', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('Content-Type application/json', () => {\r",
+									"    const { response } = pm;\r",
+									"    const contentType = response.headers.get('Content-Type');\r",
+									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
+									"});\r",
+									"pm.test('Body mit token, expiresIn, roles', () => {\r",
+									"    const body = pm.response.json();\r",
+									"    console.log(`${JSON.stringify(body)}`);\r",
+									"    const { access_token, expires_in, refresh_token, refresh_expires_in, roles } = body;\r",
+									"    pm.expect(access_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
+									"    pm.expect(expires_in).to.be.equal(1800);\r",
+									"    pm.expect(refresh_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2050,7 +1445,7 @@
 							"urlencoded": [
 								{
 									"key": "refresh_token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3NDg1ODZmNi1iYjg5LTQ0MGEtYmFiNi01NGFlYWZmOGQ1ZjgifQ.eyJleHAiOjE3MDYzNzQ4MDksImlhdCI6MTcwNjM3MTIwOSwianRpIjoiYmI1Zjk2ZWMtYWUwZi00YjM5LWE1ZTQtZjIxMjA0MjAzYTYyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwic3ViIjoiZjkxNTZhYmYtNmRhNS00OGJmLWJjMWMtODEzM2FhZTI3NDE0IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImJ1Y2gtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjRmYzIwNGM3LTUyNjEtNGU0My04OGVjLWRhZDA5OWIzOGEwMyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiI0ZmMyMDRjNy01MjYxLTRlNDMtODhlYy1kYWQwOTliMzhhMDMifQ.xVPrMezuAru9prRSnxQf89Ox4EWSJYm5Dh7WoxgBqv0",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJmZTQ5N2U0NS1hZTE3LTQ5NWQtYTJlZi0xNjE4ZWRhZWIwYjEifQ.eyJleHAiOjE3MTQyNzI4MjEsImlhdCI6MTcxNDIzNjgyMSwianRpIjoiOTdmNGJlYTQtY2I3NS00NzIxLThkODYtNDBmMGE4ZGIyYzA1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwic3ViIjoiYjliMzA5OTUtNzhhYy00ZDJiLTk5ODAtM2NmMThiZGUyMzVjIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImZpbG0tY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImMzYjdlZTQ4LWJlMmItNGE3MC05N2YzLTkxOWRkYzE2YWI1MCIsInNjb3BlIjoicm9sZXMgZW1haWwgcHJvZmlsZSIsInNpZCI6ImMzYjdlZTQ4LWJlMmItNGE3MC05N2YzLTkxOWRkYzE2YWI1MCJ9.GkgayYTX-6o7eZRqI9VV5UIhkcjzfeROVab89ejGg-hmv_SQrenfhm7eI4ZFGyff36qZt5hpNjP9uDQ5gGpQBg",
 									"type": "text"
 								}
 							]
@@ -2188,8 +1583,25 @@
 			"name": "Neuanlegen",
 			"item": [
 				{
-					"name": "Neues Buch",
+					"name": "Neuer Film",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=user&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -2207,23 +1619,27 @@
 									"    pm.expect(body).to.be.a('string').that.is.empty;\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-007-00644-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.99,\r\n  \"rabatt\": 0.123,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpost\",\r\n    \"untertitel\": \"untertitelpost\"\r\n  },\r\n  \"abbildungen\": [{\r\n    \"beschriftung\": \"Abb. 1\",\r\n    \"contentType\": \"img/png\"\r\n  }]\r\n}",
+							"raw": "{\r\n    \"titel\": \"Die Verurteilten2\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2000-02-01\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\": {\r\n        \"name\": \"Caste Rock Entertainment\",\r\n        \"umsatz\": 250000,\r\n        \"homepage\": \"https://cre.com\"\r\n    },\r\n      \"schauspielerListe\": [{\r\n        \"name\": \"Freeman Jr.\",\r\n        \"geburtsdatum\": \"1937-01-07\"\r\n      }]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2240,7 +1656,7 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch mit bereits existierender ISBN",
+					"name": "Neuer Film mit bereits existierender Titel und Datum",
 					"event": [
 						{
 							"listen": "test",
@@ -2260,11 +1676,39 @@
 									"    pm.expect(message).to.be.a('string').that.includes('ISBN');\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2276,7 +1720,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-3-897-22583-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.9,\r\n  \"rabatt\": 0.1,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.isbn\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpostisbn\",\r\n    \"untertitel\": \"Untertitelpostisbn\"\r\n  }\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\":{\r\n        \"name\": \"Der Distributor\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2293,7 +1737,7 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch mit ungültigen Daten",
+					"name": "Neuer Film mit ungültigen Daten",
 					"event": [
 						{
 							"listen": "test",
@@ -2310,16 +1754,44 @@
 									"pm.test('Fehlermeldungen im Response Body', () => {\r",
 									"    const body = pm.response.json();\r",
 									"    const { message } = body;\r",
-									"    const props = ['titel.titel', 'isbn', 'rating', 'art', 'preis', 'rabatt', 'datum', 'homepage'];\r",
+									"    const props = ['distributor.name', 'titel', 'laenge', 'rating', 'preis', 'rabatt', 'erscheinungsdatum', 'distributor.homepage'];\r",
 									"    pm.expect(message).to.be.an('array').that.has.a.lengthOf(props.length);\r",
 									"    message.forEach(msg => pm.expect(msg).to.be.a('string').that.includes.oneOf(props));\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded'\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2331,7 +1803,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"falsche-ISBN\",\r\n  \"rating\": -1,\r\n  \"art\": \"UNSICHTBAR\",\r\n  \"preis\": -1,\r\n  \"rabatt\": 2,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-02-30\",\r\n  \"homepage\": \"anyHomepage\",\r\n  \"titel\": {\r\n    \"titel\": \"?!\",\r\n    \"untertitel\": \"Untertitelinvalid\"\r\n  }\r\n}",
+							"raw": "{\r\n    \"titel\": \"!??!!?-.__\",\r\n    \"rating\": 6,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": -1000,\r\n    \"preis\": -2,\r\n    \"rabatt\": 20,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"1/1/2012\",\r\n    \"schlagwoerter\": [\r\n        \"FEHLER\"\r\n    ],\r\n    \"distributor\": {\r\n        \"name\": \"!??!!?-.__\",\r\n        \"umsatz\": 3213213112,\r\n        \"homepage\": \"___\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2348,24 +1820,8 @@
 					"response": []
 				},
 				{
-					"name": "Neues Buch als kunde",
+					"name": "Neuer Film als kunde",
 					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Statuscode 403', () => {\r",
-									"    pm.response.to.have.status(403);\r",
-									"});\r",
-									"pm.test('Content-Type application/json', () => {\r",
-									"    const { response } = pm;\r",
-									"    const contentType = response.headers.get('Content-Type');\r",
-									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
 						{
 							"listen": "prerequest",
 							"script": {
@@ -2376,14 +1832,41 @@
 									"    header: {\r",
 									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
 									"    },\r",
-									"    body: 'username=adriana.alpha&password=p',\r",
-									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().token));"
+									"    body: 'username=user&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Statuscode 201', () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test('Leerer Body', () => {\r",
+									"    const body = pm.response.text();\r",
+									"    pm.expect(body).to.be.a('string').that.is.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2395,7 +1878,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-007-00644-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.99,\r\n  \"rabatt\": 0.123,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpost\",\r\n    \"untertitel\": \"untertitelpost\"\r\n  },\r\n  \"abbildungen\": [{\r\n    \"beschriftung\": \"Abb. 1\",\r\n    \"contentType\": \"img/png\"\r\n  }]\r\n}",
+							"raw": "{\r\n    \"titel\": \"Ghost Movie\",\r\n    \"rating\": 5,\r\n    \"filmart\": \"ORIGINAL\",\r\n    \"laenge\": 186,\r\n    \"preis\": 31,\r\n    \"rabatt\": 0.031,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2013-02-21\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\": {\r\n        \"name\": \"Open Road Films\",\r\n        \"umsatz\": 25,\r\n        \"homepage\": \"https://or-films.com\"\r\n    },\r\n      \"schauspielerListe\": [{\r\n        \"name\": \"Marlon Wayans\",\r\n        \"geburtsdatum\": \"1972-07-23\"\r\n      }]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2418,8 +1901,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test('Statuscode 403', () => {\r",
-									"    pm.response.to.have.status(403);\r",
+									"pm.test('Statuscode 401', () => {\r",
+									"    pm.response.to.have.status(401);\r",
 									"});\r",
 									"pm.test('Content-Type application/json', () => {\r",
 									"    const { response } = pm;\r",
@@ -2427,7 +1910,18 @@
 									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2446,7 +1940,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-007-00644-1\",\r\n  \"rating\": 1,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 99.99,\r\n  \"rabatt\": 0.123,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-01-31\",\r\n  \"homepage\": \"https://post.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\", \"TYPESCRIPT\"],\r\n  \"titel\": {\r\n    \"titel\": \"Titelpost\",\r\n    \"untertitel\": \"untertitelpost\"\r\n  },\r\n  \"abbildungen\": [{\r\n    \"beschriftung\": \"Abb. 1\",\r\n    \"contentType\": \"img/png\"\r\n  }]\r\n}",
+							"raw": "{\r\n    \"titel\": \"Die Verurteilten\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2000-02-01\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\": {\r\n        \"name\": \"Caste Rock Entertainment\",\r\n        \"umsatz\": 250000,\r\n        \"homepage\": \"https://cre.com\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2503,11 +1997,39 @@
 									"    pm.expect(body).to.be.a('string').that.is.empty;\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2518,7 +2040,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-201-63361-0\",\r\n  \"rating\": 5,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 3333,\r\n  \"rabatt\": 0.33,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-03-03\",\r\n  \"homepage\": \"https://put.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 132,\r\n    \"preis\": 73.3,\r\n    \"rabatt\": 0,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2564,11 +2086,39 @@
 									"    pm.expect(message).to.be.a('string').that.includes('Versionsnummer');\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2579,7 +2129,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-201-63361-0\",\r\n  \"rating\": 5,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 3333,\r\n  \"rabatt\": 0.33,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-03-03\",\r\n  \"homepage\": \"https://put.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 132,\r\n    \"preis\": 73.3,\r\n    \"rabatt\": 0,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2624,11 +2174,39 @@
 									"    pm.expect(msg).to.be.a('string').that.includes('If-Match');\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2640,7 +2218,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-201-63361-0\",\r\n  \"rating\": 5,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 3333,\r\n  \"rabatt\": 0.33,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-03-03\",\r\n  \"homepage\": \"https://put.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 132,\r\n    \"preis\": 73.3,\r\n    \"rabatt\": 0,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2686,11 +2264,39 @@
 									"    pm.expect(message).to.be.a('string').that.includes('Versionsnummer');\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2701,7 +2307,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-201-63361-0\",\r\n  \"rating\": 5,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 3333,\r\n  \"rabatt\": 0.33,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-03-03\",\r\n  \"homepage\": \"https://put.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 132,\r\n    \"preis\": 73.3,\r\n    \"rabatt\": 0,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2747,11 +2353,39 @@
 									"    pm.expect(message).to.be.a('string').that.includes('999999');\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2762,7 +2396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"978-0-201-63361-0\",\r\n  \"rating\": 5,\r\n  \"art\": \"KINDLE\",\r\n  \"preis\": 3333,\r\n  \"rabatt\": 0.33,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"2022-03-03\",\r\n  \"homepage\": \"https://put.rest\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"PerryOtter\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 132,\r\n    \"preis\": 73.3,\r\n    \"rabatt\": 0,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-12-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2805,16 +2439,44 @@
 									"pm.test('Fehlermeldungen im Response Body', () => {\r",
 									"    const body = pm.response.json();\r",
 									"    const { message } = body;\r",
-									"    const props = ['isbn', 'rating', 'art', 'preis', 'rabatt', 'datum', 'homepage'];\r",
+									"    const props = ['titel', 'rating', 'filmart', 'laenge', 'preis', 'rabatt', 'erscheinungsdatum'];\r",
 									"    pm.expect(message).to.be.an('array').that.has.a.lengthOf(props.length);\r",
 									"    message.forEach(msg => pm.expect(msg).to.be.a('string').that.includes.oneOf(props));\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2825,7 +2487,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"isbn\": \"falsche-ISBN\",\r\n  \"rating\": -1,\r\n  \"art\": \"UNSICHTBAR\",\r\n  \"preis\": -1,\r\n  \"rabatt\": 2,\r\n  \"lieferbar\": true,\r\n  \"datum\": \"12345-123-123\",\r\n  \"homepage\": \"anyHomepage\",\r\n  \"schlagwoerter\": [\"JAVASCRIPT\"]\r\n}",
+							"raw": "{\r\n    \"titel\": \"!?!?!?\",\r\n    \"rating\": 10001,\r\n    \"filmart\": \"FALSCH\",\r\n    \"laenge\": -2,\r\n    \"preis\": -1000,\r\n    \"rabatt\": -1,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2002-112-03\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\",\r\n        \"ACTION\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2891,11 +2553,123 @@
 									"    pm.expect(body).to.be.a('string').that.is.empty;\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "\"0\"",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rest_url}}/:id",
+							"host": [
+								"{{rest_url}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buch 50 löschen als User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Statuscode 403', () => {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"pm.test('Content-Type application/json', () => {\r",
+									"    const { response } = pm;\r",
+									"    const contentType = response.headers.get('Content-Type');\r",
+									"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=user&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -2943,11 +2717,39 @@
 									"});\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:3000/auth/login',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+									"    },\r",
+									"    body: 'username=admin&password=p',\r",
+									"}, (err, res) => pm.collectionVariables.set('TOKEN', res.json().access_token));"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -3093,6 +2895,10 @@
 			"value": "",
 			"type": "string",
 			"disabled": true
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
 		}
 	]
 }

@@ -1,7 +1,10 @@
 {
 	"info": {
+		"_postman_id": "80adb655-19f7-44b3-8d28-3a9373b7f6e5",
 		"name": "Keycloak",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30249920",
+		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-80adb655-19f7-44b3-8d28-3a9373b7f6e5?action=share&source=collection_link&creator=30249920"
 	},
 	"item": [
 		{
@@ -26,10 +29,11 @@
 							"    pm.expect(access_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
 							"    pm.expect(expires_in).to.be.equal(1800);\r",
 							"    pm.expect(refresh_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
-							"    pm.expect(refresh_expires_in).to.be.equal(3600);\r",
+							"    pm.expect(refresh_expires_in).to.be.equal(36000);\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -104,17 +108,18 @@
 							"    const contentType = response.headers.get('Content-Type');\r",
 							"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
 							"});\r",
-							"pm.test('Body mit token, expiresIn, roles', () => {\r",
+							"pm.test('Body mit token, expiresIn', () => {\r",
 							"    const body = pm.response.json();\r",
 							"    console.log(`${JSON.stringify(body)}`);\r",
 							"    const { access_token, expires_in, refresh_token, refresh_expires_in } = body;\r",
 							"    pm.expect(access_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
 							"    pm.expect(expires_in).to.be.equal(1800);\r",
 							"    pm.expect(refresh_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
-							"    pm.expect(refresh_expires_in).to.be.equal(3600);\r",
+							"    pm.expect(refresh_expires_in).to.be.equal(36000);\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -318,6 +323,33 @@
 		},
 		{
 			"name": "Refresh Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Statuscode 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test('Content-Type application/json', () => {\r",
+							"    const { response } = pm;\r",
+							"    const contentType = response.headers.get('Content-Type');\r",
+							"    pm.expect(contentType).to.match(/^application\\/json(; charset=utf-8)?/u);\r",
+							"});\r",
+							"pm.test('Body mit token, expiresIn', () => {\r",
+							"    const body = pm.response.json();\r",
+							"    console.log(`${JSON.stringify(body)}`);\r",
+							"    const { access_token, expires_in, refresh_token, refresh_expires_in } = body;\r",
+							"    pm.expect(access_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
+							"    pm.expect(expires_in).to.be.equal(1800);\r",
+							"    pm.expect(refresh_token).to.be.a('string').that.matches(/.+\\..+\\..+/u);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -346,7 +378,7 @@
 						},
 						{
 							"key": "refresh_token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3NDg1ODZmNi1iYjg5LTQ0MGEtYmFiNi01NGFlYWZmOGQ1ZjgifQ.eyJleHAiOjE3MDYxMTY1NTIsImlhdCI6MTcwNjExMjk1MywianRpIjoiYTU2MjBmMDUtODk3ZS00ZmFiLTk4OWEtZWY4ODA2YjJlZTZjIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwic3ViIjoiZjkxNTZhYmYtNmRhNS00OGJmLWJjMWMtODEzM2FhZTI3NDE0IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImJ1Y2gtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImU0OGRjODVmLTg2MDctNGEyYy05ZTZkLTkyNzdiY2QzNzJhZCIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImU0OGRjODVmLTg2MDctNGEyYy05ZTZkLTkyNzdiY2QzNzJhZCJ9.tNJ6Rt_55sQjAeNE-X4n0xLv7sIo4POrI_BNIg6s2bU",
+							"value": "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJmZTQ5N2U0NS1hZTE3LTQ5NWQtYTJlZi0xNjE4ZWRhZWIwYjEifQ.eyJleHAiOjE3MTQyNjgxMjQsImlhdCI6MTcxNDIzMjEyNCwianRpIjoiM2MyMGRhMjktODA4Ny00OWZkLTk2NWItN2U4YTM5NTdkZGVhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9hY21lIiwic3ViIjoiYTlhOTI2OGYtNDhjOS00Zjc3LWI4NTEtOWQyMDM5Zjg4Mzk2IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImZpbG0tY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjUxYWExNzAyLTU5YmQtNGIxMS04YmY4LTQ0ODNkODAyMGVhNiIsInNjb3BlIjoicm9sZXMgZW1haWwgcHJvZmlsZSIsInNpZCI6IjUxYWExNzAyLTU5YmQtNGIxMS04YmY4LTQ0ODNkODAyMGVhNiJ9.j4EvlPxd4kTHgBxR28OlrueL1lSMFLhB19ZhHue8rh6r67XgYjRPo8Ck12IDKExJCqD1yh8bK1jyHrqLvW2BVw",
 							"type": "text"
 						}
 					]

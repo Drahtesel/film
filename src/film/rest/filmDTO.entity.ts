@@ -54,7 +54,6 @@ export class FilmDtoOhneRef {
     @IsOptional()
     @Min(0)
     @Max(1)
-    @IsPositive()
     @ApiProperty({ example: 0.1, type: Number })
     readonly rabatt: number | undefined;
 

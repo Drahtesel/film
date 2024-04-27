@@ -1,8 +1,11 @@
 {
 	"info": {
+		"_postman_id": "8b40b2fc-ad34-44a4-8aaf-277b9728d730",
 		"name": "Admin",
 		"description": "Administrative Aufgaben, z.B. Abfragen zu Liveness und Readiness",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30249920",
+		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-8b40b2fc-ad34-44a4-8aaf-277b9728d730?action=share&source=collection_link&creator=30249920"
 	},
 	"item": [
 		{

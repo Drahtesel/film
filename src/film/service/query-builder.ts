@@ -97,7 +97,7 @@ export class QueryBuilder {
     // z.B. { titel: 'a', rating: 5, javascript: true }
     // "rest properties" fuer anfaengliche WHERE-Klausel: ab ES 2018 https://github.com/tc39/proposal-object-rest-spread
     // eslint-disable-next-line max-lines-per-function
-    build({ distributor, drama, action, ...props }: Suchkriterien) {
+    build({ distributor, titel, drama, action, ...props }: Suchkriterien) {
         this.#logger.debug(
             'build: distributor=%s, drama=%s, action=%s, props=%o',
             distributor,
@@ -109,7 +109,7 @@ export class QueryBuilder {
         let queryBuilder = this.#repo.createQueryBuilder(this.#filmAlias);
         queryBuilder.innerJoinAndSelect(
             `${this.#filmAlias}.distributor`,
-            'distributors',
+            'distributor',
         );
 
         // z.B. { titel: 'a', rating: 5, javascript: true }
@@ -126,8 +126,18 @@ export class QueryBuilder {
             const ilike =
                 typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
             queryBuilder = queryBuilder.where(
-                `${this.#distributorAlias}.name ${ilike} :name`,
+                `${this.#distributorAlias}.name ${ilike} :distributor`,
                 { distributor: `%${distributor}%` },
+            );
+            useWhere = false;
+        }
+
+        if (titel !== undefined && typeof titel === 'string') {
+            const ilike =
+                typeOrmModuleOptions.type === 'postgres' ? 'ilike' : 'like';
+            queryBuilder = queryBuilder.where(
+                `${this.#filmAlias}.titel ${ilike} :titel`,
+                { titel: `%${titel}%` },
             );
             useWhere = false;
         }

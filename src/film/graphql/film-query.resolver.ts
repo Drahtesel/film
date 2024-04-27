@@ -49,7 +49,10 @@ export class FilmQueryResolver {
     async findById(@Args() { id }: IdInput) {
         this.#logger.debug('findById: id=%d', id);
 
-        const film = await this.#service.findById({ id });
+        const film = await this.#service.findById({
+            id,
+            mitSchauspielerListe: true,
+        });
 
         if (this.#logger.isLevelEnabled('debug')) {
             this.#logger.debug(
