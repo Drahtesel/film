@@ -140,13 +140,13 @@ describe('GraphQL Mutations', () => {
             `,
         };
         const expectedMsg = [
-            expect.stringMatching(/^isbn /u),
+            expect.stringMatching(/^titel /u),
+            expect.stringMatching(/^laenge /u),
             expect.stringMatching(/^rating /u),
             expect.stringMatching(/^preis /u),
             expect.stringMatching(/^rabatt /u),
-            expect.stringMatching(/^datum /u),
-            expect.stringMatching(/^homepage /u),
-            expect.stringMatching(/^titel.titel /u),
+            expect.stringMatching(/^erscheinungsdatum /u),
+            expect.stringMatching(/^distributor.name /u),
         ];
 
         // when
@@ -248,12 +248,12 @@ describe('GraphQL Mutations', () => {
             `,
         };
         const expectedMsg = [
-            expect.stringMatching(/^isbn /u),
+            expect.stringMatching(/^titel /u),
+            expect.stringMatching(/^laenge /u),
             expect.stringMatching(/^rating /u),
             expect.stringMatching(/^preis /u),
             expect.stringMatching(/^rabatt /u),
-            expect.stringMatching(/^datum /u),
-            expect.stringMatching(/^homepage /u),
+            expect.stringMatching(/^erscheinungsdatum /u),
         ];
 
         // when

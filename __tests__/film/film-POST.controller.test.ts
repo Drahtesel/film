@@ -29,7 +29,6 @@ import { type FilmDTO } from '../../src/film/rest/filmDTO.entity.js';
 import { FilmReadService } from '../../src/film/service/film-read.service.js';
 import { HttpStatus } from '@nestjs/common';
 import { loginRest } from '../login.js';
-import { todo } from 'node:test';
 
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
@@ -72,15 +71,15 @@ const neuerFilmInvalid: Record<string, unknown> = {
     },
 };
 // Name + Erscheinungsdatum müssen eindeutig sein
-const neuesBuchIsbnExistiert: FilmDTO = {
-    titel: '978-3-897-22583-1',
+const neuerFilmTitelundDatumExistiert: FilmDTO = {
+    titel: 'StarTrekWars',
     laenge: 120,
     rating: 1,
     filmart: 'KINOFASSUNG',
     preis: 99.99,
     rabatt: 0.099,
     streambar: true,
-    erscheinungsdatum: new Date('2022-02-28'),
+    erscheinungsdatum: new Date('1982-02-01'),
     schlagwoerter: ['ACTION', 'DRAMA'],
     distributor: {
         name: 'Titelpostisbn',
@@ -193,7 +192,7 @@ describe('POST /rest', () => {
         // when
         const response: AxiosResponse<ErrorResponse> = await client.post(
             '/rest',
-            neuesBuchIsbnExistiert,
+            neuerFilmTitelundDatumExistiert,
             { headers },
         );
 
