@@ -1,0 +1,67 @@
+' Preview durch <Alt>d
+
+@startuml Entity
+
+package typeorm {
+  class "@Entity" as Entity
+  hide Entity circle
+  class "@Column" as Column
+  hide Column circle
+  class "@PrimaryColumn" as PrimaryColumn
+  hide PrimaryColumn circle
+  class "@OneToMany" as OneToMany
+  hide OneToMany circle
+  class "@JoinColumn" as JoinColumn
+  hide JoinColumn circle
+  class "@ManyToOne" as ManyToOne
+  hide ManyToOne circle
+  class "@CreateDateColumn" as CreateDateColumn
+  hide CreateDateColumn circle
+  class "@UpdateDateColumn" as UpdateDateColumn
+  hide UpdateDateColumn circle
+}
+
+package film.entity {
+  class "type FilmArt = 'KINOFASSUNG' | 'ORIGINAL'" as FilmArt
+  hide FilmArt circle
+
+  class Film <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() readonly id: number
+    @Column() readonly version: number
+    @Column() readonly titel: string
+    @Column() readonly laenge: number
+    @Column() readonly rating: number
+    @Column() readonly art: FilmArt
+    @Column() readonly preis: number
+    @Column() readonly rabatt: number
+    @Column() readonly streambar: boolean
+    @Column() readonly erscheinungsdatum: Date
+    @Column() readonly schlagwoerter?: string
+    @CreateDateColumn() readonly erzeugt: Date
+    @UpdateDateColumn() readonly aktualisiert: Date
+  }
+
+  class Distributor <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() readonly id: number
+    @Column() readonly name: string
+    @Column() readonly umsatz: number
+    @Column() readonly homepage: string
+  }
+
+  class Schauspieler <<entity>> <<@Entity>> {
+    @Column() @PrimaryColumn() readonly id: number
+    @Column() readonly name: string
+    @Column() readonly geburtsdatum: Date
+  }
+
+  Film *--> "1" Distributor : @OneToOne() \ntitel
+  Film *--> "*" Schauspieler : @OneToMany() \nabbildungen
+
+  Film .right.> Entity
+  Film .right.> FilmArt
+}
+
+hide empty members
+
+
+@enduml
