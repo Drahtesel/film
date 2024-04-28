@@ -25,7 +25,6 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { Distributor } from '../../src/film/entity/distributor.entity';
 import { type ErrorResponse } from './error-response.js';
 import { type FilmeModel } from '../../src/film/rest/film-get.controller.js';
 import { HttpStatus } from '@nestjs/common';
@@ -36,7 +35,7 @@ import { HttpStatus } from '@nestjs/common';
 const distributorVorhanden = 'a';
 const distributorNichtVorhanden = 'xx';
 const schlagwortVorhanden = 'action';
-const schlagwortNichtVorhanden = 'drama';
+const schlagwortNichtVorhanden = 'fehler';
 
 // -----------------------------------------------------------------------------
 // T e s t s

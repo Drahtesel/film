@@ -30,7 +30,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 export class FilmAlreadyExistsException extends HttpException {
     constructor(
         readonly titel: string,
-        readonly erscheinungsdatum: Date,
+        readonly erscheinungsdatum: Date | string,
     ) {
         super(
             `Der Film ${titel} mit dem Erscheinungsdatum ${erscheinungsdatum.toString()} existiert bereits.`,

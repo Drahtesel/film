@@ -96,7 +96,7 @@ describe('GET /rest/:id', () => {
         expect(selfLink).toMatch(new RegExp(`${url}$`, 'u'));
     });
 
-    test('Kein Buch zu nicht-vorhandener ID', async () => {
+    test('Kein Film zu nicht-vorhandener ID', async () => {
         // given
         const url = `/${idNichtVorhanden}`;
 

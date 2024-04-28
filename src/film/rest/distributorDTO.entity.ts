@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import { IsOptional, IsUrl, Matches, MaxLength } from 'class-validator';
+import { IsOptional, IsUrl, Matches, MaxLength, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 /**
@@ -17,6 +17,7 @@ export class DistributorDTO {
     readonly homepage: string | undefined;
 
     @IsOptional()
+    @Min(0)
     @ApiProperty({ example: '1234.56', type: String })
     readonly umsatz: number | undefined;
 }

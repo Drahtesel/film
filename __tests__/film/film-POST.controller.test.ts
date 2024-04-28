@@ -42,11 +42,11 @@ const neuerFilm: FilmDTO = {
     rabatt: 0.123,
     streambar: true,
     erscheinungsdatum: new Date('2022-02-28'),
-    schlagwoerter: ['JAVASCRIPT', 'TYPESCRIPT'],
+    schlagwoerter: ['Horror', 'Action'],
     distributor: {
         name: 'Universal',
         umsatz: 0,
-        homepage: 'https://Universal/',
+        homepage: 'https://Universal.com',
     },
     schauspielerListe: [
         {
@@ -56,10 +56,10 @@ const neuerFilm: FilmDTO = {
     ],
 };
 const neuerFilmInvalid: Record<string, unknown> = {
-    titel: 'Star Wars',
-    laenge: 120,
+    titel: '!?!?!.__',
+    laenge: -120,
     rating: -1,
-    filmart: 'ORIGINAL',
+    filmart: 'FEHLER',
     preis: -1,
     rabatt: 2,
     streambar: true,
@@ -72,19 +72,19 @@ const neuerFilmInvalid: Record<string, unknown> = {
 };
 // Name + Erscheinungsdatum müssen eindeutig sein
 const neuerFilmTitelundDatumExistiert: FilmDTO = {
-    titel: 'StarTrekWars',
+    titel: 'Star Trek Wars',
     laenge: 120,
     rating: 1,
     filmart: 'KINOFASSUNG',
     preis: 99.99,
     rabatt: 0.099,
     streambar: true,
-    erscheinungsdatum: new Date('1982-02-01'),
+    erscheinungsdatum: '1982-02-01',
     schlagwoerter: ['ACTION', 'DRAMA'],
     distributor: {
-        name: 'Titelpostisbn',
+        name: 'DistributorPost',
         umsatz: 0,
-        homepage: 'https://post.isbn/',
+        homepage: 'https://post.distributor.com',
     },
     schauspielerListe: undefined,
 };
@@ -115,7 +115,7 @@ describe('POST /rest', () => {
         await shutdownServer();
     });
 
-    test('Neues Film', async () => {
+    test('Neuer Film', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -149,7 +149,7 @@ describe('POST /rest', () => {
         expect(data).toBe('');
     });
 
-    test('Neues Film mit ungueltigen Daten', async () => {
+    test('Neuer Film mit ungueltigen Daten', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -162,6 +162,8 @@ describe('POST /rest', () => {
             expect.stringMatching(/^rabatt /u),
             expect.stringMatching(/^erscheinungsdatum /u),
             expect.stringMatching(/^distributor.name /u),
+            expect.stringMatching(/^distributor.umsatz /u),
+            expect.stringMatching(/^distributor.homepage /u),
         ];
 
         // when
@@ -184,7 +186,7 @@ describe('POST /rest', () => {
         expect(messages).toEqual(expect.arrayContaining(expectedMsg));
     });
 
-    test('Neues Film, aber die ISBN existiert bereits', async () => {
+    test('Neuer Film, aber die Kombination aus Titel und Erscheinungsdatum existiert bereits', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -201,11 +203,15 @@ describe('POST /rest', () => {
 
         const { message, statusCode } = data;
 
-        expect(message).toEqual(expect.stringContaining('ISBN'));
+        expect(message).toEqual(expect.stringContaining('Erscheinungsdatum'));
+        expect(message).toEqual(expect.stringContaining('existiert bereits'));
+        expect(message).toEqual(
+            expect.stringContaining(neuerFilmTitelundDatumExistiert.titel),
+        );
         expect(statusCode).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
     });
 
-    test('Neues Film, aber ohne Token', async () => {
+    test('Neuer Film, aber ohne Token', async () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.post(
             '/rest',
@@ -216,7 +222,7 @@ describe('POST /rest', () => {
         expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
     });
 
-    test('Neues Film, aber mit falschem Token', async () => {
+    test('Neuer Film, aber mit falschem Token', async () => {
         // given
         const token = 'FALSCH';
         headers.Authorization = `Bearer ${token}`;
@@ -231,6 +237,4 @@ describe('POST /rest', () => {
         // then
         expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
     });
-
-    test.todo('Abgelaufener Token');
 });
