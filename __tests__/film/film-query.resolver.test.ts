@@ -40,7 +40,7 @@ export interface GraphQLResponseBody {
 
 type FilmDTO = Omit<
     Film,
-    'abbildungen' | 'aktualisiert' | 'erzeugt' | 'rabatt'
+    'schauspielerListe' | 'aktualisiert' | 'erzeugt' | 'rabatt'
 > & {
     rabatt: string;
 };
@@ -54,7 +54,7 @@ const distributorNameVorhanden = 'Alpha';
 const teilDistributorNameVorhanden = 'a';
 const teilDistributornameNichtVorhanden = 'abc';
 
-const isbnVorhanden = '978-3-897-22583-1';
+const titelVorhanden = 'Star Trek Wars';
 
 const ratingVorhanden = 2;
 const ratingNichtVorhanden = 99;
@@ -85,23 +85,23 @@ describe('GraphQL Queries', () => {
         await shutdownServer();
     });
 
-    test('Buch zu vorhandener ID', async () => {
+    test('Film zu vorhandener ID', async () => {
         // given
         const body: GraphQLRequest = {
             query: `
                 {
-                    buch(id: "${idVorhanden}") {
+                    film(id: "${idVorhanden}") {
                         version
-                        isbn
+                        titel
+                        laenge
                         rating
-                        art
+                        filmart
                         preis
-                        lieferbar
-                        datum
-                        homepage
+                        streambar
+                        erscheinungsdatum
                         schlagwoerter
-                        titel {
-                            titel
+                        distributor {
+                            name
                         }
                         rabatt(short: true)
                     }
@@ -127,7 +127,7 @@ describe('GraphQL Queries', () => {
         expect(result.id).toBeUndefined();
     });
 
-    test('Buch zu nicht-vorhandener ID', async () => {
+    test('Film zu nicht-vorhandener ID', async () => {
         // given
         const id = '999999';
         const body: GraphQLRequest = {
@@ -149,7 +149,7 @@ describe('GraphQL Queries', () => {
         // then
         expect(status).toBe(HttpStatus.OK);
         expect(headers['content-type']).toMatch(/json/iu);
-        expect(data.data!.buch).toBeNull();
+        expect(data.data!.film).toBeNull();
 
         const { errors } = data;
 
@@ -158,9 +158,9 @@ describe('GraphQL Queries', () => {
         const [error] = errors!;
         const { message, path, extensions } = error;
 
-        expect(message).toBe(`Es gibt kein Buch mit der ID ${id}.`);
+        expect(message).toBe(`Es gibt kein Film mit der ID ${id}.`);
         expect(path).toBeDefined();
-        expect(path![0]).toBe('buch');
+        expect(path![0]).toBe('film');
         expect(extensions).toBeDefined();
         expect(extensions!.code).toBe('BAD_USER_INPUT');
     });
@@ -293,7 +293,7 @@ describe('GraphQL Queries', () => {
             query: `
                 {
                     filme(suchkriterien: {
-                        isbn: "${isbnVorhanden}"
+                        isbn: "${titelVorhanden}"
                     }) {
                         isbn
                         titel {
@@ -326,7 +326,7 @@ describe('GraphQL Queries', () => {
         const [film] = filmeArray;
         const { titel, distributor } = film!;
 
-        expect(titel).toBe(isbnVorhanden);
+        expect(titel).toBe(titelVorhanden);
         expect(distributor?.name).toBeDefined();
     });
 

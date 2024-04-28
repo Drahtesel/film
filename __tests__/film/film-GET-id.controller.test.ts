@@ -77,7 +77,7 @@ describe('GET /rest/:id', () => {
         await shutdownServer();
     });
 
-    test('Buch zu vorhandener ID', async () => {
+    test('Film zu vorhandener ID', async () => {
         // given
         const url = `/${idVorhanden}`;
 
