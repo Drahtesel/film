@@ -45,7 +45,7 @@ const geaenderterFilm: FilmDtoOhneRef = {
 };
 const idVorhanden = '30';
 
-const geaendertesFilmIdNichtVorhanden: FilmDtoOhneRef = {
+const geaenderterFilmIdNichtVorhanden: FilmDtoOhneRef = {
     titel: 'Beta',
     laenge: 100,
     rating: 4,
@@ -58,20 +58,18 @@ const geaendertesFilmIdNichtVorhanden: FilmDtoOhneRef = {
 };
 const idNichtVorhanden = '999999';
 
-const geaendertesFilmInvalid: Record<string, unknown> = {
-    titel: 'Gamma',
-    laenge: 101,
+const geaenderterFilmInvalid: Record<string, unknown> = {
+    titel: '!?!?',
+    laenge: -101,
     rating: -1,
     filmart: 'UNSICHTBAR',
     preis: -1,
     rabatt: 2,
     streambar: true,
     erscheinungsdatum: '12345-123-123',
-    distributor: '?!',
-    homepage: 'anyHomepage',
 };
 
-const veraltesFilm: FilmDtoOhneRef = {
+const veralterFilm: FilmDtoOhneRef = {
     titel: '978-0-007-09732-6',
     laenge: 100,
     rating: 1,
@@ -110,7 +108,7 @@ describe('PUT /rest/:id', () => {
         await shutdownServer();
     });
 
-    test('Vorhandenes Film aendern', async () => {
+    test('Vorhandenen Film aendern', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         const token = await loginRest(client);
@@ -129,7 +127,7 @@ describe('PUT /rest/:id', () => {
         expect(data).toBe('');
     });
 
-    test('Nicht-vorhandenes Film aendern', async () => {
+    test('Nicht-vorhandenen Film aendern', async () => {
         // given
         const url = `/rest/${idNichtVorhanden}`;
         const token = await loginRest(client);
@@ -139,7 +137,7 @@ describe('PUT /rest/:id', () => {
         // when
         const { status }: AxiosResponse<string> = await client.put(
             url,
-            geaendertesFilmIdNichtVorhanden,
+            geaenderterFilmIdNichtVorhanden,
             { headers },
         );
 
@@ -147,7 +145,7 @@ describe('PUT /rest/:id', () => {
         expect(status).toBe(HttpStatus.NOT_FOUND);
     });
 
-    test('Vorhandenes Film aendern, aber mit ungueltigen Daten', async () => {
+    test('Vorhandenen Film aendern, aber mit ungueltigen Daten', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         const token = await loginRest(client);
@@ -165,7 +163,7 @@ describe('PUT /rest/:id', () => {
 
         // when
         const { status, data }: AxiosResponse<Record<string, any>> =
-            await client.put(url, geaendertesFilmInvalid, { headers });
+            await client.put(url, geaenderterFilmInvalid, { headers });
 
         // then
         expect(status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -178,7 +176,7 @@ describe('PUT /rest/:id', () => {
         expect(messages).toEqual(expect.arrayContaining(expectedMsg));
     });
 
-    test('Vorhandenes Film aendern, aber ohne Versionsnummer', async () => {
+    test('Vorhandenen Film aendern, aber ohne Versionsnummer', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         const token = await loginRest(client);
@@ -197,7 +195,7 @@ describe('PUT /rest/:id', () => {
         expect(data).toBe('Header "If-Match" fehlt');
     });
 
-    test('Vorhandenes Film aendern, aber mit alter Versionsnummer', async () => {
+    test('Vorhandenen Film aendern, aber mit alter Versionsnummer', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         const token = await loginRest(client);
@@ -207,7 +205,7 @@ describe('PUT /rest/:id', () => {
         // when
         const { status, data }: AxiosResponse<ErrorResponse> = await client.put(
             url,
-            veraltesFilm,
+            veralterFilm,
             { headers },
         );
 
@@ -220,7 +218,7 @@ describe('PUT /rest/:id', () => {
         expect(statusCode).toBe(HttpStatus.PRECONDITION_FAILED);
     });
 
-    test('Vorhandenes Film aendern, aber ohne Token', async () => {
+    test('Vorhandenen Film aendern, aber ohne Token', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         delete headers.Authorization;
@@ -237,7 +235,7 @@ describe('PUT /rest/:id', () => {
         expect(response.status).toBe(HttpStatus.UNAUTHORIZED);
     });
 
-    test('Vorhandenes Film aendern, aber mit falschem Token', async () => {
+    test('Vorhandenen Film aendern, aber mit falschem Token', async () => {
         // given
         const url = `/rest/${idVorhanden}`;
         const token = 'FALSCH';

@@ -36,6 +36,7 @@ export type GraphQLQuery = Pick<GraphQLRequest, 'query'>;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
+const idAendern = '40';
 const idLoeschen = '60';
 
 // -----------------------------------------------------------------------------
@@ -62,7 +63,7 @@ describe('GraphQL Mutations', () => {
     });
 
     // -------------------------------------------------------------------------
-    test('Neuer FIlm', async () => {
+    test('Neuer Film', async () => {
         // given
         const token = await loginGraphQL(client);
         const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
@@ -74,7 +75,7 @@ describe('GraphQL Mutations', () => {
                             titel: "Nackte Kanone",
                             laenge: 85,
                             rating: 5,
-                            filmeart: KINOFASSUNG,
+                            filmart: KINOFASSUNG,
                             preis: 99.99,
                             rabatt: 0.123,
                             streambar: true,
@@ -84,8 +85,8 @@ describe('GraphQL Mutations', () => {
                                 name: "Titelcreatemutation",
                                 umsatz: 201156.78
                             },
-                            schauspieler: [{
-                                name: Nielsen,
+                            schauspielerListe: [{
+                                name: "Nielsen",
                                 geburtsdatum: "1926-02-11"
                             }]
                         }
@@ -113,6 +114,7 @@ describe('GraphQL Mutations', () => {
     });
 
     // -------------------------------------------------------------------------
+    // eslint-disable-next-line max-lines-per-function
     test('Film mit ungueltigen Werten neu anlegen', async () => {
         // given
         const token = await loginGraphQL(client);
@@ -122,9 +124,10 @@ describe('GraphQL Mutations', () => {
                 mutation {
                     create(
                         input: {
-                            name: 12,
+                            titel: "!:!;:;",
+                            laenge: -1,
                             rating: -1,
-                            filmart: ORIGONAL,
+                            filmart: ORIGINAL,
                             preis: -1,
                             rabatt: 2,
                             streambar: false,
@@ -184,12 +187,12 @@ describe('GraphQL Mutations', () => {
                 mutation {
                     update(
                         input: {
-                            id: "40",
+                            id: "${idAendern}",
                             version: 0,
-                            titel: "Doktor Seltsam oder wie ich lernte die Bombe zu lieben",
+                            titel: "Doktor Seltsam",
                             laenge: 95,
                             rating: 5,
-                            art: ORIGINAL,
+                            filmart: ORIGINAL,
                             preis: 99.99,
                             rabatt: 0.099,
                             streambar: false,
@@ -223,13 +226,12 @@ describe('GraphQL Mutations', () => {
         // given
         const token = await loginGraphQL(client);
         const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
-        const id = '40';
         const body: GraphQLQuery = {
             query: `
                 mutation {
                     update(
                         input: {
-                            id: "${id}",
+                            id: "${idAendern}",
                             version: 0,
                             titel: "?!12",
                             laenge: -1,
@@ -279,7 +281,7 @@ describe('GraphQL Mutations', () => {
     });
 
     // -------------------------------------------------------------------------
-    test('Nicht-vorhandenes Film aktualisieren', async () => {
+    test('Nicht-vorhandenen Film aktualisieren', async () => {
         // given
         const token = await loginGraphQL(client);
         const authorization = { Authorization: `Bearer ${token}` }; // eslint-disable-line @typescript-eslint/naming-convention
@@ -328,7 +330,7 @@ describe('GraphQL Mutations', () => {
         const { message, path, extensions } = error;
 
         expect(message).toBe(
-            `Es gibt kein Film mit der ID ${id.toLowerCase()}.`,
+            `Es gibt keinen Film mit der ID ${id.toLowerCase()}.`,
         );
         expect(path).toBeDefined();
         expect(path![0]).toBe('update');
@@ -372,7 +374,7 @@ describe('GraphQL Mutations', () => {
         const body: GraphQLQuery = {
             query: `
                 mutation {
-                    delete(id: "60")
+                    delete(id: "${idLoeschen}")
                 }
             `,
         };

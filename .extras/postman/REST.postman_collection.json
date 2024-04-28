@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "1581cf52-dcc7-4a11-a974-3fcb12710008",
+		"_postman_id": "43c935ea-bd4f-460d-9965-5408ce0e6eda",
 		"name": "REST",
 		"description": "REST-Schnittstelle",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30249920",
-		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-1581cf52-dcc7-4a11-a974-3fcb12710008?action=share&source=collection_link&creator=30249920"
+		"_collection_link": "https://speeding-spaceship-802758.postman.co/workspace/Film~a86e3120-d93f-40b2-8697-07be6175b51c/collection/30249920-43c935ea-bd4f-460d-9965-5408ce0e6eda?action=share&source=collection_link&creator=30249920"
 	},
 	"item": [
 		{
@@ -1983,7 +1983,7 @@
 			"name": "Ändern",
 			"item": [
 				{
-					"name": "Buch 30 ändern",
+					"name": "Film 30 ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2066,7 +2066,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch 30 mit falscher Versionsnummer ändern",
+					"name": "Film 30 mit falscher Versionsnummer ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2155,7 +2155,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch 30 ohne Versionsnummer ändern",
+					"name": "Film 30 ohne Versionsnummer ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2244,7 +2244,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch 30 mit alter Versionsnummer ändern",
+					"name": "Film 30 mit alter Versionsnummer ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2333,7 +2333,7 @@
 					"response": []
 				},
 				{
-					"name": "Nicht-vorhandenes Buch 999999 ändern",
+					"name": "Nicht-vorhandenen Film 999999 ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2422,7 +2422,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch 30 mit ungültigen Daten ändern",
+					"name": "Film 30 mit ungültigen Daten ändern",
 					"event": [
 						{
 							"listen": "test",
@@ -2539,7 +2539,7 @@
 			"name": "Löschen",
 			"item": [
 				{
-					"name": "Buch 50 löschen",
+					"name": "Film 50 löschen",
 					"event": [
 						{
 							"listen": "test",
@@ -2622,7 +2622,7 @@
 					"response": []
 				},
 				{
-					"name": "Buch 50 löschen als User",
+					"name": "Film 50 löschen als User",
 					"event": [
 						{
 							"listen": "test",
@@ -2706,7 +2706,7 @@
 					"response": []
 				},
 				{
-					"name": "Nicht-vorhandenes Buch 999999 löschen",
+					"name": "Nicht-vorhandenen Film 999999 löschen",
 					"event": [
 						{
 							"listen": "test",
