@@ -1,0 +1,75 @@
+' Preview durch <Alt>d
+
+@startuml Komponenten
+
+left to right direction
+
+actor RESTClient
+actor GraphQLClient
+
+node "Nest" {
+  [RequestLoggerMiddleware]
+
+  [FilmController]
+  [FilmResolver]
+
+  [FilmService]
+
+  [Repository<Film>]
+
+  [MailService]
+}
+
+
+cloud {
+    [TypeORM]
+}
+
+cloud {
+    [nest-keycloak-connect]
+}
+
+cloud {
+    [nodemailer]
+}
+
+database "DB film" {
+    [Tabelle film]
+    [Tabelle distributor]
+    [Tabelle schauspieler]
+}
+
+node {
+    [Keycloak]
+}
+
+node {
+    [Mailserver]
+}
+
+RESTClient ~~> [RequestLoggerMiddleware]
+GraphQLClient ~~> [RequestLoggerMiddleware]
+
+[RequestLoggerMiddleware] ~~> [FilmController]
+[RequestLoggerMiddleware] ~~> [FilmResolver]
+
+[FilmController] ..> [FilmService]
+[FilmResolver] ..> [FilmService]
+[FilmService] ..> [Repository<Film>]
+
+[Repository<Film>] ~~> [TypeORM]
+[TypeORM] ~~> [Tabelle film]
+[TypeORM] ~~> [Tabelle distributor]
+[TypeORM] ~~> [Tabelle schauspieler]
+
+[FilmController] ..> [nest-keycloak-connect]
+[nest-keycloak-connect] ~~> [Keycloak]
+
+[FilmService] ..> [MailService]
+[MailService] ~~> [nodemailer]
+[nodemailer] ~~> [Mailserver]
+
+[MailService] ~[hidden]~> [nest-keycloak-connect]
+
+
+@enduml
