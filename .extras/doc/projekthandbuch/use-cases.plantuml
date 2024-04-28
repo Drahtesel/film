@@ -1,0 +1,21 @@
+' Preview durch <Alt>d
+
+@startuml Use Cases
+
+actor Gast
+actor Admin
+actor Kunde
+
+rectangle film {
+    Gast --> (Film suchen)
+    Admin --> (Film suchen)
+    Admin --> (Film anlegen)
+    Admin --> (Film ändern)
+    Admin --> (Film löschen)
+    Kunde --> (Film suchen)
+    Kunde --> (Film anlegen)
+    Kunde --> (Film ändern)
+}
+
+
+@enduml
