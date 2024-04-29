@@ -477,9 +477,9 @@ Mit dem Unterkommando `inspect` kann man die Metadaten, z.B. Labels, zu einem
 Image inspizieren:
 
 ```powershell
-    docker inspect juergenzimmermann/buch:2024.04.0-distroless
-    docker inspect juergenzimmermann/buch:2024.04.0-bookworm
-    docker inspect juergenzimmermann/buch:2024.04.0-wolfi
+    docker inspect romolus/film:2024.04.0-distroless
+    docker inspect romolus/film:2024.04.0-bookworm
+    docker inspect romolus/film:2024.04.0-wolfi
 ```
 
 #### docker sbom
@@ -489,9 +489,9 @@ inspizieren, welche Bestandteilen in einem Docker-Images enthalten sind, z.B.
 npm-Packages oder Debian-Packages.
 
 ```powershell
-    docker sbom juergenzimmermann/buch:2024.04.0-distroless
-    docker sbom juergenzimmermann/buch:2024.04.0-bookworm
-    docker sbom juergenzimmermann/buch:2024.04.0-wolfi
+    docker sbom romolus/film:2024.04.0-distroless
+    docker sbom romolus/film:2024.04.0-bookworm
+    docker sbom romolus/film:2024.04.0-wolfi
 ```
 
 #### dive
