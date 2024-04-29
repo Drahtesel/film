@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# Aufruf:   docker build --tag juergenzimmermann/buch:2024.04.0-bookworm .
+# Aufruf:   docker build --tag romolus/film:2024.04.0-bookworm .
 #               ggf. --progress=plain
 #               ggf. --no-cache
 #           Get-Content Dockerfile.bookworm | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
