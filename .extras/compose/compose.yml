@@ -40,8 +40,8 @@ include:
 
 # https://docs.docker.com/compose/compose-file/05-services
 services:
-  buch:
-    image: juergenzimmermann/buch:2024.04.0-bookworm
+  film:
+    image: romolus/film:2024.04.0-bookworm
     depends_on:
       db:
         condition: service_healthy
@@ -66,8 +66,8 @@ services:
         target: /opt/app/dist/config/resources/jwt/private-key.pem
         read_only: true
       - type: bind
-        source: ../../src/config/resources/db/sqlite/buch.sqlite
-        target: /opt/app/dist/config/resources/db/sqlite/buch.sqlite
+        source: ../../src/config/resources/db/sqlite/film.sqlite
+        target: /opt/app/dist/config/resources/db/sqlite/film.sqlite
     env_file: app.env
     environment:
       # https://docs.docker.com/compose/compose-file/compose-file-v3/#variable-substitution

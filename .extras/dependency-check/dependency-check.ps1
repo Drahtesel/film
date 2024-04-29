@@ -30,8 +30,8 @@ if ($versionMinimum -gt $versionCurrent) {
 # Titel setzen
 $host.ui.RawUI.WindowTitle = 'dependency-check'
 
-$nvdApiKey = '12345678-1234-1234-1234-123456789012'
-$project = 'buch'
+$nvdApiKey = 'f937e588-a50d-4ca3-9c7a-7bb52c820a33'
+$project = 'film'
 
 C:\Zimmermann\dependency-check\bin\dependency-check.bat `
   --nvdApiKey $nvdApiKey `
