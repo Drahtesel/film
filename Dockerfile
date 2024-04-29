@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# Aufruf:   docker build --tag juergenzimmermann/buch:2024.04.0-bookworm .
+# Aufruf:   docker build --tag romolus/film:2024.04.0-bookworm .
 #               ggf. --progress=plain
 #               ggf. --no-cache
 #           Get-Content Dockerfile.bookworm | docker run --rm --interactive hadolint/hadolint:2.12.1-beta-debian
@@ -119,7 +119,7 @@ LABEL org.opencontainers.image.title="film" \
     org.opencontainers.image.description="Appserver film mit Basis-Image Debian Bookworm" \
     org.opencontainers.image.version="2024.04.0-bookworm" \
     org.opencontainers.image.licenses="GPL-3.0-or-later" \
-    org.opencontainers.image.authors="Juergen.Zimmermann@h-ka.de"
+    org.opencontainers.image.authors="krro1024@h-ka.de"
 
 RUN <<EOF
 set -eux
