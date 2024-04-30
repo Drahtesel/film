@@ -15,7 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+import {
+    type FilmModel,
+    type FilmeModel,
+} from '../../src/film/rest/film-get.controller.js';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import {
@@ -26,8 +29,8 @@ import {
     startServer,
 } from '../testserver.js';
 import { type ErrorResponse } from './error-response.js';
-import { type FilmeModel } from '../../src/film/rest/film-get.controller.js';
 import { HttpStatus } from '@nestjs/common';
+import { dbType } from '../../src/config/db.js';
 
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
@@ -36,6 +39,20 @@ const distributorVorhanden = 'a';
 const distributorNichtVorhanden = 'xx';
 const schlagwortVorhanden = 'action';
 const schlagwortNichtVorhanden = 'fehler';
+const streambar = dbType === 'sqlite' ? '1' : 'true';
+
+const keyValuePairs: [string, string][] = [
+    ['titel', 'Star Trek Wars'],
+    ['rating', '4'],
+    ['laenge', '120'],
+    ['filmart', 'ORIGINAL'],
+    ['preis', '73.3'],
+    ['rabatt', '0.017'],
+    ['streambar', streambar],
+    ['erscheinungsdatum', '2008-02-06'],
+];
+
+const paramsMap = new Map<string, string>(keyValuePairs);
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -142,7 +159,7 @@ describe('GET /rest', () => {
 
         const { filme } = data._embedded;
 
-        // Jedes Film hat im Array der Schlagwoerter z.B. "javascript"
+        // Jeder Film hat im Array der Schlagwoerter z.B. "action"
         filme
             .map((film) => film.schlagwoerter)
             .forEach((schlagwoerter) =>
@@ -150,6 +167,59 @@ describe('GET /rest', () => {
                     expect.arrayContaining([schlagwortVorhanden.toUpperCase()]),
                 ),
             );
+    });
+
+    test('Mind. 1 Film mit mehreren Schlagwörtern', async () => {
+        // given
+        const params = {
+            [schlagwortVorhanden]: 'true',
+            drama: 'true',
+        };
+
+        // when
+        const { status, headers, data }: AxiosResponse<FilmeModel> =
+            await client.get('/', { params });
+
+        // then
+        expect(status).toBe(HttpStatus.OK);
+        expect(headers['content-type']).toMatch(/json/iu);
+        expect(data).toBeDefined();
+
+        const { filme } = data._embedded;
+
+        // Jeder Film hat im Array der Schlagwoerter z.B. "drama, action"
+        filme
+            .map((film) => film.schlagwoerter)
+            .forEach((schlagwoerter) =>
+                expect(schlagwoerter).toEqual(
+                    expect.arrayContaining([
+                        schlagwortVorhanden.toUpperCase(),
+                        'drama'.toUpperCase(),
+                    ]),
+                ),
+            );
+    });
+
+    test('Alle Properties testen', async () => {
+        for (const param of paramsMap.keys()) {
+            // given
+            const params = { [param]: paramsMap.get(param) };
+
+            // when
+            const { status, headers, data }: AxiosResponse<FilmeModel> =
+                await client.get('/', { params });
+
+            // then
+            expect(status).toBe(HttpStatus.OK);
+            expect(headers['content-type']).toMatch(/json/iu);
+            expect(data).toBeDefined();
+
+            const { filme } = data._embedded;
+
+            expect(
+                filme.map((film) => film[param as keyof FilmModel]?.toString()),
+            ).toContain(paramsMap.get(param));
+        }
     });
 
     test('Keine Filme zu einem nicht vorhandenen Schlagwort', async () => {
@@ -188,6 +258,16 @@ describe('GET /rest', () => {
 
         expect(error).toBe('Not Found');
         expect(statusCode).toBe(HttpStatus.NOT_FOUND);
+    });
+
+    test('Kein Film zu falschem MIME-Typen', async () => {
+        const { status }: AxiosResponse<ErrorResponse> = await client.get(
+            '/',
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { headers: { Accept: 'FEHLER' } },
+        );
+
+        expect(status).toBe(HttpStatus.NOT_ACCEPTABLE);
     });
 });
 /* eslint-enable no-underscore-dangle */

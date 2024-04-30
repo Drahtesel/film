@@ -41,7 +41,7 @@ const geaenderterFilm: FilmDtoOhneRef = {
     rabatt: 0.33,
     streambar: true,
     erscheinungsdatum: new Date('2022-03-03'),
-    schlagwoerter: ['ACTION'],
+    schlagwoerter: ['GEAENDERT'],
 };
 const idVorhanden = '30';
 
@@ -54,7 +54,7 @@ const geaenderterFilmIdNichtVorhanden: FilmDtoOhneRef = {
     rabatt: 0.044,
     streambar: true,
     erscheinungsdatum: new Date('2022-02-04'),
-    schlagwoerter: ['DRAMA'],
+    schlagwoerter: ['GEAENDERT'],
 };
 const idNichtVorhanden = '999999';
 
@@ -67,6 +67,7 @@ const geaenderterFilmInvalid: Record<string, unknown> = {
     rabatt: 2,
     streambar: true,
     erscheinungsdatum: '12345-123-123',
+    schlagwoerter: ['GEAENDERT'],
 };
 
 const veralterFilm: FilmDtoOhneRef = {
@@ -78,7 +79,7 @@ const veralterFilm: FilmDtoOhneRef = {
     rabatt: 0.044,
     streambar: true,
     erscheinungsdatum: new Date('2022-02-04'),
-    schlagwoerter: ['DRAMA'],
+    schlagwoerter: ['GEAENDERT'],
 };
 
 // -----------------------------------------------------------------------------

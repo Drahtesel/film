@@ -24,6 +24,7 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
+import { type ErrorResponse } from './error-response.js';
 import { HttpStatus } from '@nestjs/common';
 import { loginRest } from '../login.js';
 
@@ -31,6 +32,7 @@ import { loginRest } from '../login.js';
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
 const id = '50';
+const idNichtVorhanden = '9999';
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -72,6 +74,28 @@ describe('DELETE /rest/filme', () => {
         // then
         expect(status).toBe(HttpStatus.NO_CONTENT);
         expect(data).toBeDefined();
+    });
+
+    test('Nicht vorhandenen Film loeschen', async () => {
+        const url = `/rest/${idNichtVorhanden}`;
+        const token = await loginRest(client);
+        const headers: Record<string, string> = {
+            Authorization: `Bearer ${token}`, // eslint-disable-line @typescript-eslint/naming-convention
+        };
+
+        // when
+        const { status, data }: AxiosResponse<ErrorResponse> =
+            await client.delete(url, { headers });
+
+        // then
+        expect(status).toBe(HttpStatus.NOT_FOUND);
+        expect(data).toBeDefined();
+
+        const { error, message, statusCode } = data;
+
+        expect(error).toBe('Not Found');
+        expect(message).toEqual(expect.stringContaining(message));
+        expect(statusCode).toBe(HttpStatus.NOT_FOUND);
     });
 
     test('Film loeschen, aber ohne Token', async () => {

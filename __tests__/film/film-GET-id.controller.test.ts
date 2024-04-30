@@ -144,4 +144,34 @@ describe('GET /rest/:id', () => {
         expect(status).toBe(HttpStatus.NOT_MODIFIED);
         expect(data).toBe('');
     });
+
+    test('Film zu vorhandener ID mit falschem ETag', async () => {
+        const url = `/${idVorhanden}`;
+
+        const { status, headers, data }: AxiosResponse<FilmModel> =
+            await client.get(url, {
+                headers: { 'If-None-Match': '"falsch"' }, // eslint-disable-line @typescript-eslint/naming-convention
+            });
+
+        expect(status).toBe(HttpStatus.OK);
+        expect(headers['content-type']).toMatch(/json/iu);
+
+        // eslint-disable-next-line no-underscore-dangle
+        const selfLink = data._links.self.href;
+
+        // eslint-disable-next-line security-node/non-literal-reg-expr
+        expect(selfLink).toMatch(new RegExp(`${url}$`, 'u'));
+    });
+
+    test('Kein Film zu falschem MIME-Typen', async () => {
+        const url = `/${idVorhanden}`;
+
+        const { status }: AxiosResponse<ErrorResponse> = await client.get(
+            url,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { headers: { Accept: 'FEHLER' } },
+        );
+
+        expect(status).toBe(HttpStatus.NOT_ACCEPTABLE);
+    });
 });
