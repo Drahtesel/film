@@ -592,7 +592,7 @@
 									"    const { filme } = body._embedded;\r",
 									"    pm.expect(filme).to.be.an('array').that.has.a.lengthOf(1);\r",
 									"    const { titel, _links } = filme[0];\r",
-									"    pm.expect(titel).to.be.a('string').that.includes('StarTrekWars');\r",
+									"    pm.expect(titel).to.be.a('string').that.includes('Star Trek Wars');\r",
 									"    pm.expect(_links.self.href).to.be.a('string').that.matches(/\\/rest\\/[1-9]\\d*$/u);\r",
 									"});"
 								],
@@ -616,14 +616,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{rest_url}}?titel=StarTrekWars",
+							"raw": "{{rest_url}}?titel=Star Trek Wars",
 							"host": [
 								"{{rest_url}}"
 							],
 							"query": [
 								{
 									"key": "titel",
-									"value": "StarTrekWars"
+									"value": "Star Trek Wars"
 								}
 							]
 						}
@@ -1639,7 +1639,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titel\": \"Die Verurteilten2\",\r\n    \"rating\": 4,\r\n    \"filmart\": \"KINOFASSUNG\",\r\n    \"laenge\": 120,\r\n    \"preis\": 15,\r\n    \"rabatt\": 0.2,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": \"2000-02-01\",\r\n    \"schlagwoerter\": [\r\n        \"DRAMA\"\r\n    ],\r\n    \"distributor\": {\r\n        \"name\": \"Caste Rock Entertainment\",\r\n        \"umsatz\": 250000,\r\n        \"homepage\": \"https://cre.com\"\r\n    },\r\n      \"schauspielerListe\": [{\r\n        \"name\": \"Freeman Jr.\",\r\n        \"geburtsdatum\": \"1937-01-07\"\r\n      }]\r\n}",
+							"raw": "{\r\n    \"titel\": 'Star Trek Wars',\r\n    \"laenge\": 120,\r\n    \"rating\": 1,\r\n    \"filmart\": 'KINOFASSUNG',\r\n    \"preis\": 99.99,\r\n    \"rabatt\": 0.099,\r\n    \"streambar\": true,\r\n    \"erscheinungsdatum\": new Date('1982-02-01'),\r\n    \"schlagwoerter\": ['ACTION', 'DRAMA'],\r\n    \"distributor\": {\r\n        \"name\": 'DistributorPost',\r\n        \"umsatz\": 0,\r\n        \"homepage\": 'https://post.distributor/',\r\n    },\r\n    \"schauspielerListe\": undefined\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
