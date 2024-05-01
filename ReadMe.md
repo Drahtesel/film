@@ -765,10 +765,10 @@ wozu es die Datei `Dockerfile.jenkins` gibt, um ein solches Image zu erstellen:
 ```powershell
     cd .extras\compose\jenkins
     Get-Content Dockerfile | docker run --rm --interactive hadolint/hadolint:2.10.0-beta-debian
-    docker build --tag juergenzimmermann/jenkins:2024.04.0 .
+    docker build --tag romolus/jenkins:2024.04.0 .
 ```
 
-Das neu gebaute Image `juergenzimmermann/jenkins:2024.04.0` wird in
+Das neu gebaute Image `romolus/jenkins:2024.04.0` wird in
 `compose.yml` beim Service `jenkins` verwendet:
 
 ```powershell
