@@ -37,7 +37,7 @@ package film #DDDDDD {
     class FilmWriteService << control >>
   }
 
-  class "type FilmDTO = Omit<Film, 'abbildungen' | 'aktualisiert' | 'erzeugt'" as FilmDTO
+  class "type FilmDTO = Omit<Film, 'schauspielerListe' | 'aktualisiert' | 'erzeugt'" as FilmDTO
   hide FilmDTO circle
 
     interface IdInput {
