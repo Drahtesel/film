@@ -164,10 +164,6 @@ pipeline {
                         sh 'npx asciidoctor --version'
                         sh 'npm run asciidoctor'
                     },
-                    'reveal.js': {
-                        sh 'npx asciidoctor-revealjs --version'
-                        sh 'npm run revealjs'
-                    },
                     'TypeDoc': {
                         sh 'npx typedoc --version'
                         sh 'npm run typedoc'
@@ -224,7 +220,7 @@ pipeline {
         stage('Docker Image bauen') {
             steps {
                 echo 'TODO: Docker-Image bauen und veroeffentlichen'
-                // sh 'docker buildx build --tag juergenzimmermann/buch:2024.04.0 .'
+                // sh 'docker buildx build --tag romolus/film:2024.04.0 .'
             }
         }
 
