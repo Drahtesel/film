@@ -29,14 +29,13 @@ package film {
 
   package service #DDDDDD {
     class FilmInvalid
-    class DistributorExists
     class FilmAlreadyExists
     class VersionInvalid
     class VersionOutdated
 
     class FilmWriteService << control >> <<@Injectable()>> {
-      + async create(film: Film): Promise<number|FilmInvalid|DistributorExists|FilmAlreadyExists>
-      + async update(id: number, film: Film, version: string): Promise<number|FilmInvalid|DistributorExists|FilmAlreadyExists|VersionInvalid|VersionOutdated>
+      + async create(film: Film): Promise<number|FilmInvalid|FilmAlreadyExists>
+      + async update(id: number, film: Film, version: string): Promise<number|FilmInvalid|FilmAlreadyExists|VersionInvalid|VersionOutdated>
       + async delete(id: number): Promise<boolean>
     }
 
@@ -51,7 +50,6 @@ package film {
     FilmWriteService .up.> Promise
     FilmWriteService ..> Film
     FilmWriteService .up.> FilmInvalid
-    FilmWriteService .up.> DistributorExists
     FilmWriteService .up.> FilmAlreadyExistsExists
     FilmWriteService .up.> VersionInvalid
     FilmWriteService .up.> VersionOutdated
@@ -60,7 +58,6 @@ package film {
     Film .up[hidden].> Promise
     Film .up[hidden].> Injectable
     Film .up[hidden].> InjectRepository
-    DistributorExists .up[hidden].> Film
     FilmValidationService .[hidden].> Repository
     FilmValidationService .[hidden].> MailService
   }

@@ -13,7 +13,7 @@ entity "Film" {
   --
   * version: integer
   * titel: text
-  * lange: number
+  * laenge: number
   * rating: number
   * filmart: text
   * preis: number

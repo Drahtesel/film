@@ -157,7 +157,8 @@
 									"        .forEach(filmart => pm.expect(filmart).to.be.a('string'));\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -174,8 +175,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($name: String = \"Alpha\") {\r\n  filme(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n  }\r\n}",
-								"variables": "{\r\n  \"name\": \"WarnerBros\"\r\n}"
+								"query": "query ($name: String = \"Warner Bros\") {\r\n  filme(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n  }\r\n}",
+								"variables": "{\r\n  \"name\": \"Warner Bros\"\r\n}"
 							}
 						},
 						"url": {
@@ -210,7 +211,7 @@
 									"        const { filmart, schlagwoerter, distributor } = film;\r",
 									"        pm.expect(filmart).to.be.a('string');\r",
 									"        pm.expect(schlagwoerter).to.be.an('array');\r",
-									"        pm.expect(distributor.name).to.be.a('string').that.includes('ta');\r",
+									"        pm.expect(distributor.name).to.be.a('string').that.includes('Wa');\r",
 									"    });\r",
 									"});"
 								],
@@ -232,8 +233,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ($name: String = \"ta\") {\r\n  filme(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
-								"variables": "{\r\n  \"name\": \"ta\"\r\n}"
+								"query": "query ($name: String = \"wa\") {\r\n  filme(suchkriterien: {distributor: $name}) {\r\n    filmart\r\n    schlagwoerter\r\n    distributor {\r\n      name\r\n    }\r\n  }\r\n}",
+								"variables": "{\r\n  \"name\": \"wa\"\r\n}"
 							}
 						},
 						"url": {
