@@ -76,7 +76,6 @@ export class FilmMutationResolver {
 
         const film = this.#filmDtoToFilm(filmDTO);
         const id = await this.#service.create(film);
-        // TODO BadUserInputError
         this.#logger.debug('createFilm: id=%d', id);
         const payload: CreatePayload = { id };
         return payload;
@@ -95,7 +94,6 @@ export class FilmMutationResolver {
             film,
             version: versionStr,
         });
-        // TODO BadUserInputError
         this.#logger.debug('updateFilm: versionResult=%d', versionResult);
         const payload: UpdatePayload = { version: versionResult };
         return payload;

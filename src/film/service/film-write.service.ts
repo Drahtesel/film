@@ -146,7 +146,6 @@ export class FilmWriteService {
         await this.#repo.manager.transaction(async (transactionalMgr) => {
             // Den Film zur gegebenen ID mit Titel und Abb. asynchron loeschen
 
-            // TODO "cascade" funktioniert nicht beim Loeschen
             const distributorId = film.distributor?.id;
             if (distributorId !== undefined) {
                 await transactionalMgr.delete(Distributor, distributorId);

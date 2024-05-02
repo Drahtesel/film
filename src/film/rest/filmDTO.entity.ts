@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable max-classes-per-file */
+
+/**
+ * Das Modul besteht aus der Entity-Klasse.
+ * @packageDocumentation
+ */
+
 import {
     ArrayUnique,
     IsArray,
@@ -72,6 +78,9 @@ export class FilmDtoOhneRef {
     readonly schlagwoerter: string[] | undefined;
 }
 
+/**
+ * Entity-Klasse für Filme ohne TypeORM.
+ */
 export class FilmDTO extends FilmDtoOhneRef {
     @ValidateNested()
     @Type(() => DistributorDTO)

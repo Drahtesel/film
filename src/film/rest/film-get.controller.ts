@@ -1,3 +1,7 @@
+/**
+ * Das Modul besteht aus der Controller-Klasse für Lesen an der REST-Schnittstelle.
+ * @packageDocumentation
+ */
 /* eslint-disable max-classes-per-file */
 import {
     ApiHeader,
@@ -50,9 +54,10 @@ export interface Links {
     /** Optionaler Linke für remove */
     readonly remove?: Link;
 }
-
+/** Typdefinitionen für ein Distributorobjekt ohne Rückwärtsverweis zum Film */
 export type DistributorModel = Omit<Distributor, 'film' | 'id'>;
 
+/** Filmobjekt mit HATEOAS-Links */
 export type FilmModel = Omit<
     Film,
     | 'schauspielerListe'
@@ -120,6 +125,27 @@ export class FilmGetController {
         this.#service = service;
     }
 
+    /**
+     * Ein Film wird asynchron anhand seiner ID als Pfadparameter gesucht.
+     *
+     * Falls es einen solchen Film gibt und `If-None-Match` im Request-Header
+     * auf die aktuelle Version des Buches gesetzt war, wird der Statuscode
+     * `304` (`Not Modified`) zurückgeliefert. Falls `If-None-Match` nicht
+     * gesetzt ist oder eine veraltete Version enthält, wird der gefundene
+     * Film im Rumpf des Response als JSON-Datensatz mit Atom-Links für HATEOAS
+     * und dem Statuscode `200` (`OK`) zurückgeliefert.
+     *
+     * Falls es keinen Film zur angegebenen ID gibt, wird der Statuscode `404`
+     * (`Not Found`) zurückgeliefert.
+     *
+     * @param idStr Pfad-Parameter `id`
+     * @param req Request-Objekt von Express mit Pfadparameter, Query-String,
+     *            Request-Header und Request-Body.
+     * @param version Versionsnummer im Request-Header bei `If-None-Match`
+     * @param res Leeres Response-Objekt von Express.
+     * @returns Leeres Promise-Objekt.
+     */
+
     // eslint-disable-next-line max-params
     @Get(':id')
     @Public()
@@ -178,6 +204,22 @@ export class FilmGetController {
         return res.contentType(APPLICATION_HAL_JSON).json(filmModel);
     }
 
+    /**
+     * Filme werden mit Query-Parametern asynchron gesucht. Falls es mindestens
+     * einen solchen Film gibt, wird der Statuscode `200` (`OK`) gesetzt. Im Rumpf
+     * des Response ist das JSON-Array mit den gefundenen Filmen, die jeweils
+     * um Atom-Links für HATEOAS ergänzt sind.
+     *
+     * Falls es keinen Film zu den Suchkriterien gibt, wird der Statuscode `404`
+     * (`Not Found`) gesetzt.
+     *
+     * Falls es keine Query-Parameter gibt, werden alle Filme ermittelt.
+     *
+     * @param query Query-Parameter von Express.
+     * @param req Request-Objekt von Express.
+     * @param res Leeres Response-Objekt von Express.
+     * @returns Leeres Promise-Objekt.
+     */
     @Get()
     @Public()
     @ApiOperation({ summary: 'Suche mit Kriterien' })

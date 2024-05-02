@@ -1,4 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
+
+/**
+ * Das Modul besteht aus der Entity-Klasse.
+ * @packageDocumentation
+ */
+
 import { IsISO8601, IsOptional, Matches, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 

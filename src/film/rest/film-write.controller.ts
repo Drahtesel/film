@@ -1,3 +1,8 @@
+/**
+ * Das Modul besteht aus der Controller-Klasse für Schreiben an der REST-Schnittstelle.
+ * @packageDocumentation
+ */
+
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -40,6 +45,9 @@ import { paths } from '../../config/paths.js';
 
 const MSG_FORBIDDEN = 'Kein Token mit ausreichender Berechtigung vorhanden';
 
+/**
+ * Die Controllerklasse für die Verwaltung von Filmen
+ */
 @Controller(paths.rest)
 @UseGuards(AuthGuard)
 @UseInterceptors(ResponseTimeInterceptor)
@@ -53,6 +61,22 @@ export class FilmWriteController {
     constructor(service: FilmWriteService) {
         this.#service = service;
     }
+
+    /**
+     * Ein neuer Film wird asynchron angelegt. Der neu anzulegende Filme ist als
+     * JSON-Datensatz im Request-Objekt enthalten. Wenn es keine
+     * Verletzungen von Constraints gibt, wird der Statuscode `201` (`Created`)
+     * gesetzt und im Response-Header wird `Location` auf die URI so gesetzt,
+     * dass damit der neu angelegte Film abgerufen werden kann.
+     *
+     * Falls Constraints verletzt sind, wird der Statuscode `400` (`Bad Request`)
+     * gesetzt und genauso auch wenn die Kombination aus Titel und Erscheinungsdatum bereits
+     * existiert.
+     *
+     * @param filmDTO JSON-Daten für ein Film im Request-Body.
+     * @param res Leeres Response-Objekt von Express.
+     * @returns Leeres Promise-Objekt.
+     */
 
     @Post()
     @Roles({ roles: ['admin', 'user'] })
@@ -74,6 +98,32 @@ export class FilmWriteController {
         this.#logger.debug('post: location=%s', location);
         return res.location(location).send();
     }
+
+    /**
+     * Ein vorhandener Film wird asynchron aktualisiert.
+     *
+     * Im Request-Objekt von Express muss die ID des zu aktualisierenden Films
+     * als Pfad-Parameter enthalten sein. Außerdem muss im Rumpf der zu
+     * aktualisierende Film als JSON-Datensatz enthalten sein. Damit die
+     * Aktualisierung überhaupt durchgeführt werden kann, muss im Header
+     * `If-Match` auf die korrekte Version für optimistische Synchronisation
+     * gesetzt sein.
+     *
+     * Bei erfolgreicher Aktualisierung wird der Statuscode `204` (`No Content`)
+     * gesetzt und im Header auch `ETag` mit der neuen Version mitgeliefert.
+     *
+     * Falls die Versionsnummer fehlt, wird der Statuscode `428` (`Precondition
+     * required`) gesetzt; und falls sie nicht korrekt ist, der Statuscode `412`
+     * (`Precondition failed`). Falls Constraints verletzt sind, wird der
+     * Statuscode `400` (`Bad Request`) gesetzt und genauso auch wenn die
+     * Kombination aus Titel und Erscheinungsdatum bereits existieret.
+     *
+     * @param filmDTO Filmdaten im Body des Request-Objekts.
+     * @param id Pfad-Paramater für die ID.
+     * @param version Versionsnummer aus dem Header _If-Match_.
+     * @param res Leeres Response-Objekt von Express.
+     * @returns Leeres Promise-Objekt.
+     */
 
     // eslint-disable-next-line max-params
     @Put(':id')
@@ -126,6 +176,13 @@ export class FilmWriteController {
         return res.header('ETag', `"${neueVersion}"`).send();
     }
 
+    /**
+     * Ein Film wird anhand seiner ID-gelöscht, die als Pfad-Parameter angegeben
+     * ist. Der zurückgelieferte Statuscode ist `204` (`No Content`).
+     *
+     * @param id Pfad-Paramater für die ID.
+     * @returns Leeres Promise-Objekt.
+     */
     @Delete(':id')
     @Roles({ roles: ['admin'] })
     @HttpCode(HttpStatus.NO_CONTENT)
